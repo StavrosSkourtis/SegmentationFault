@@ -1,0 +1,13 @@
+#Header{
+    width:100%;
+    background-color:#515151;
+    height:50px;
+    position:static;
+}
+
+#HeaderContent{
+    width:100%;
+    min-width:700px;
+    max-width:900px;
+    margin:0 auto;
+}
