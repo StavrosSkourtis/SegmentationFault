@@ -8,6 +8,9 @@
 
         public function handle(){
 
+
+            //show view
+            include 'view/home.php';
         }
 
     }

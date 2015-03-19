@@ -1,13 +1,49 @@
 #Header{
     width:100%;
-    background-color:#515151;
+    background-color:#dcdcdc;
     height:50px;
-    position:static;
+    position:fixed;
 }
-
+#EmptySpaceBellowHeader{ height:50px;}
 #HeaderContent{
     width:100%;
     min-width:700px;
-    max-width:900px;
+    max-width:800px;
     margin:0 auto;
+}
+
+#HeaderLeft {
+    float:left;
+    height:50px;
+}
+
+#HeaderRight{
+    float:right;
+    height:50px;
+}
+
+#HeaderLeft h1{
+    margin:0;
+    line-height: 50px;
+}
+
+.sign_inup{
+    width:70px;
+    height:50px;
+    display: inline-block;
+    float:right;
+    line-height: 50px;
+    color:black;
+    text-decoration:none;
+    text-align:center;
+}
+
+.sign_inup:hover{
+    animation-name: sign_animation;
+    animation-duration: 1s;
+    background-color: #ABABAB ;
+}
+@keyframes sign_animation {
+    0%   {background-color: #dcdcdc ;}
+    100% {background-color: #ABABAB ;}
 }
