@@ -8,6 +8,21 @@
     class SimpleUser extends User{
 
         /*
+        constructor used to create the object when resuming a session,takes only the uid from the
+        SESSION array
+        */
+        function __construct($id){
+            this->$id=$id;
+        }
+        /*
+        constructor used to create the object when the user is login in or creating a new account.
+        After this,login or signup should be called to populate the object
+        */
+        function __construct(){
+            
+
+        }
+        /*
             Creates a new question.
             @param $html contains the text of the question
             @param $tags is an array of tags , it must contain a least 3 tags
