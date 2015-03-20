@@ -1,15 +1,32 @@
 #ContentWraper{
     width:800px;
-    margin:20px auto;
+    margin:0px auto;
 }
 #DynamicLeftPart{
     float:left;
     width:500px;
 }
+#ToolBar{
+    width:500px;
+    height:40px;
+    float:left;
+    position:fixed;
+    background-color:#FFF;
+}
+#EmptySpaceUnderToolBar{
+    width:20px;
+    height:40px;
+}
+.ToolBarItem{
+    float:left;
+    margin:20px;
+}
 #FixedRightPart{
+    margin-top:20px;
     margin-left:500px;
     width:300px;
     position:fixed;
+    padding-left:15px;
 }
 #ask_question_link{
     color:black;
@@ -38,12 +55,13 @@
     font-weight:normal;
     margin-top:20px
     width:100%;
+    margin-left:10px;
 }
 .tag{
     padding:5px;
     margin:2px;
     background-color:#1193ff;
-    border-radius:10px;
+    border-radius:5px;
     float:left;
     color:#FFF;
 }

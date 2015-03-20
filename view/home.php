@@ -1,11 +1,33 @@
 <div id="ContentWraper">
+    <div id="ToolBar">
+        <div class="ToolBarItem">
+            Newest
+        </div>
+        <div class="ToolBarItem">
+            Top Today
+        </div>
+        <div class="ToolBarItem">
+            All Time Top
+        </div>
+    </div>
+
     <div id="DynamicLeftPart">
-        Bla Bla<br><br><br><br><br>
-        Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>
-        Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>
-        Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>
-        Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>
-        Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>Bla Bla<br><br><br><br><br>
+        <div id="EmptySpaceUnderToolBar">
+        </div>
+        <div id="Questions">
+            <?php
+                include 'view/question_list_item.php';
+                include 'view/question_list_item.php';
+                include 'view/question_list_item.php';
+                include 'view/question_list_item.php';
+                include 'view/question_list_item.php';
+                include 'view/question_list_item.php';
+                include 'view/question_list_item.php';
+                include 'view/question_list_item.php';
+                include 'view/question_list_item.php';
+
+            ?>
+        </div>
     </div>
 
     <div id="FixedRightPart">
