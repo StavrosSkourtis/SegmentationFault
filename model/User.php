@@ -4,10 +4,16 @@
 
     */
     abstract class User{
+
+
         /*
             User information
         */
-        private $id
+        public $id;
+        public $name;
+        public $surname;
+        public $email;
+        public $username;
 
         /*
             returns true if the login was successful
@@ -43,7 +49,7 @@
                 /*if a username is taken ,return false*/
                 return FALSE;
             }
-           
+
             /*create the sql query and add the parameters,id must be auto-increment*/
             $query = new DatabaseQuery(
                 "insert into user(username,password,name,surname,email,join_date,type,user_icon) "+
@@ -59,7 +65,7 @@
             $query->addParameter('s',"null");
 
             $result = $query->execute();
-            
+
             /*
                 return TRUE ,which means everything went well,maybe check the affected rows and
                 return true only if effectedRows>0.
@@ -71,8 +77,8 @@
 
         /*
             Get all the data of the user,the user must be logged in,'
-            this is in the user class instread of the simpleUser cause both Admin and SimpleUser 
-            should have it,but in general this class should only have methods that an unregistered 
+            this is in the user class instread of the simpleUser cause both Admin and SimpleUser
+            should have it,but in general this class should only have methods that an unregistered
             or unlogged user has to call
         */
         public function getData(){
@@ -83,7 +89,16 @@
             $con = new DatabaseConnetion();
             $query = new DatabaseQuery("select * from user where uid=?" , $con);
             $query->addParameter('i',$id);
-            return $query->execute();
+            $result = $query->execute();
+
+            //fetch the row
+            $row = $result->fetch_assoc();
+
+            // store user info
+            $this->name = $row["name"];
+            $this->surname = $row["surname"];
+            $this->email = $row["email"];
+            $this->username = $row["username"];
         }
 
     }
