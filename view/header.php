@@ -1,7 +1,7 @@
 <div id="Header">
     <div id="HeaderContent">
         <div id="HeaderLeft">
-            <h1><a href="?p=home">Segment Fault</a></h1>
+            <h1><a href="?p=home">Segmentation Fault</a></h1>
         </div>
         <div id="HeaderRight">
             <a class="sign_inup" href="?p=signup" >Sign up</a>
