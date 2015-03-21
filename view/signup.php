@@ -24,8 +24,6 @@
                 <input class="textfield" type="password" name="password2"><br>
             </div>
         </div>
-
-
             <br><br>
 
             <div id="forgot_password_div">

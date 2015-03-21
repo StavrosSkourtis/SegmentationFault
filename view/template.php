@@ -14,6 +14,8 @@
     </head>
     <body>
         <?php
+
+
             //load the header html
             include 'view/header.php';
             //calls the controller witch in turn loads the use case's view

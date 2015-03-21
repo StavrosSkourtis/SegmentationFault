@@ -20,7 +20,7 @@
             $socket and $port will most likely not be used.
             
         */
-        public function __construct($hostname = "localhost" ,$user = "root" ,$pass = "dbpass",$database = "database",$socket = "null",$port = "null"){
+        public function __construct($hostname = "localhost" ,$user = "root" ,$pass = "dbpass",$database = "mydb",$socket = "null",$port = "null"){
             if($port!="null" && $socket!="null"){
                 // create db from unix domain socket
             }else{

@@ -9,7 +9,6 @@
                 set the title of the page
             */
             $this->setTitle("Sign In");
-
             /*
                 Set the view file
             */
@@ -21,9 +20,6 @@
         }
 
         public function handle(){
-
-
-
             /*
                 Show the view
             */

@@ -1,19 +1,12 @@
-<?php
+<?php 
+
     /*
         This scripts contains the SimpleUser class
         It defines the basic action of a registered user
     */
-    include_once 'model/User.php'
+    include_once 'model/User.php';
 
-    class SimpleUser extends User{
-
-        /*
-        constructor used to create the object when resuming a session,takes only the uid from the
-        SESSION array
-        */
-        function __construct($id){
-            this->$id=$id;
-        }
+    class SimpleUser extends User {
         /*
         constructor used to create the object when the user is login in or creating a new account.
         After this,login or signup should be called to populate the object
@@ -71,3 +64,4 @@
         }
 
     }
+?>

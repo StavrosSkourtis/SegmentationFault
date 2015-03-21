@@ -1,11 +1,11 @@
-<?php
+<?php 
+    include_once("utils/Database.php");
+
     /*
         This file contains an abstact class that describes a User
 
     */
     abstract class User{
-
-
         /*
             User information
         */
@@ -15,16 +15,17 @@
         public $email;
         public $username;
 
+
         /*
             returns true if the login was successful
             else it returns false
         */
         public function login($email,$password){
-            $con = new DatabaseConnetion();
+            $con = new DatabaseConnection();
             $query = new DatabaseQuery("select password,uid,username from user where email=?" , $con);
             $query->addParameter('s',$email);
             $result = $query->execute();
-            $user = $result->fetch_assoc()
+            $user = $result->fetch_assoc();
             if(isset($user)){
                 if(password_verify($password,$user["password"])){
                     $id=$user["uid"];
@@ -34,17 +35,18 @@
             return FALSE;
         }
 
+        
         /*
             create a user and insert his data in the database
         */
         public function signUp($username,$password,$email,$name,$surname){
-            $con = new DatabaseConnetion();
+            $con = new DatabaseConnection();
 
             /*check if a user with the given username already exists*/
             $query = new DatabaseQuery("select uid from user where username=?" , $con);
             $query->addParameter('s',$username);
             $result = $query->execute();
-            $user = $result->fetch_assoc()
+            $user = $result->fetch_assoc();
             if(isset($user)){
                 /*if a username is taken ,return false*/
                 return FALSE;
@@ -86,7 +88,7 @@
                 /*id the user is not logged in,return null*/
                 return NULL;
             }
-            $con = new DatabaseConnetion();
+            $con = new DatabaseConnection();
             $query = new DatabaseQuery("select * from user where uid=?" , $con);
             $query->addParameter('i',$id);
             $result = $query->execute();
@@ -102,3 +104,4 @@
         }
 
     }
+?>
