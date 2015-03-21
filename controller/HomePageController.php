@@ -1,5 +1,8 @@
 <?php
-
+    /**
+     *  This file contains the controller for the main page
+     *  this pages show the latest/top etc questions
+     */
     class HomePageController extends Controller{
 
         public function __construct(){

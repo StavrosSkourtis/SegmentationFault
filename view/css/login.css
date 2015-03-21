@@ -1,0 +1,58 @@
+#LoginWraper{
+    margin: 50px auto;
+    width:420px;
+}
+#LoginWraper h1{
+    text-align:center;
+    font-style:italic;
+    font-family:serif;
+    font-size:4em;
+}
+.label{
+    margin:10px 0px 0px 60px;
+    font-style:italic;
+    font-family:serif;
+    font-size:1.3em;
+}
+.textfield{
+    width:300px;
+    height:45px;
+    border-radius:0px;
+    border-width:0px;
+    margin:10px 60px;
+    text-align:center;
+    font-size:1em;
+}
+.submit_button{
+    float:right;
+    width: 70px;
+    height: 40px;
+    font-size: 1.1em;
+    background-image: -webkit-gradient(
+    	linear,
+    	left top,
+    	left bottom,
+    	color-stop(0, #E3E3E3),
+    	color-stop(1, #FFFFFF)
+    );
+    background-image: -o-linear-gradient(bottom, #E3E3E3 0%, #FFFFFF 100%);
+    background-image: -moz-linear-gradient(bottom, #E3E3E3 0%, #FFFFFF 100%);
+    background-image: -webkit-linear-gradient(bottom, #E3E3E3 0%, #FFFFFF 100%);
+    background-image: -ms-linear-gradient(bottom, #E3E3E3 0%, #FFFFFF 100%);
+    background-image: linear-gradient(to bottom, #E3E3E3 0%, #FFFFFF 100%);
+    border-width:2px;
+    margin-right:40px;
+}
+#forgot_password_div {
+    width:250px;
+    float:left;
+}
+#forgot_password_div a{
+    text-decoration:none;
+    color:#0037ff;
+    margin:0px 0px 6px 20px;
+    display:block;
+}
+#forgot_password_div a:hover{
+    color:#000;
+}

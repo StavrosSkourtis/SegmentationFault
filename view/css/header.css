@@ -1,8 +1,9 @@
 #Header{
     width:100%;
-    background-color:#dcdcdc;
+    background-color:#232323;
     height:50px;
     position:fixed;
+    color:#cecece;
 }
 #EmptySpaceBellowHeader{ height:50px;}
 #HeaderContent{
@@ -26,6 +27,13 @@
     margin:0;
     line-height: 50px;
 }
+#HeaderLeft a{
+    text-decoration:none;
+    color:#cecece;
+}
+#HeaderLeft a:hover{
+    color:#FFF;
+}
 
 .sign_inup{
     width:70px;
@@ -33,7 +41,7 @@
     display: inline-block;
     float:right;
     line-height: 50px;
-    color:black;
+    color:#cecece;
     text-decoration:none;
     text-align:center;
 }
@@ -41,7 +49,7 @@
 .sign_inup:hover{
     animation-name: sign_animation;
     animation-duration: 1s;
-    background-color: #ABABAB ;
+    background-color: #000 ;
 }
 @keyframes sign_animation {
     0%   {background-color: #dcdcdc ;}
