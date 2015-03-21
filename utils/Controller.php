@@ -1,4 +1,5 @@
 <?php
+    include_once 'utils/View.php';
     /*
         Controller class, all controllers must extend this class
         right now it only forces you to implement the handle method
@@ -6,6 +7,7 @@
     */
     abstract class Controller{
         protected $title = "TeiOverflow";
+        private $view ;
 
         public function getTitle(){
             return $this->title;
@@ -15,4 +17,20 @@
         }
 
         abstract public function handle();
+
+        protected function setView($view_file){
+            $this->view = new View();
+            $this->view->setPath($view_file);
+        }
+        protected function addCss($name){
+            $this->view->addCss($name);
+        }
+
+        protected function showView(){
+            $this->view->project();
+        }
+
+        public function linkCss(){
+            $this->view->linkCss();
+        }
     }
