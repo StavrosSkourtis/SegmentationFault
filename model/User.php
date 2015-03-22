@@ -20,7 +20,7 @@
             returns true if the login was successful
             else it returns false
         */
-        public function login($email,$password){
+        public function signIn($email,$password){
             $con = new DatabaseConnection();
             $query = new DatabaseQuery("select password,uid,username from user where email=?" , $con);
             $query->addParameter('s',$email);

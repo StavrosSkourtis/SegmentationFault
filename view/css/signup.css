@@ -12,6 +12,7 @@
 #FieldWraper{
     width:100%;
 }
+
 #Left{
     width:46%;
     float:left;
@@ -20,6 +21,16 @@
 #Right{
     width:46%;
     float:right;
+}
+.UnfilledField{
+    width:30%;
+    vertical-align:middle;
+    margin: 0 auto;
+    text-align:center;
+    background:#ff9999;
+    margin-top:10px;
+    border: 1px solid;
+    border-radius: 5px;
 }
 .label{
     margin:10px 0px 0px 10px;
