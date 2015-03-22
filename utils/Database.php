@@ -18,7 +18,7 @@
             if no parameters are passed we create it
             with the default ones.
             $socket and $port will most likely not be used.
-            
+
         */
         public function __construct($hostname = "localhost" ,$user = "root" ,$pass = "dbpass",$database = "mydb",$socket = "null",$port = "null"){
             if($port!="null" && $socket!="null"){
@@ -63,6 +63,12 @@
         public function addParameter($type ,$value){
             $this->query->bind_param($type , $value);
         }
+        /*
+          returns the query
+        */
+        public function getQuery(){
+          return $this->query;
+        }
 
         /*
             Execute the query
@@ -70,9 +76,7 @@
         */
         public function execute(){
             $this->query->execute();
-
             $result = $this->query->get_result();
-           
             return $result;
         }
     }

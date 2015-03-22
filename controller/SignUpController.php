@@ -1,7 +1,7 @@
 <?php
     include_once 'model/SimpleUser.php';
     include_once 'utils/Controller.php';
-    
+
     class SignUpController extends Controller{
 
         public function __construct(){
@@ -22,8 +22,9 @@
         public function handle(){
             if(!empty($_POST)){
                  if($this->signup()){
-                     echo "ss";
-                 } 
+                   header("Location: ?p=signin");
+                   exit();
+                 }
             }
 
             /*
