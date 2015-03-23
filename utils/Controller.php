@@ -27,10 +27,10 @@
         }
 
         protected function showView($args = null){
-            $this->view->project($args);
+          if(isset($this->view))$this->view->project($args);
         }
 
         public function linkCss(){
-            $this->view->linkCss();
+            if(isset($this->view))$this->view->linkCss();
         }
     }

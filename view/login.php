@@ -1,6 +1,12 @@
 <div id="LoginWraper">
     <form method="post">
         <h1>Welcome Back!</h1>
+        <?php if(isset( $args["error_msg"])) : ?>
+            <div class='ErrorField'>
+                <?php print $args["error_msg"]; ?>
+            </div>
+        <?php endif; ?>
+
             <p class="label">E-mail</p>
             <input class="textfield" type="text" name="email" ><br>
             <p class="label">Password</p>

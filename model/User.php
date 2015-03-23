@@ -28,7 +28,8 @@
             $user = $result->fetch_assoc();
             if(isset($user)){
                 if(password_verify($password,$user["password"])){
-                    $id=$user["uid"];
+                    session_start();
+                    $_SESSION["uid"]=$user["uid"];
                     return TRUE;
                 }
             }
@@ -102,6 +103,13 @@
             $this->surname = $row["surname"];
             $this->email = $row["email"];
             $this->username = $row["username"];
+        }
+        /*
+          signout method(no shit sherlock)
+        */
+        public function signOut(){
+          session_destroy();
+          return TRUE;
         }
 
     }

@@ -23,13 +23,19 @@
                  if($this->signin()){
                    header("Location: ?p=home");
                    exit();
+                 }else{
+                   $error_msg = "username or password doesn't match";
                  }
             }
 
+            if(isset($error_msg))
+                $args["error_msg"] = $error_msg;
+            else
+                $args = null;
             /*
                 Show the view
             */
-            $this->showView();
+            $this->showView($args);
         }
         public function signin(){
             $simpleUser=new SimpleUser();

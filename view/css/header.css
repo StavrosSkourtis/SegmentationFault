@@ -45,7 +45,16 @@
     text-decoration:none;
     text-align:center;
 }
-
+.sign_out{
+    width:70px;
+    height:50px;
+    display: inline-block;
+    float:right;
+    line-height: 50px;
+    color:#cecece;
+    text-decoration:none;
+    text-align:center;
+}
 .sign_inup:hover{
     animation-name: sign_animation;
     animation-duration: 1s;

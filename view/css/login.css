@@ -14,6 +14,16 @@
     font-family:serif;
     font-size:1.3em;
 }
+.ErrorField{
+    width:30%;
+    vertical-align:middle;
+    margin: 0 auto;
+    text-align:center;
+    background:#ff9999;
+    margin-top:10px;
+    border: 1px solid;
+    border-radius: 5px;
+}
 .textfield{
     width:300px;
     height:45px;
