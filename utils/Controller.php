@@ -26,8 +26,8 @@
             $this->view->addCss($name);
         }
 
-        protected function showView(){
-            $this->view->project();
+        protected function showView($args = null){
+            $this->view->project($args);
         }
 
         public function linkCss(){

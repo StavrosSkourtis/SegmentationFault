@@ -1,6 +1,16 @@
 <div id="SignUpWraper">
     <form method="post">
+
+
         <h1>Join us</h1>
+
+
+        <?php if(isset( $args["error_msg"])) : ?>
+            <div class='UnfilledField'>
+                <?php print $args["error_msg"]; ?>
+            </div>
+        <?php endif; ?>
+
 
         <div id="FieldWraper">
             <div id="Left">

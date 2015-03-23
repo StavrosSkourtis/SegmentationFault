@@ -24,7 +24,7 @@
             $this->css[] = $name;
         }
 
-        public function project(){
+        public function project($args){
             include 'view/'.$this->path;
         }
 
