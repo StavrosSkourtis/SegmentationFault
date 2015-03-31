@@ -63,7 +63,7 @@
               $name,
               $surname,
               $email,
-              $type=1,
+              User::getUserType('User'),
               $icon="null"
             );
 
@@ -112,5 +112,21 @@
           return TRUE;
         }
 
+
+        /**
+         *  This method finds the id of a specific user type in the database.
+         *  @param $user_type_string the user type we want the id
+         *  @return an integer value of the id of the user type
+         */
+        public static function getUserType($user_type_string){
+            $con = new DatabaseConnection();
+
+            $cmd = new DatabaseQuery("select type_id from UserType where type_name=?" , $con);
+            $cmd->addParameter('s',$user_type_string);
+            $result = $cmd->execute();
+
+            $row = $result->fetch_assoc();
+            return $row['type_id'];
+        }
     }
 ?>

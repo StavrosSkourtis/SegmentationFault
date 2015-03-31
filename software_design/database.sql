@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS `mydb`.`UserType` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`UserType` (
   `type_id` INT NOT NULL AUTO_INCREMENT,
-  `type_ name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`type_id`, `type_ name`))
+  `type_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`type_id`, `type_name`))
 ENGINE = InnoDB;
 
 
@@ -295,3 +295,11 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- -------------------------------------------------------
+-- Insert user types
+-- -------------------------------------------------------
+
+insert into UserType (type_name) values ('Admin');
+insert into UserType (type_name) values ('User');
