@@ -24,8 +24,7 @@
             $con = new DatabaseConnection();
             $query = new DatabaseQuery("select password,uid,username from user where email=?" , $con);
             $query->addParameter('s',$email);
-            $result = $query->execute();
-            $user = $result->fetch_assoc();
+            $user = $query->execute();
             if(isset($user)){
                 if(password_verify($password,$user["password"])){
                     session_start();
@@ -47,8 +46,7 @@
             /*check if a user with the given username already exists*/
             $query = new DatabaseQuery("select uid from user where username=?" , $con);
             $query->addParameter('s',$username);
-            $result = $query->execute();
-            $user = $result->fetch_assoc();
+            $user = $query->execute();
             if(isset($user)){
                 /*if a username is taken ,return false*/
                 return FALSE;
@@ -57,17 +55,18 @@
             /*create the sql query and add the parameters,id must be auto-increment*/
             $query = new DatabaseQuery("insert into user(username,password,name,surname,email,join_date,type,user_icon) values(?,?,?,?,?,now(),?,?)" , $con);
 
-            $query->getQuery()->bind_param("sssssis" ,
-              $username,
-              password_hash($password,PASSWORD_DEFAULT),
-              $name,
-              $surname,
-              $email,
-              User::getUserType('User'),
-              $icon="null"
+            $query->addParameter("sssssis",
+                $username,
+                password_hash($password,PASSWORD_DEFAULT),
+                $name,
+                $surname,
+                $email,
+                User::getUserType('User'),
+                $icon="null"
             );
 
-            $result = $query->execute();
+
+            $query->executeUpdate();
 
 
             /*
@@ -93,10 +92,7 @@
             $con = new DatabaseConnection();
             $query = new DatabaseQuery("select * from user where uid=?" , $con);
             $query->addParameter('i',$id);
-            $result = $query->execute();
-
-            //fetch the row
-            $row = $result->fetch_assoc();
+            $row = $query->execute();
 
             // store user info
             $this->name = $row["name"];
@@ -123,9 +119,8 @@
 
             $cmd = new DatabaseQuery("select type_id from UserType where type_name=?" , $con);
             $cmd->addParameter('s',$user_type_string);
-            $result = $cmd->execute();
+            $row = $cmd->execute();
 
-            $row = $result->fetch_assoc();
             return $row['type_id'];
         }
     }

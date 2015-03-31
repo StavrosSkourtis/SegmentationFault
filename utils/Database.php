@@ -7,6 +7,8 @@
         database   connection   DatabaseQuery  is  safe
         against  sql injectionsbecause it uses prepared
         statements
+
+        see testbed/database_test.php for an example
     */
 
     class DatabaseConnection{
@@ -47,6 +49,7 @@
     class DatabaseQuery{
         // holds the prepared query
         private $query;
+        private $result;
 
         // constructor
         public function __construct($query,$connection){
@@ -60,8 +63,21 @@
             and then addParameter('s','name');
             's' stands for string
          */
-        public function addParameter($type ,$value){
-            $this->query->bind_param($type , $value);
+        public function addParameter($param_types){
+            /*
+                Get the parameters
+            */
+            $args = array_slice(func_get_args(),1);
+
+            $params = array();
+
+            $params[] = & $param_types;
+
+            for($i=0 ; $i<count($args) ;$i++)
+                $params[] = & $args[$i];
+
+
+            call_user_func_array(array($this->query, 'bind_param'), $params);
         }
         /*
           returns the query
@@ -77,6 +93,15 @@
         public function execute(){
             $this->query->execute();
             $result = $this->query->get_result();
-            return $result;
+            $this->result = $result;
+            return $result->fetch_assoc();
+        }
+
+        public function executeUpdate(){
+            $this->query->execute();
+        }
+
+        public function getResultNumber(){
+            return $this->result->num_rows;
         }
     }
