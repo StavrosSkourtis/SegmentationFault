@@ -1,4 +1,5 @@
 <?php
+    include_once 'model/Question.php';
     /**
      *  This file contains the controller for the main page
      *  this pages show the latest/top etc questions
@@ -23,9 +24,6 @@
         }
 
         public function handle(){
-
-
-
             /*
                 Show the view
             */
