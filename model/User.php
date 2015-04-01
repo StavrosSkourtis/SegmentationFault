@@ -24,7 +24,8 @@
             $con = new DatabaseConnection();
             $query = new DatabaseQuery("select password,uid,username from user where email=?" , $con);
             $query->addParameter('s',$email);
-            $user = $query->execute();
+            $set = $query->execute();
+            $user = $set->next();
             if(isset($user)){
                 if(password_verify($password,$user["password"])){
                     session_start();
@@ -46,8 +47,8 @@
             /*check if a user with the given username already exists*/
             $query = new DatabaseQuery("select uid from user where username=?" , $con);
             $query->addParameter('s',$username);
-            $user = $query->execute();
-            if(isset($user)){
+            $set = $query->execute();
+            if($set->getRowCount() > 0){
                 /*if a username is taken ,return false*/
                 return FALSE;
             }
@@ -119,8 +120,8 @@
 
             $cmd = new DatabaseQuery("select type_id from UserType where type_name=?" , $con);
             $cmd->addParameter('s',$user_type_string);
-            $row = $cmd->execute();
-
+            $set = $cmd->execute();
+            $row = $set->next();
             return $row['type_id'];
         }
     }

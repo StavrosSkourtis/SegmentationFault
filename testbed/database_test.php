@@ -10,6 +10,11 @@
     // Φτιάχνουμε το αντικείμενο της σύνδεσης
     $con = new DatabaseConnection();
 
+
+    /*
+        Example
+    */
+
     /*
         Φτιάχνουμε το query, σαν παραμέτρους δίνουμε:
             -το query string οπου είναι ο sql κώδικας που πρέπει να εκτελεστή
@@ -30,6 +35,20 @@
     $cmd->addParameter('ss','Stavros','Skourtis');
 
     // Εκτελούμε το query, επιστέφει ένα associative array
-    $row = $cmd->execute();
+    $set = $cmd->execute();
 
-    print $row['email'];
+    while($row = $set->next() ){
+        print $row['email'];
+    }
+
+
+    /*
+        Example 2
+    */
+    $query2 = new DatabaseQuery("select * from user",$con);
+
+    $set2 = $query2->execute();
+
+    while($r = $set2->next()){
+        print $r['username'];
+    }

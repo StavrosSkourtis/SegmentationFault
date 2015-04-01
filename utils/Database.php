@@ -1,7 +1,7 @@
 <?php
     /*
-        This file contains 2 classes DatabaseConnection
-        and DatabaseQuery. The first is used  to open a
+        This file contains 3 classes DatabaseConnection
+        and DatabaseQuery and ResultSet. The first is used  to open a
         connection to the database   and  the second to
         create  and  run a query  on  an  already  open
         database   connection   DatabaseQuery  is  safe
@@ -49,7 +49,6 @@
     class DatabaseQuery{
         // holds the prepared query
         private $query;
-        private $result;
 
         // constructor
         public function __construct($query,$connection){
@@ -88,20 +87,36 @@
 
         /*
             Execute the query
-            returns the result
+            returns a ResultSet object
         */
         public function execute(){
             $this->query->execute();
             $result = $this->query->get_result();
-            $this->result = $result;
-            return $result->fetch_assoc();
+            $resultSet = new ResultSet($result);
+            return $resultSet;
         }
+
+
 
         public function executeUpdate(){
             $this->query->execute();
         }
 
-        public function getResultNumber(){
+    }
+
+
+    class ResultSet{
+        private $result;
+
+        public function __construct($result){
+            $this->result = $result;
+        }
+
+        public function next(){
+            return $this->result->fetch_assoc();
+        }
+
+        public function getRowCount(){
             return $this->result->num_rows;
         }
     }
