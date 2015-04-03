@@ -5,29 +5,28 @@
         private $html;
         private $id;
         private $userId;
+        private $username;
         private $datePosted;
         private $lastEdited;
         private $solved;
-        private $upvotes;
-        private $downvote;
+        private $votes;
         private $tags;
         private $title;
-
 
 
         public static function getQuestions($offset,$count){
           $con = new DatabaseConnection();
 
           $questionsQuery = new DatabaseQuery(
-            "select question.qid as id,question.title as title
+            "select question.qid as id,question.title as title,question.post_date as date
              from question"
           , $con);
 
           $result = $questionsQuery->execute();
-          while($row = $result->fetch_assoc()){
+          while($questionRow = $result->next()){
             $question=new Question;
-            $question->setTitle($row["title"]);
-            $questions[$row["id"]]=$question;
+            $question->setTitle($questionRow["title"]);
+            $question->setDatePosted($questionRow["date"]);
 
             $tagsQuery = new DatabaseQuery(
               "select tag.tag_id as id,tag.tag_string as name
@@ -35,13 +34,36 @@
                where questiontags.question=? and
                questiontags.tag=tag.tag_id"
             , $con);
-            $tagsQuery->getQuery()->bind_param("i" ,$row["id"]);
+
+            $usernameQuery = new DatabaseQuery(
+              "select user.username as username from user,question where question.user=user.uid and question.qid=".$questionRow["id"]
+            , $con);
+            $rsUser = $usernameQuery->execute();
+            $user=$rsUser->next();
+            $question->setUsername($user["username"]);
+
+            $tagsQuery->getQuery()->bind_param("i" ,$questionRow["id"]);
             $tags = $tagsQuery->execute();
-            while($tag = $tags->fetch_assoc()){
-              $questions["tags"][$tag["id"]]=$tag["name"];
+
+            unset($tagsData);
+            while($tagRow=$tags->next()){
+              $tagsData[$tagRow["id"]]=$tagRow["name"];
             }
+
+            $question->setTags($tagsData);
+
+            $votesQuery = new DatabaseQuery(
+              "select sum(questionscore.vote) as v from questionscore where
+              questionscore.qid=".$questionRow["id"]
+            , $con);
+            $rsVotes = $votesQuery->execute();
+            $vote=$rsVotes->next();
+            if(!isset($vote))$question->setVotes(0);
+            else $question->setVotes($vote["v"]);
+            $questions[$questionRow["id"]]=$question;
           }
-          /* votes have not been implemented yet*/
+
+          return $questions;
         }
 
         /*
@@ -60,6 +82,15 @@
         public function delete(){
 
         }
+        public function setTags($tags){
+          $this->tags=$tags;
+        }
+        public function setUsername($username){
+          $this->username=$username;
+        }
+        public function getUsername(){
+          return $this->username;
+        }
         /*
           appends an answer to the question
         */
@@ -72,7 +103,12 @@
         public function vote($vote){
 
         }
-
+        /*
+          get the abstract of a question,the abstract is shown at the question's listing
+        */
+        public function getAbstract(){
+          return "the abstract of the question";
+        }
         public function getHtml(){
             return $this->html;
         }
@@ -93,20 +129,20 @@
             return $this->lastEdited;
         }
 
-        public function getUpvotes(){
-            return $this->upvotes;
+        public function getVotes(){
+            return $this->votes;
         }
         public function getTitle(){
             return $this->title;
-        }
-        public function getDownvotes(){
-            return $this->downvotes;
         }
 
         public function getPoints(){
             return $upvotes-$downvotes;
         }
-
+        public function getTags(){
+        //  return array("java","c++");
+            return $this->tags;
+        }
         public function setHtml($html){
             $this->html = $html;
         }
@@ -130,8 +166,8 @@
             $this->lastEdited = $lastEdited;
         }
 
-        public function setUpvotes($upvotes){
-            $this->upvotes = $upvotes;
+        public function setVotes($votes){
+            $this->votes = $votes;
         }
 
         public function setDownvotes($downvotes){

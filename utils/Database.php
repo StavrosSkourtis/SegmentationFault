@@ -115,7 +115,9 @@
         public function next(){
             return $this->result->fetch_assoc();
         }
-
+        public function getRawResult(){
+          return $this->result;
+        }
         public function getRowCount(){
             return $this->result->num_rows;
         }

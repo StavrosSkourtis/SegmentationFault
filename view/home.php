@@ -1,3 +1,5 @@
+<?php include_once "model/Question.php"; ?>
+
 <div id="ContentWraper">
     <div id="ToolBar">
         <div class="ToolBarItem">
@@ -14,17 +16,42 @@
     <div id="DynamicLeftPart">
         <div id="EmptySpaceUnderToolBar">
         </div>
-        <div id="Questions">
-            <?php
-                include 'view/question_list_item.php';
-                include 'view/question_list_item.php';
-                include 'view/question_list_item.php';
-                include 'view/question_list_item.php';
-                include 'view/question_list_item.php';
-                include 'view/question_list_item.php';
-                include 'view/question_list_item.php';
-                include 'view/question_list_item.php';
-                include 'view/question_list_item.php';
+          <div id="Questions">
+              <?php
+
+                $questions=Question::getQuestions(0,2);
+                foreach ($questions as $question): ?>
+                  <div class="question_item">
+                      <div class="question_title_div">
+                          <a class="question_item_title" href="" target="_blank">
+                              <?php echo $question->getTitle() ?>
+                          </a>
+                      </div>
+
+                      <?php echo $question->getAbstract(); ?>
+                      <br><br>
+                      <div class="question_tags" >
+                          <?php
+                            if($question->getTags()!==null){
+                              foreach ($question->getTags() as $key => $tag){
+                                echo "<div class='q_item_tag'><a href='home?tag=".$key."''>".$tag."</div>";
+                              }
+                            }
+                          ?>
+                      </div>
+                      <br>
+                      <div class="q_label_div">
+                          <div class="question_score">
+                            <?php echo $question->getVotes(); ?>
+                          </div>
+
+                          <div class="username_and_date">
+                              <p class="question_item_sub_label">by <a href=""><?php echo $question->getUsername(); ?> </a><?php echo $question->getDatePosted(); ?></p>
+                          </div>
+                      </div>
+                  </div>
+                <?php endforeach; ?>
+
 
             ?>
         </div>
