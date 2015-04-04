@@ -3,7 +3,7 @@
 <div id="Header">
     <div id="HeaderContent">
         <div id="HeaderLeft">
-            <h1><a href="?p=home">Segmentation Fault</a></h1>
+            <h1><a href="?p=home&ofset=0&sorting=newest">Segmentation Fault</a></h1>
         </div>
         <?php if(!isset($_SESSION["uid"])) : ?>
           <div id="HeaderRight">

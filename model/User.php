@@ -40,7 +40,7 @@
         /*
             create a user and insert his data in the database
         */
-        public function signUp($username,$password,$email,$name,$surname){
+        public function signUp($username,$password,$email){
             $con = new DatabaseConnection();
 
 
@@ -54,13 +54,11 @@
             }
 
             /*create the sql query and add the parameters,id must be auto-increment*/
-            $query = new DatabaseQuery("insert into user(username,password,name,surname,email,join_date,type,user_icon) values(?,?,?,?,?,now(),?,?)" , $con);
+            $query = new DatabaseQuery("insert into user(username,password,email,join_date,type,user_icon) values(?,?,?,now(),?,?)" , $con);
 
-            $query->addParameter("sssssis",
+            $query->addParameter("sssis",
                 $username,
                 password_hash($password,PASSWORD_DEFAULT),
-                $name,
-                $surname,
                 $email,
                 User::getUserType('User'),
                 $icon="null"
@@ -123,6 +121,15 @@
             $set = $cmd->execute();
             $row = $set->next();
             return $row['type_id'];
+        }
+        public function getUsername(){
+          return $this->username;
+        }
+        public function setUsername($username){
+            $this->username=$username;
+        }
+        public function setUserid($id){
+            $this->id=$id;
         }
     }
 ?>

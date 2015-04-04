@@ -2,7 +2,12 @@
     width:450px;
     min-height:60px;
     margin:20px 0px;
+
     padding:10px;
+    background:#ccc;
+    box-shadow: 5px 5px 2px #bbb;
+    border-radius: 2px;
+    margin-bottom:30;
 }
 .question_title_div{
     width:100%;

@@ -14,9 +14,6 @@
 
         <div id="FieldWraper">
             <div id="Left">
-                <p class="label">Name</p>
-                <input class="textfield" type="text" name="name"  value="<?php echo @$_POST['name']; ?>" >
-
                 <p class="label">Username</p>
                 <input class="textfield" type="text" name="username"  value="<?php echo @$_POST['username']; ?>" ><br>
 
@@ -24,9 +21,6 @@
                 <input class="textfield" type="password" name="password"><br>
             </div>
             <div id="Right">
-                <p class="label">Surname</p>
-                <input class="textfield" type="text" name="surname"  value="<?php echo @$_POST['surname']; ?>" ><br>
-
                 <p class="label">E-mail</p>
                 <input class="textfield" type="text" name="email"  value="<?php echo @$_POST['email']; ?>" ><br>
 

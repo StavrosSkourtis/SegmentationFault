@@ -7,11 +7,16 @@
     width:500px;
 }
 #ToolBar{
-    width:500px;
-    height:40px;
-    float:left;
+    float:right;
+    margin:10px;
+    padding: 5px 10px;
+    background: #00f;
+    color: #fff;
+    margin: 10px 10px 10px 10px;
+    width:150px;
+    height:30px;
+    float:right;
     position:fixed;
-    background-color:#ededed;
 }
 #EmptySpaceUnderToolBar{
     width:20px;
@@ -19,7 +24,11 @@
 }
 .ToolBarItem{
     float:left;
-    margin:20px;
+    margin:10px;
+    padding: 5px 10px;
+    background: #55f;
+    color: #fff;
+    margin: 10px 10px 10px 10px;
 }
 #FixedRightPart{
     margin-top:20px;
@@ -28,11 +37,21 @@
     position:fixed;
     padding-left:15px;
 }
+.next_page_link{
+  padding: 10px 15px;
+  background: #4479BA;
+  color: #FFF;
+  margin: 10px 10px 10px 10px;
+}
 #ask_question_link{
     color:black;
     text-decoration:none;
     font-size:1.1em;
-    margin:0px 0px 0px 10px;
+    padding: 10px 15px;
+    width:100%;
+    background: #44ff44;
+    color: #000000;
+    margin: 0px 0px 0px 0px;
 }
 #ask_question_link:hover{
     color:#6e6e6e;
@@ -40,13 +59,14 @@
 #search_box{
     margin-top:20px;
     width:240px;
-    height:45px;
+    height:25px;
     font-size:1.1em;
     color:black;
+
 }
 #search_icon{
     margin-top:20px;
-    width:50px;
+    width:35px;
     float:right;
 }
 

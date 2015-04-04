@@ -33,14 +33,6 @@
                   $error_msg = "The email address is not valid";
                   $error=TRUE;
                 }
-                if($_POST["name"]==""){
-                  $error_msg= "Name can't be empty";
-                  $error=TRUE;
-                }
-                if($_POST["surname"]==""){
-                  $error_msg ="Surname can't be empty";
-                  $error=TRUE;
-                }
                 if($_POST["password"]!=$_POST["password2"]){
                   $error_msg ="Passwords are not the same";
                   $error=TRUE;
@@ -73,7 +65,7 @@
         }
         public function signup(){
             $simpleUser=new SimpleUser();
-            $res=$simpleUser->signUp($_POST["username"],$_POST["password"],$_POST["email"],$_POST["name"],$_POST["surname"]);
+            $res=$simpleUser->signUp($_POST["username"],$_POST["password"],$_POST["email"]);
             return $res;
         }
     }

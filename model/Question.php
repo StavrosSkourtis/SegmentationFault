@@ -1,32 +1,48 @@
 
 <?php
     include_once("utils/Database.php");
+    include_once("model/SimpleUser.php");
     class Question{
         private $html;
         private $id;
-        private $userId;
-        private $username;
         private $datePosted;
         private $lastEdited;
         private $solved;
         private $votes;
         private $tags;
         private $title;
+        private $user;
 
 
-        public static function getQuestions($offset,$count){
+
+        public static function getQuestions($offset,$count,$sorting){
           $con = new DatabaseConnection();
 
-          $questionsQuery = new DatabaseQuery(
-            "select question.qid as id,question.title as title,question.post_date as date
-             from question"
-          , $con);
+          if($sorting=="newest"){
+            $questionsQuery = new DatabaseQuery(
+              "select question.html as data,question.qid as id,question.title as title,question.post_date as date,user.username as username,user.uid as userid
+               from question,user where user.uid=question.user order by date DESC limit ".$count." OFFSET ".$offset
+            , $con);
+          }
+          if($sorting=="toptoday"){
+            $questionsQuery = new DatabaseQuery(
+              "select question.html as data,question.qid as id,question.title as title,question.post_date as date,user.username as username,user.uid as userid
+               from question,user where user.uid=question.user and question.post_date=now() order by date DESC limit ".$count." OFFSET ".$offset
+            , $con);
+          }
+          if($sorting=="alltimetop"){
+            $questionsQuery = new DatabaseQuery(
+            "select question.html as data,sum(questionscore.vote) as votes,question.qid as id,question.title as title,question.post_date as date,user.username as username,user.uid as userid
+            from question,user,questionscore where user.uid=question.user and questionscore.qid=question.qid order by votes DESC limit ".$count." OFFSET ".$offset
+            , $con);
+          }
 
           $result = $questionsQuery->execute();
           while($questionRow = $result->next()){
             $question=new Question;
             $question->setTitle($questionRow["title"]);
             $question->setDatePosted($questionRow["date"]);
+            $question->setHtml($questionRow["data"]);
 
             $tagsQuery = new DatabaseQuery(
               "select tag.tag_id as id,tag.tag_string as name
@@ -35,12 +51,10 @@
                questiontags.tag=tag.tag_id"
             , $con);
 
-            $usernameQuery = new DatabaseQuery(
-              "select user.username as username from user,question where question.user=user.uid and question.qid=".$questionRow["id"]
-            , $con);
-            $rsUser = $usernameQuery->execute();
-            $user=$rsUser->next();
-            $question->setUsername($user["username"]);
+            $user=new SimpleUser;
+            $user->setUsername($questionRow["username"]);
+            $user->setUserid($questionRow["userid"]);
+            $question->setUser($user);
 
             $tagsQuery->getQuery()->bind_param("i" ,$questionRow["id"]);
             $tags = $tagsQuery->execute();
@@ -49,8 +63,17 @@
             while($tagRow=$tags->next()){
               $tagsData[$tagRow["id"]]=$tagRow["name"];
             }
+            if(isset($tagsData)){
+              $question->setTags($tagsData);
+            }
 
-            $question->setTags($tagsData);
+            /*
+              the following can be used as a query above instead of a new query just for the votes,the problem is that every question needs atleast
+              1 vote(can be 0)
+
+              select sum(questionscore.vote) as votes,question.qid as id,question.title as title,question.post_date as date,user.name as username,user.uid as userid
+              from question,user,questionscore where user.uid=question.user and questionscore.qid=question.qid
+            */
 
             $votesQuery = new DatabaseQuery(
               "select sum(questionscore.vote) as v from questionscore where
@@ -62,8 +85,10 @@
             else $question->setVotes($vote["v"]);
             $questions[$questionRow["id"]]=$question;
           }
+          if(isset($questions)){
+            return $questions;
+          }
 
-          return $questions;
         }
 
         /*
@@ -107,7 +132,7 @@
           get the abstract of a question,the abstract is shown at the question's listing
         */
         public function getAbstract(){
-          return "the abstract of the question";
+          return substr($this->html,0,100);
         }
         public function getHtml(){
             return $this->html;
@@ -135,7 +160,12 @@
         public function getTitle(){
             return $this->title;
         }
-
+        public function getUser(){
+            return $this->user;
+        }
+        public function setUser($user){
+            $this->user=$user;
+        }
         public function getPoints(){
             return $upvotes-$downvotes;
         }
