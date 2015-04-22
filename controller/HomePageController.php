@@ -1,4 +1,8 @@
 <?php
+	/*
+        DILWSA ERGASIA ASURMATA
+    */
+
     include_once 'model/Question.php';
     /**
      *  This file contains the controller for the main page
