@@ -18,6 +18,10 @@
             $this->addCss("login.css");
         }
 
+
+        /*
+            This is method is called by index.php
+        */
         public function handle(){
             if(!empty($_POST)){
                  if($this->signin()){
@@ -37,6 +41,7 @@
             */
             $this->showView($args);
         }
+
         public function signin(){
             $simpleUser=new SimpleUser();
             return $simpleUser->signIn($_POST["email"],$_POST["password"]);
