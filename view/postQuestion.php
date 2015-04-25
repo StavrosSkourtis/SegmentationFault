@@ -3,7 +3,10 @@
 
 <div id="ContentWraper">
     <h1 id="ContentTitle">Ask a Question</h1>
-
+    <p id="error_mesg"><?php
+                            if(isset($args["error_msg"]))
+                                print $args["error_msg"];
+                        ?></p>
     <form method="post">
         <div id="hiddenInput">
         <input type="hidden" id="tagsPostData" name="tags" value="">
