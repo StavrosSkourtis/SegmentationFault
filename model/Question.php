@@ -9,6 +9,9 @@
         private $lastEdited;
         private $solved;
         private $votes;
+        /*
+            Array of Strings
+        */
         private $tags;
         private $title;
         /*
@@ -17,8 +20,6 @@
             DONT mistake this for username
         */
         private $user;
-
-
 
         public static function getQuestions($offset,$count,$sorting){
           $con = new DatabaseConnection();
