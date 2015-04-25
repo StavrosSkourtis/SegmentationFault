@@ -17,10 +17,9 @@
         }
         /*
             Creates a new question.
-            @param $html contains the text of the question
-            @param $tags is an array of tags , it must contain a least 3 tags
+            @param $question ,is the question(no shit)
         */
-        public function postQuestion($html,$tags){
+        public function postQuestion($question){
 
         }
 
