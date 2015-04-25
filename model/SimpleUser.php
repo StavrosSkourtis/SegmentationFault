@@ -15,29 +15,11 @@
 
 
         }
-        /*
-            Creates a new question.
-            @param $html contains the text of the question
-            @param $tags is an array of tags , it must contain a least 3 tags
-        */
-        public function postQuestion($html,$tags){
 
-        }
 
         /*
-            Creates a comment on a given post(question or answer)
-            @param $text is the text of the comment
-            @param $post_id is the post this comment belongs to
-            @param $type it shows if this is a comment of an answer(1) or to a question(0)
-        */
-        public function postComment($text,$post_id,$type){
-
-        }
-
-        /*
-            Creates a answer for a given question
+            Creates a question
             @param $question object of the type Question
-            @param $tags is an ARRAY of STRINGS containing tag names
 
             TODO
             Run an sql statement that inserts the parameter
@@ -62,6 +44,21 @@
 
             Για οδηγίες σχετικά με την βαση δεδομένων στην php πάνε εδώ testbed/database_test.php
         */
+        public function postQuestion($question){
+
+        }
+
+        /*
+            Creates a comment on a given post(question or answer)
+            @param $text is the text of the comment
+            @param $post_id is the post this comment belongs to
+            @param $type it shows if this is a comment of an answer(1) or to a question(0)
+        */
+        public function postComment($text,$post_id,$type){
+
+        }
+
+
         public function postAnswer($question , $tags){
 
         }

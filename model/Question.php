@@ -9,6 +9,9 @@
         private $lastEdited;
         private $solved;
         private $votes;
+        /*
+            Array of Strings
+        */
         private $tags;
         private $title;
         /*
