@@ -15,6 +15,19 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+drop table if exists QuestionTags;
+drop table if exists Tag;
+drop table if exists QuestionScore;
+drop table if exists AnswerScore;
+drop table if exists ACommentScore;
+drop table if exists QCommentScore;
+drop table if exists QuestionComment;
+drop table if exists AnswerComment;
+drop table if exists Answer;
+drop table if exists Question;
+drop table if exists User;
+drop table if exists UserType;
+
 
 --
 -- Database: `mydb`
@@ -197,7 +210,7 @@ INSERT INTO `questiontags` (`question`, `tag`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tag` (
-  `tag_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL AUTO_INCREMENT,
   `tag_string` varchar(45) NOT NULL,
   PRIMARY KEY (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -206,9 +219,8 @@ CREATE TABLE IF NOT EXISTS `tag` (
 -- Dumping data for table `tag`
 --
 
-INSERT INTO `tag` (`tag_id`, `tag_string`) VALUES
-(0, 'java'),
-(1, 'c++');
+INSERT INTO `tag` (`tag_string`) VALUES
+( 'Java'),('c++'),('c'),('Perl'),('Perl'),('Sql'),('Oracle'),('php'),('OpenGL');
 
 -- --------------------------------------------------------
 

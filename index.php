@@ -15,7 +15,7 @@
         'signup'       => 'SignUpController'        ,
         'postquestion' => 'PostQuestionController'  ,
         'home'         => 'HomePageController'      ,
-        'signout'         => 'SignoutController'
+        'signout'      => 'SignoutController'
     );
 
     /*

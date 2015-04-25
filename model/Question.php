@@ -11,6 +11,11 @@
         private $votes;
         private $tags;
         private $title;
+        /*
+            Object of the type SimpleUser
+            DONT mistake this for user id
+            DONT mistake this for username
+        */
         private $user;
 
 

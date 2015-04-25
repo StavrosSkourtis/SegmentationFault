@@ -31,8 +31,8 @@
             <br><br>
 
             <div id="forgot_password_div">
-                <a href="?p=signup">Join our community!</a>
-                <a href="?p=password_recovery">Recover your password.</a>
+                <a href="?p=signin">Already have an account?</a>
+                <a href="">Sign in with Google account (not rly).</a>
             </div>
             <input class="submit_button" type="submit" value="Create Account">
     </form>

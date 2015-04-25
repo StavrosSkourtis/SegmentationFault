@@ -1,6 +1,16 @@
 #ContentWraper{
     width:800px;
-    margin:0px auto;
+    padding:50px;
+    margin:10px auto;
+    min-height:500px;
+    background-color:#FFF;
+    box-shadow: -1px 1px 20px 0px #AAA;
+    border-radius: 7px;
+}
+#ContentWraper::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 #DynamicLeftPart{
     float:left;
@@ -49,12 +59,12 @@
     font-size:1.1em;
     padding: 10px 15px;
     width:100%;
-    background: #44ff44;
+    background: #0099ff;
     color: #000000;
     margin: 0px 0px 0px 0px;
 }
 #ask_question_link:hover{
-    color:#6e6e6e;
+    color:#FFF;
 }
 #search_box{
     margin-top:20px;
