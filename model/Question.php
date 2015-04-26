@@ -7,6 +7,9 @@
         private $id;
         private $datePosted;
         private $lastEdited;
+        /*
+            boolean
+        */
         private $solved;
         private $votes;
         /*

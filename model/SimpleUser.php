@@ -13,9 +13,12 @@
         */
         function __construct(){
 
-
         }
 
+        /*
+            Start of the ADD methods
+
+        */
 
         /*
             Creates a question
@@ -48,38 +51,97 @@
 
         }
 
+
+        /*
+            Creates a answer
+            @param $answer object of the type Answer
+
+            TODO
+            Run an sql statement that inserts the parameter
+            answer to the database and the tags
+
+            Database tables
+            -Answer
+
+            check database for correct column names
+
+            Για οδηγίες σχετικά με την βαση δεδομένων στην php πάνε εδώ testbed/database_test.php
+        */
+        public function postAnswer($answer){
+
+        }
+
         /*
             Creates a comment on a given post(question or answer)
-            @param $text is the text of the comment
-            @param $post_id is the post this comment belongs to
-            @param $type it shows if this is a comment of an answer(1) or to a question(0)
+            @param the question
         */
-        public function postComment($text,$post_id,$type){
+        public function postComment($comment){
 
         }
 
 
-        public function postAnswer($question , $tags){
+        /*
+            Start of the DELETE methods
+        */
+
+        /*
+            Deletes a question from the database, first all its answer must be deleted
+        */
+        public function deleteQuestion($question){
 
         }
 
-        public function deleteQuestion($question_id){
+        /*
+            Deletes an answer from the database, first all its comments must be deleted
+        */
+        public function deleteAnswer($answer){
 
         }
 
-        public function deleteAnswer($answer_id){
+        /*
+            Deletes a comment from the database.
+        */
+        public function deleteComment($comment){
 
         }
 
-        public function deleteComment($comment_id){
+
+        /*
+            Start of the EDIT methods
+        */
+
+        /*
+            Edits the answer : updates all its data to match the data of the parameter
+            dont alter comments
+            dont change the owner (user id)
+        */
+        public function editAnswer($answer){
 
         }
 
-        public function editAnswer($html,$answer_id){
+        /*
+            Edits the answer : updates all its data to match the data of the parameter
+            dont alter comments
+            dont change the owner (user id)
+        */
+        public function editQuestion($question){
 
         }
 
-        public function editQuestion($html,$question_id){
+        /*
+            Edits the answer : updates all its data to match the data of the parameter
+            dont alter comments
+            dont change the owner (user id)
+        */
+        public function editComment($comment){
+
+        }
+
+
+        /*
+            Checks if THIS user if logged in
+        */
+        public function checkIfLoggedIn(){
 
         }
 

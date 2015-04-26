@@ -18,6 +18,7 @@
         'signout'      => 'SignoutController'
     );
 
+    
     /*
         Check if the GET argument 'p' is set.
         If it isn't we set the target controller
