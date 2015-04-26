@@ -1,21 +1,45 @@
-
 <?php
+    /*
+        This class describes a Question
+
+        note static methods are located at the bottom
+    */
     include_once("utils/Database.php");
     include_once("model/SimpleUser.php");
-    class Question{
+    include_once("model/Votable.php");
+
+    class Question implements Votable{
+        /*
+            The questions text
+        */
         private $html;
+        /*
+            The questions id
+        */
         private $id;
+        /*
+            The date it was posted
+        */
         private $datePosted;
+        /*
+            The date it was last edited
+        */
         private $lastEdited;
         /*
             boolean
         */
         private $solved;
+        /*
+            The score of the question
+        */
         private $votes;
         /*
             Array of Strings
         */
         private $tags;
+        /*
+            The Title of the question
+        */
         private $title;
         /*
             Object of the type SimpleUser
@@ -23,7 +47,120 @@
             DONT mistake this for username
         */
         private $user;
+        /*
+            Array of comments
+        */
+        private $comments;
+        /*
+            Array of answers
+        */
+        private $answers;
 
+
+        /*
+            Fills data from the database
+        */
+        public function create($id){
+            $this->id = $id;
+
+        }
+
+
+        /*
+            Inserts a vote to the database
+        */
+        public function vote($uid, $vote){
+
+        }
+
+        /*
+            Getter and setters
+        */
+        public function setTags($tags){
+          $this->tags=$tags;
+        }
+        /*
+          appends an answer to the question
+        */
+        public function setAnswers($answers){
+            $this->answers = $answers;
+        }
+        /*
+          get the abstract of a question,the abstract is shown at the question's listing
+        */
+        public function getAbstract(){
+          return substr($this->html,0,100);
+        }
+        public function getHtml(){
+            return $this->html;
+        }
+        public function getId(){
+            return $this->id;
+        }
+        public function getUserId(){
+            return $this->userId;
+        }
+        public function getDatePosted(){
+            return $this->datePosted;
+        }
+        public function getLastEdited(){
+            return $this->lastEdited;
+        }
+        public function getVotes(){
+            return $this->votes;
+        }
+        public function getTitle(){
+            return $this->title;
+        }
+        public function getUser(){
+            return $this->user;
+        }
+        public function setUser($user){
+            $this->user=$user;
+        }
+        public function getPoints(){
+            return $upvotes-$downvotes;
+        }
+        public function getTags(){
+        //  return array("java","c++");
+            return $this->tags;
+        }
+        public function setHtml($html){
+            $this->html = $html;
+        }
+        public function setId($id){
+            $this->id = $id;
+        }
+        public function setTitle($title){
+            $this->title = $title;
+        }
+        public function setUserId($userId){
+            $this->userId = $userId;
+        }
+        public function setDatePosted($datePosted){
+            $this->datePosted = $datePosted;
+        }
+        public function setLastEdited($lastEdited){
+            $this->lastEdited = $lastEdited;
+        }
+        public function setVotes($votes){
+            $this->votes = $votes;
+        }
+        public function setDownvotes($downvotes){
+            $this->downvotes = $downvotes;
+        }
+        public function getComments(){
+            return $this->comments;
+        }
+        public function setComment($comments){
+            $this->comments;
+        }
+
+
+
+        /*
+            Static methods
+        */
         public static function getQuestions($offset,$count,$sorting){
           $con = new DatabaseConnection();
 
@@ -104,120 +241,5 @@
         the following need to be implemented
         */
 
-        /*
-          returns all the data of a question
-        */
-        public static function getQuestion($qid){
 
-        }
-        /*
-          deletes the question
-        */
-        public function delete(){
-
-        }
-        public function setTags($tags){
-          $this->tags=$tags;
-        }
-        public function setUsername($username){
-          $this->username=$username;
-        }
-        public function getUsername(){
-          return $this->username;
-        }
-        /*
-          appends an answer to the question
-        */
-        public function addAnswer($answer){
-
-        }
-        /*
-          votes 1/-1
-        */
-        public function vote($vote){
-
-        }
-        /*
-          get the abstract of a question,the abstract is shown at the question's listing
-        */
-        public function getAbstract(){
-          return substr($this->html,0,100);
-        }
-        public function getHtml(){
-            return $this->html;
-        }
-
-        public function getId(){
-            return $this->id;
-        }
-
-        public function getUserId(){
-            return $this->userId;
-        }
-
-        public function getDatePosted(){
-            return $this->datePosted;
-        }
-
-        public function getLastEdited(){
-            return $this->lastEdited;
-        }
-
-        public function getVotes(){
-            return $this->votes;
-        }
-        public function getTitle(){
-            return $this->title;
-        }
-        public function getUser(){
-            return $this->user;
-        }
-        public function setUser($user){
-            $this->user=$user;
-        }
-        public function getPoints(){
-            return $upvotes-$downvotes;
-        }
-        public function getTags(){
-        //  return array("java","c++");
-            return $this->tags;
-        }
-        public function setHtml($html){
-            $this->html = $html;
-        }
-
-        public function setId($id){
-            $this->id = $id;
-        }
-        public function setTitle($title){
-            $this->title = $title;
-        }
-
-        public function setUserId($userId){
-            $this->userId = $userId;
-        }
-
-        public function setDatePosted($datePosted){
-            $this->datePosted = $datePosted;
-        }
-
-        public function setLastEdited($lastEdited){
-            $this->lastEdited = $lastEdited;
-        }
-
-        public function setVotes($votes){
-            $this->votes = $votes;
-        }
-
-        public function setDownvotes($downvotes){
-            $this->downvotes = $downvotes;
-        }
-
-        public function upvote(){
-            $this->upvotes++;
-        }
-
-        public function downvotes(){
-            $this->downvotes++;
-        }
     }

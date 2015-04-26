@@ -16,11 +16,18 @@
         }
 
 
+        public function upvote($votable){
+            $votable->vote( $this->id ,+1);
+        }
+
+        public function downvote($votable){
+            $votable->vote( $this->id ,-1);
+        }
+
+
         /*
             Start of the ADD methods
-
         */
-
 
 
         /*
@@ -52,6 +59,8 @@
             Για οδηγίες σχετικά με την βαση δεδομένων στην php πάνε εδώ testbed/database_test.php
         */
         public function postQuestion($question){
+            if(!checkIfLoggedIn())
+                return;
 
         }
 
@@ -62,7 +71,7 @@
 
             TODO
             Run an sql statement that inserts the parameter
-            answer to the database and the tags
+            answer to the database
 
             Database tables
             -Answer
@@ -72,6 +81,8 @@
             Για οδηγίες σχετικά με την βαση δεδομένων στην php πάνε εδώ testbed/database_test.php
         */
         public function postAnswer($answer){
+            if(!checkIfLoggedIn())
+                return;
 
         }
 
@@ -80,7 +91,8 @@
             @param the question
         */
         public function postComment($comment){
-
+            if(!checkIfLoggedIn())
+                return;
         }
 
 
@@ -92,20 +104,24 @@
             Deletes a question from the database, first all its answer must be deleted
         */
         public function deleteQuestion($question){
-
+            if(!checkIfLoggedIn())
+                return;
         }
 
         /*
             Deletes an answer from the database, first all its comments must be deleted
         */
         public function deleteAnswer($answer){
-
+            if(!checkIfLoggedIn())
+                return;
+        }
 
         /*
             Deletes a comment from the database.
         */
         public function deleteComment($comment){
-
+            if(!checkIfLoggedIn())
+                return;
         }
 
 
@@ -119,7 +135,8 @@
             dont change the owner (user id)
         */
         public function editAnswer($answer){
-
+            if(!checkIfLoggedIn())
+                return;
         }
 
         /*
@@ -128,7 +145,8 @@
             dont change the owner (user id)
         */
         public function editQuestion($question){
-
+            if(!checkIfLoggedIn())
+                return;
         }
 
         /*
@@ -137,15 +155,19 @@
             dont change the owner (user id)
         */
         public function editComment($comment){
-
+            if(!checkIfLoggedIn())
+                return;
         }
 
 
         /*
-            Checks if THIS user if logged in
+            Checks if THIS user is logged in
         */
         public function checkIfLoggedIn(){
-
+            if( isset($_SESSION["uid"])  && $_SESSION["uid"]==$this->id)
+                return true;
+            else
+                return false;
         }
 
     }

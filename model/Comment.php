@@ -3,8 +3,9 @@
         This class descibes a comment
 
     */
+    include_once 'model/Votable.php';
 
-    class Comment{
+    class Comment implements Votable{
         /*
             The of the comment
         */
@@ -36,14 +37,14 @@
 
 
         /*
-            Constructor
+            Creates a comment
 
             @param $id is the id of the comment
             @param $type shows if this is a Comment to an answer or to a question, must be 'Q' or 'A'
 
 
         */
-        public function __construct($id , $type){
+        public function create($id , $type){
             $this->type = $type;
             if($type == 'Q'){
                 /*
@@ -67,9 +68,16 @@
         }
 
 
+        /*
+            Inserts a vote to the database
+        */
+        public function vote($uid, $vote){
+
+        }
+
 
         /*
-            Getter methods
+            Getter and Setter methods
         */
         public function getId(){
             return $this->id;
@@ -89,5 +97,49 @@
 
         public function getTarget(){
             return $this->target;
+        }
+
+        public function getType(){
+            return $this->type;
+        }
+
+        public function setId($id){
+            $this->id = $id;
+        }
+
+        public function setDate($date){
+            $this->date = $date;
+        }
+
+        public function setText($text){
+            $this->text = $text;
+        }
+
+        public function setUser($user){
+            $this->user = $user;
+        }
+
+        public function setTarget($target){
+            $this->target = $target;
+        }
+
+        public function setType($type){
+            $this->type = $type;
+        }
+
+
+        /*
+            Static method
+        */
+
+        /*
+            Creates and returns an Array of Comments
+            @param target_id the id of the target
+            @param target_type the type of the target , 'Q' means question , 'A' means answer
+
+        */
+        public static function getComments($target_id , $target_type ){
+
+
         }
     }

@@ -1,4 +1,5 @@
 <?php
+    include_once 'model/Votable.php';
     /*
         This class describes an answer
     */
@@ -36,18 +37,23 @@
         private $votes;
 
         /*
-            Constructor creates an object and fills the data with the given id
-
+            Fills the object with data from the database using the given id
         */
-        public function __construct($id){
+        public function create($id){
 
         }
 
 
+        /*
+            Inserts a vote to the database
+        */
+        public function vote($uid, $vote){
+
+        }
 
 
         /*
-            Getters
+            Getters and Setters
         */
         public function getText(){
             return $this->text;
@@ -73,4 +79,40 @@
             return $this->votes;
         }
 
+        public function setText($text){
+            $this->text = $text;
+        }
+
+        public function setUser($user){
+            $this->user = $user;
+        }
+
+        public function getQuestion($question){
+            $this->question = $question;
+        }
+
+        public function getComments($comments){
+            $this->comments = $comments;
+        }
+
+        public function getDate($date){
+            $this->date = $date;
+        }
+
+        public function getVotes($votes){
+            $this->votes = $votes;
+        }
+
+
+        /*
+            Static method
+
+        */
+
+        /*
+            Returns an Array of answers that belong to that question
+        */
+        public static function getAnswers($question_id){
+
+        }
     }
