@@ -15,14 +15,18 @@
 
         }
 
+
         /*
             Start of the ADD methods
 
         */
 
+
+
         /*
-            Creates a question
+            Creates a answer for a given question
             @param $question object of the type Question
+            @param $tags is an ARRAY of STRINGS containing tag names
 
             TODO
             Run an sql statement that inserts the parameter
@@ -96,7 +100,6 @@
         */
         public function deleteAnswer($answer){
 
-        }
 
         /*
             Deletes a comment from the database.

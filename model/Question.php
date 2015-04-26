@@ -24,8 +24,6 @@
         */
         private $user;
 
-
-
         public static function getQuestions($offset,$count,$sorting){
           $con = new DatabaseConnection();
 
