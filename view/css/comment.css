@@ -1,0 +1,57 @@
+.Comment{
+	width:736px;
+	min-height: 90px;
+	float:right;
+}
+
+.CommentVoteWraper{
+	float:left;
+	width:80px;
+	height:90px;
+	margin-right: 15px;
+}
+.commentVoteIcon{
+	width:35px;
+	margin-top:20px;
+}
+.CommentVotes{
+	text-align: center;
+	font-size:1.3em;
+	margin-top:5px;
+}
+
+.CommentRightPartWraper{
+
+}
+
+.CommentText{
+
+	width:100%;
+	min-height: 60px;
+}
+
+.CommentInfo{
+	width:100%;
+	height: 30px;
+}
+
+.CommentTextParagraph{
+	margin:0px;
+	padding: 10px;
+	font-size: 0.9em;
+	text-align: justify;
+}
+.CommentUsernameField{
+	margin:2px 30px;
+	display: inline;
+	font-size: 1em;
+	text-align: justify;
+	float :right;
+}
+.CommentDateField{
+	margin:2px 30px;
+	display: inline;
+	font-size: 1em;
+	text-align: justify;
+	float :left;
+}

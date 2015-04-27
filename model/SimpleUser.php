@@ -59,7 +59,7 @@
             Για οδηγίες σχετικά με την βαση δεδομένων στην php πάνε εδώ testbed/database_test.php
         */
         public function postQuestion($question){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
 
         }
@@ -81,7 +81,7 @@
             Για οδηγίες σχετικά με την βαση δεδομένων στην php πάνε εδώ testbed/database_test.php
         */
         public function postAnswer($answer){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
 
         }
@@ -91,7 +91,7 @@
             @param the question
         */
         public function postComment($comment){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
         }
 
@@ -104,7 +104,7 @@
             Deletes a question from the database, first all its answer must be deleted
         */
         public function deleteQuestion($question){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
         }
 
@@ -112,7 +112,7 @@
             Deletes an answer from the database, first all its comments must be deleted
         */
         public function deleteAnswer($answer){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
         }
 
@@ -120,7 +120,7 @@
             Deletes a comment from the database.
         */
         public function deleteComment($comment){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
         }
 
@@ -135,7 +135,7 @@
             dont change the owner (user id)
         */
         public function editAnswer($answer){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
         }
 
@@ -145,7 +145,7 @@
             dont change the owner (user id)
         */
         public function editQuestion($question){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
         }
 
@@ -155,7 +155,7 @@
             dont change the owner (user id)
         */
         public function editComment($comment){
-            if(!checkIfLoggedIn())
+            if(!$this->checkIfLoggedIn())
                 return;
         }
 

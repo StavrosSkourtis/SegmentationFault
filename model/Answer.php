@@ -87,22 +87,24 @@
             $this->user = $user;
         }
 
-        public function getQuestion($question){
+        public function setQuestion($question){
             $this->question = $question;
         }
 
-        public function getComments($comments){
+        public function setComments($comments){
             $this->comments = $comments;
         }
 
-        public function getDate($date){
+        public function setDate($date){
             $this->date = $date;
         }
 
-        public function getVotes($votes){
+        public function setVotes($votes){
             $this->votes = $votes;
         }
-
+        public function addComment($comment){
+            $this->comments[count($this->comments)] = $comment;
+        }
 
         /*
             Static method

@@ -28,7 +28,7 @@
 
         <div class="sub_section">
             <p class="label">Preview</p>
-            <div id="markdown">
+            <div id="markdown" class="markdown">
 
             </div>
         </div>

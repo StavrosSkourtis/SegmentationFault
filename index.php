@@ -6,6 +6,8 @@
         Starting point of this application
     */
     include 'utils/controller.php';
+    
+    
 
     /*
         Define pages that exist on this web sercive
@@ -15,7 +17,8 @@
         'signup'       => 'SignUpController'        ,
         'postquestion' => 'PostQuestionController'  ,
         'home'         => 'HomePageController'      ,
-        'signout'      => 'SignoutController'
+        'signout'      => 'SignoutController'       ,
+        'question'     => 'ViewQuestionController'
     );
 
     

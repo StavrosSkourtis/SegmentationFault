@@ -1,9 +1,14 @@
-#markdown a{
+.markdown a{
     color:#59b;
     text-decoration:none;
 }
 
-#markdown pre{
+.markdown pre{
     background-color:#f3f3f3;
     padding: 10px;
+}
+
+.markdown h1{
+	font-size: 1.5em;
+	font-weight: normal;
 }

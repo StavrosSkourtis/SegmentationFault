@@ -3,7 +3,7 @@
 
 
         <h1>Join us</h1>
-
+        
 
         <?php if(isset( $args["error_msg"])) : ?>
             <div class='UnfilledField'>
@@ -37,3 +37,4 @@
             <input class="submit_button" type="submit" value="Create Account">
     </form>
 </div>
+

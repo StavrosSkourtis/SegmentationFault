@@ -1,0 +1,33 @@
+.Answer{
+	border-radius: 5px;
+	background-color: #FFF;
+	padding: 20px;
+	margin: 20px 0px;
+}
+.AnswerHeader{
+}
+.AnswerTopLabel{
+	display: inline-block;
+	float:right;
+	margin:5px;
+}
+.AnswerVoteLabel{
+	display: inline-block;
+	margin: 0px 10px;
+}
+.AnswerText{
+	min-height: 150px;
+}
+.AnswerCommentTextField{
+	width:94%;
+	height:60px;
+	margin: 20px 3% 5px 3%;
+}
+.AnswerCommentSubmit{
+	float:right;
+	height:50px;
+	margin-right:3%;
+	font-size:1.1em;
+	background-color: #0099ff;
+	border-width:1px;
+}

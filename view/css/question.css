@@ -1,0 +1,75 @@
+#ContentWraper{
+	width:800px;
+	
+	margin: 10px auto;
+
+	min-height: 500px;
+}
+
+#Question{
+	border-radius: 5px;
+	background-color: #FFF;
+	padding: 20px;
+}
+
+
+#QuestionTitle{
+	font-weight: normal;
+	font-size: 1.8em;
+}
+
+#QuestionVote{
+	height:70px;
+	float:left;
+}
+#QuestionText{
+	margin:20px 0px;
+}
+#QuestionHeader{
+	min-height: 62px
+}
+
+#QuestionVoteWraper{
+	float:left;
+}
+#QuestionInfo{
+	  float: right;
+	  margin-top: 5px;
+}
+}
+.voteIcon{
+	width:63px;
+}
+#UsernameLabel{
+	font-size: 1em;
+	text-align: right;
+	margin:5px;
+}
+#QuestionDate{
+	margin:5px;
+	text-align: right;
+	font-size: 1em;
+}
+.VoteLabel{
+	display: inline-block;
+	font-size:1.7em;
+	margin:10px 10px 0px 10px;
+}
+#VoteLabelWraper{
+	width:66px;
+	height:100%;
+	float:left;
+}
+#QuestionCommentTextField{
+	width:94%;
+	height:60px;
+	margin: 20px 3% 5px 3%;
+}
+#QuestionCommentSubmit{
+	float:right;
+	height:50px;
+	margin-right:3%;
+	font-size:1.1em;
+	background-color: #0099ff;
+	border-width:1px;
+}

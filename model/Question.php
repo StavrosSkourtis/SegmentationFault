@@ -85,6 +85,9 @@
         public function setAnswers($answers){
             $this->answers = $answers;
         }
+        public function getAnswers(){
+            return $this->answers;
+        }
         /*
           get the abstract of a question,the abstract is shown at the question's listing
         */
@@ -156,6 +159,13 @@
             $this->comments;
         }
 
+        public function addComment($comment){
+            $this->comments[count($this->comments)] = $comment;
+        }
+
+        public function addAnswer($answer){
+            $this->answers[count($this->answers)] = $answer;
+        }
 
 
         /*
