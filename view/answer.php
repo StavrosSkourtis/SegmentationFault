@@ -48,8 +48,11 @@
 
 
 	<div class="postCommentForm">
-		<textarea name="answer_comment" class="AnswerCommentTextField"></textarea>
-		<input type="submit" value="Enter Comment" class="AnswerCommentSubmit">
+		<form method="post">
+			<input type="hidden" name="answer_id" value="<?php print $answer->getId(); ?>">
+			<textarea name="answer_comment" class="AnswerCommentTextField"></textarea>
+			<input type="submit" value="Enter Comment" class="AnswerCommentSubmit">
+		</form>
 	</div>
 	<?php 
 		/*

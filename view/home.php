@@ -52,30 +52,18 @@
         <img id="search_icon" src="res/ui/search.png">
 
 
-        <h2>Selected Tags</h2>
-        <div class="tag_div" >
-            <a href="" class="tag">Java</a>
-            <a href="" class="tag">C++</a>
-            <a href="" class="tag">Android</a>
-            <a href="" class="tag">C#</a>
-            <a href="" class="tag">Java</a>
-            <a href="" class="tag">C++</a>
-            <a href="" class="tag">Android</a>
-            <a href="" class="tag">C#</a>
-            <div style="clear: both"></div>
-        </div>
-
-
-        <h2>Most Popular Tags</h2>
+        <h2>Top 10 Tags</h2>
         <div class="tag_div">
-            <a href="" class="tag">Java</a>
-            <a href="" class="tag">C++</a>
-            <a href="" class="tag">Android</a>
-            <a href="" class="tag">C#</a>
-            <a href="" class="tag">Java</a>
-            <a href="" class="tag">C++</a>
-            <a href="" class="tag">Android</a>
-            <a href="" class="tag">C#</a>
+            <p href="" class="tag">Java</p> 
+            <p href="" class="tag">C++</p>
+            <p href="" class="tag">Android</p>
+            <p href="" class="tag">C#</p>
+            <p href="" class="tag">Java</p>
+            <p href="" class="tag">C++</p>
+            <p href="" class="tag">Android</p>
+            <p href="" class="tag">C#</p>
+            <p href="" class="tag">C#</p>
+            <p href="" class="tag">C#</p>
             <div style="clear: both"></div>
         </div>
 

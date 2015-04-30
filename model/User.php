@@ -15,7 +15,9 @@
         public $email;
         public $username;
 
-
+        public function create($id){
+            
+        }
 
         /*
             returns true if the login was successful
@@ -31,6 +33,7 @@
                 if(password_verify($password,$user["password"])){
                     session_start();
                     $_SESSION["uid"]=$user["uid"];
+                    $_SESSION["username"] = $user["username"];
                     return TRUE;
                 }
             }

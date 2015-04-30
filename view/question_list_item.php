@@ -9,7 +9,7 @@
 <div class="question_item">
 
     <div class="question_title_div">
-        <a class="question_item_title" href="" target="_blank">
+        <a class="question_item_title" href="?p=question&id<?php print $question->getId(); ?>" target="_blank">
             <?php print $question->getTitle(); ?>
         </a>
     </div>

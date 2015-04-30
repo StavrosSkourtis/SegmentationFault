@@ -1,6 +1,8 @@
 <?php
     include_once 'utils/Controller.php';
     include_once 'model/Question.php';
+    include_once 'controller/SignInController.php';
+
     class PostQuestionController extends Controller{
 
         public function __construct(){
@@ -24,39 +26,52 @@
 
         public function handle(){
             if(!isset($_SESSION["uid"])){
-              $args["error_msg"] = "You need to be logged in to post a question(<a href='?p=signin'>signin</a>)";
-            }
-            else{
-              if(isset($_POST["tags"]) && isset($_POST["title"]) && isset($_POST["question"])){
-                $title=htmlspecialchars($_POST["title"]);
-                $question=($_POST["question"]);
+                /*
+                    User has not logged in
+                    redirect to sign in page
+                */
 
-                $tags=explode("*",$_POST["tags"]);
+                header("Location: ?p=signin");
+                die();
+            }else{
+                /*
+                    User has logged in
+                */
+                if(isset($_POST["tags"]) && isset($_POST["title"]) && isset($_POST["question"])){
+                    $title=htmlspecialchars($_POST["title"]);
+                    $question=($_POST["question"]);
 
-                if(count($tags)==0)$error_msg = "You need atleast 1 tag";
-                if(strlen($title)<20)$error_msg = "Title should be atleast 20 characters";
-                if(strlen($question)<50)$error_msg = "Your question needs to be atleast 50 characters";
+                    $tags=explode("*",$_POST["tags"]);
 
-                if(isset($error_msg))
-                    $args["error_msg"] = $error_msg;
-                else{
-                    $args = null;
-                    $question=new Question;
-                    $question->setTags($tags);
-                    $question->setHtml($question);
+                    if(count($tags)==0)
+                        $error_msg = "You need atleast 1 tag";
+                    if(strlen($title)<20)
+                        $error_msg = "Title should be atleast 20 characters";
+                    if(strlen($question)<50)
+                        $error_msg = "Your question needs to be atleast 50 characters";
 
-                    $user=new SimpleUser;
-                    $user->setUserid($_SESSION["uid"]);
-                    $user->postQuestion($question);
+                    if(isset($error_msg))
+                        $args["error_msg"] = $error_msg;
+                    else{
+                        $args = null;
+                        $question=new Question;
+                        $question->setTags($tags);
+                        $question->setHtml($question);
+
+                        $user=new SimpleUser;
+                        $user->setUserid($_SESSION["uid"]);
+                        $user->postQuestion($question);
+                    }
                 }
-              }
+
+                /*
+                    show view
+                */
+                $args['status'] = 'init';
+                $this->showView($args);
             }
 
-            /*
-                show view
-            */
-            $args['status'] = 'init';
-            $this->showView($args);
+
         }
 
     }

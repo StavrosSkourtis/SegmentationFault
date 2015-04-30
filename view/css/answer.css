@@ -31,3 +31,33 @@
 	background-color: #0099ff;
 	border-width:1px;
 }
+
+#AnswerForm{
+	background-color: #FFF;
+	margin-top:20px;
+	border-radius: 5px;
+	padding: 20px;
+}
+#postAnswerTextarea{
+	width:100%;
+	height:100px;
+}
+
+#AnswerPreview{
+	width:100%;
+	min-height:80px;
+}
+
+#AnswerForm h1{
+	font-weight: normal;
+}
+
+#postAnswerSubmit{
+	margin-top:20px;
+	float:right;
+ 	height: 50px;
+  	margin-right: 3%;
+  	font-size: 1.1em;
+  	background-color: #0099ff;
+  	border-width: 1px;
+}

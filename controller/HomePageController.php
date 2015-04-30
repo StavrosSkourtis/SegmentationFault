@@ -28,9 +28,12 @@
         }
 
         public function handle(){
-            if(isset($_GET["ofset"]))$_SESSION["questions_ofset"]=$_GET["ofset"];
+            if(isset($_GET["ofset"]))
+                $_SESSION["questions_ofset"]=$_GET["ofset"];
 
-            if(!isset($_SESSION["questions_ofset"]))$_SESSION["questions_ofset"]=0;
+            if(!isset($_SESSION["questions_ofset"]))
+                $_SESSION["questions_ofset"]=0;
+            
             if(isset($_GET["sorting"])){
               $sorting=$_GET["sorting"];
             }else $sorting=$_GET["sorting"]="newest";

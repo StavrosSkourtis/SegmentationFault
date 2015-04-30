@@ -1,3 +1,4 @@
+<script type="text/javascript" src="view/javascript/answerPostPreview.js"></script>
 <div id="ContentWraper">
 
 	<div id="Question">
@@ -79,8 +80,11 @@
 			
 		
 		<div id="postCommentForm">
-			<textarea name="question_comment" id="QuestionCommentTextField"></textarea>
-			<input type="submit" value="Enter Comment" id="QuestionCommentSubmit">
+			<form method="post" >
+				<input type="hidden" name="question_id" value="<?php print $args['question']->getId(); ?>">
+				<textarea name="question_comment" id="QuestionCommentTextField"></textarea>
+				<input type="submit" value="Enter Comment" id="QuestionCommentSubmit">
+			</form>
 		</div>
 
 		<?php 
@@ -107,5 +111,25 @@
 			?>
 	</div>
 
+
+	<div id="AnswerForm">
+
+		<form>
+			<input type="hidden" name="question_id" value="<?php print $args['question']->getId(); ?>" >
+			<h1>Enter an answer</h1> 
+			<textarea id="postAnswerTextarea" name="postedAnswer"></textarea> 
+			
+			
+
+			<p class="label"> Preview</p>
+			<hr>
+			<div id="AnswerPreview" class="markdown">
+
+			</div>
+			<hr>
+			<input id="postAnswerSubmit"  type="submit" value="Enter answer" >
+		</form>
+		<div style="clear: both"></div>
+	</div>
 
 </div>

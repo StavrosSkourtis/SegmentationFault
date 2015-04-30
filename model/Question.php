@@ -7,6 +7,9 @@
     include_once("utils/Database.php");
     include_once("model/SimpleUser.php");
     include_once("model/Votable.php");
+    include_once("model/SimpleUser.php");
+    include_once("model/Answer.php");
+    include_once("model/Comment.php");
 
     class Question implements Votable{
         /*
@@ -36,7 +39,7 @@
         /*
             Array of Strings
         */
-        private $tags;
+        private $tags =  array();
         /*
             The Title of the question
         */
@@ -63,6 +66,90 @@
         public function create($id){
             $this->id = $id;
 
+            /*
+                Create the database connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+                set up the query
+            */
+            $query = new DatabaseQuery("select * from question where qid=?" ,$dbConnection);
+            $query->addParameter('i',$id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+
+            /*
+                if the number of rows is equal or bellow zero we return false
+            */
+            if($set->getRowCount() <= 0 )
+                return false;
+
+            /*
+                Get the data in an array
+                there is no need for a while loop because it is not possible for this query to return for than 1 rows
+                because question id is unique
+            */
+            $row  = $set->next();
+
+            /*
+                Get basic data
+            */
+            $this->title = $row["title"];
+            $this->html = $row["html"];
+            $this->datePosted = $row["post_date"];
+            $this->lastEdited = $row["edit_date"];
+
+            /*
+                Get the user
+            */
+            $user = new SimpleUser();
+            $user->create($row["user"]);
+
+            $this->user = $user;
+
+            /*
+                get the answers and the comments
+            */
+            $this->answers = Answer::getAnswers($id);
+            $this->comments = Comment::getComments($id,'Q');
+            
+
+            /*
+                Get the tags
+
+            */
+            $tagQuery = new DatabaseQuery("select tag_string ".
+                                          "from tag ".
+                                          "inner join questiontags on tag.tag_id=questiontags.tag ".
+                                          "where questiontags.qustion=?"
+                                          ,$dbConnection);
+            $tagQuery->addParameter('i',$id);
+
+            $tagSet = $tagQuery->execute();
+
+            while($tagRow = $tagSet->next() ){
+                $this->tags[count($this->tags)] = $tagRow['tag_string'];
+            }
+
+
+
+            $votesQuery = new DatabaseQuery("select sum(vote) as score from questionscore where qid=?",$dbConnection);
+            $votesQuery->addParameter('i',$id);
+
+            $votesSet = $votesQuery->execute();
+            $votesRow = $votesSet->next();
+            $this->votes = $votesRow['score'];
+
+
+            $dbConnection->close();
+            /*
+                every thing is ok return true
+            */
+            return true;
         }
 
 

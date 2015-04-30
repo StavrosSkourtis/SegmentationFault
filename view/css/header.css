@@ -22,6 +22,11 @@
     float:right;
     height:50px;
 }
+#HeaderRight p{
+    display: inline-block;
+    margin-right: 20px;
+    font-style: italic;
+}
 
 #HeaderLeft h1{
     margin:0;
@@ -56,11 +61,8 @@
     text-align:center;
 }
 .sign_inup:hover{
-    animation-name: sign_animation;
-    animation-duration: 1s;
     background-color: #000 ;
 }
-@keyframes sign_animation {
-    0%   {background-color: #dcdcdc ;}
-    100% {background-color: #ABABAB ;}
+.sign_out:hover{
+    background-color: #000 ;
 }
