@@ -3,7 +3,12 @@
 <div id="Header">
     <div id="HeaderContent">
         <div id="HeaderLeft">
-            <h1><a href="?p=home&ofset=0&sorting=newest">Segmentation Fault</a></h1>
+            <!-- <img src="res/ui/banner.png" > -->
+            <h1>
+            <a class="titleBracket">&lt;</a>
+            <a  id="HeaderLink" href="?p=home&ofset=0&sorting=newest"> 
+            Segmentation Fault</a>
+            <a class="titleBracket">/&gt;</a></h1>
         </div>
         <?php if(!isset($_SESSION["uid"])) : ?>
           <div id="HeaderRight">

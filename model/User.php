@@ -14,9 +14,32 @@
         public $surname;
         public $email;
         public $username;
+        public $joinDate;
 
+        /*
+            Creates a user based on the id
+        */
         public function create($id){
-            
+            $dbConnection = new DatabaseConnection();
+
+            $dbQuery = new DatabaseQuery('select * from user where uid=?' , $dbConnection);
+
+            $dbQuery->addParameter('i',$id);
+            $set = $dbQuery->execute();
+
+            if($set->getRowCount() <=0)
+                return false;
+
+            $row = $set->next();
+
+            $this->name = $row["name"];
+            $this->surname = $row["surname"];
+            $this->email = $row["email"];
+            $this->joinDate = $row["join_date"];
+            $this->username = $row["username"];
+
+            $dbConnection->close();
+            return true;
         }
 
         /*
@@ -81,6 +104,7 @@
             return TRUE;
         }
 
+
         /*
             Get all the data of the user,the user must be logged in,'
             this is in the user class instread of the simpleUser cause both Admin and SimpleUser
@@ -111,7 +135,6 @@
           return TRUE;
         }
 
-
         /**
          *  This method finds the id of a specific user type in the database.
          *  @param $user_type_string the user type we want the id
@@ -136,4 +159,3 @@
             $this->id=$id;
         }
     }
-?>

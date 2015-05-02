@@ -4,6 +4,7 @@
 
     */
     include_once 'model/Votable.php';
+    include_once 'utils/Database.php';
 
     class Comment implements Votable{
         /*
@@ -14,6 +15,11 @@
             The date this was posted
         */
         private $date;
+        /*
+            The date it was last edited
+        */
+        private $editDate;
+
         /*
             The comment text
         */
@@ -46,25 +52,57 @@
         */
         public function create($id , $type){
             $this->type = $type;
-            if($type == 'Q'){
-                /*
-                    This is a comment to a question
-                */
-                $query = "";
+            $this->id = $id;
 
-            }else if($type == 'A'){
-                /*
-                    This is a comment to a answer
-                */
-                $query = "";
+            /*
+                Create the connection
+            */
+            $dbConnection = new DatabaseConnection();
 
+            /*
+                Create the query
+            */
+            if($target_type == 'Q'){
+                $query = new DatabaseQuery("select * from questioncomment where cid=?" , $dbConnection);
+            }else if($target_type == 'A'){
+                $query = new DatabaseQuery("select * from answercomment where cid=?" , $dbConnection);
             }
 
             /*
-                TODO run query and fill data
+                Add the parameter and execute
             */
+            $query->addParameter('i',$id);
+            $set = $query->execute();
 
+            $row = $set->next();
+            $this->date = $row['post_date'];
+            $this->text = $row['text'];
+            $this->editDate = $row['edit_date'];
 
+            if($target_type == 'Q')
+                $this->target = $row['question'];
+            else if($target_type == 'A')
+                $this->target = $row['answer'];
+            
+            $user = new SimpleUser();
+            $user->create($row["user"]);
+            $this->user = $user;
+
+            if($target_type == 'Q'){
+                $votesQuery = new DatabaseQuery("select sum(vote) as votes from qcommentscore where cid=?" , $dbConnection);
+            }else if($target_type == 'A'){
+                $votesQuery = new DatabaseQuery("select sum(vote) as votes from acommentscore where cid=?" , $dbConnection);
+            }
+            $votesQuery->addParameter('i',$id);
+            $set2 = $votesQuery->execute();
+
+            $votesRow = $set2->next();
+
+            $votes = $votesRow['votes'];
+
+            $this->votes = $votes;   
+
+            $dbConnection->close();
         }
 
 
@@ -147,7 +185,32 @@
 
         */
         public static function getComments($target_id , $target_type ){
+            /*  
+                Create the connection
+            */
+            $dbConnection = new DatabaseConnection();
 
+            if($target_type == 'Q'){
+                $query = new DatabaseQuery("select cid from questioncomment where question=?" , $dbConnection);
+            }else if($target_type == 'A'){
+                $query = new DatabaseQuery("select cid from answercomment where answer=?" , $dbConnection);
+            }
 
+            $query->addParameter('i',$target_id);
+
+            $set = $query->execute();
+
+            $comments = array();
+
+            while($row = $set->next()){
+                $comment = new Comment();
+                $comment->create($row['cid'] , $target_type);
+
+                $comments[count($comments)] = $comment;
+            }
+
+            $dbConnection->close();
+
+            return $comments;
         }
     }

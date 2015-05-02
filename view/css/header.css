@@ -13,6 +13,7 @@
     margin:0 auto;
 }
 
+
 #HeaderLeft {
     float:left;
     height:50px;
@@ -32,11 +33,16 @@
     margin:0;
     line-height: 50px;
 }
-#HeaderLeft a{
+#HeaderLeft h1:hover{
+    color:#FFF;
+}
+
+
+#HeaderLink{
     text-decoration:none;
     color:#cecece;
 }
-#HeaderLeft a:hover{
+#HeaderLink:hover{
     color:#FFF;
 }
 
@@ -65,4 +71,7 @@
 }
 .sign_out:hover{
     background-color: #000 ;
+}
+.titleBracket{
+    color:#416cb4;
 }

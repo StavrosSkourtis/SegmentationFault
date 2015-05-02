@@ -32,6 +32,10 @@
         */
         private $date;
         /*
+            The date this was last edited
+        */
+        private $editDate;
+        /*
             the score of the answer
         */
         private $votes;
@@ -40,7 +44,71 @@
             Fills the object with data from the database using the given id
         */
         public function create($id){
+            $this->id = $id;
 
+            /*
+                Create the database connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+                set up the query
+            */
+            $query = new DatabaseQuery("select * from answer where aid=?" ,$dbConnection);
+            $query->addParameter('i',$id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+
+            /*
+                if the number of rows is equal or bellow zero we return false
+            */
+            if($set->getRowCount() <= 0 )
+                return false;
+
+            /*
+                Get the data in an array
+                there is no need for a while loop because it is not possible for this query to return for than 1 rows
+                because question id is unique
+            */
+            $row  = $set->next();
+
+            /*
+                Get basic data
+            */
+            $this->html = $row["html"];
+            $this->date = $row["post_date"];
+            $this->editDate = $row["edit_date"];
+
+            /*
+                Get the user
+            */
+            $user = new SimpleUser();
+            $user->create($row["user"]);
+
+            $this->user = $user;
+
+            /*
+                get the answers and the comments
+            */
+            $this->comments = Comment::getComments($id,'A');
+            
+            $votesQuery = new DatabaseQuery("select sum(vote) as score from answerscore where aid=?",$dbConnection);
+            $votesQuery->addParameter('i',$id);
+
+            $votesSet = $votesQuery->execute();
+            $votesRow = $votesSet->next();
+            $this->votes = $votesRow['score'];
+
+
+            $dbConnection->close();
+            /*
+                every thing is ok return true
+            */
+            return true;
+        
         }
 
 
@@ -122,6 +190,23 @@
             Returns an Array of answers that belong to that question
         */
         public static function getAnswers($question_id){
+            $dbConnection = new DatabaseConnection();
 
+            $query = new DatabaseQuery( "select aid from answer where question=?", $dbConnection);
+            $query->addParameter('i' , $question_id);
+            $set = $query->execute();
+
+            $answers = array();
+
+            while( $row = $set->next()){
+                $answer = new Answer();
+                $answer->create($row['aid']);
+
+                $answers[count($answers)] = $answer;
+            }
+
+            $dbConnection->close();
+
+            return $answers;
         }
     }
