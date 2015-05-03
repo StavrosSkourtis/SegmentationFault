@@ -3,8 +3,10 @@
         This class descibes a comment
 
     */
-    include_once 'model/Votable.php';
-    include_once 'utils/Database.php';
+    if(!isset($ajax))
+        $ajax = "";
+    include_once $ajax.'model/Votable.php';
+    include_once $ajax.'utils/Database.php';
 
     class Comment implements Votable{
         /*

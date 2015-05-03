@@ -17,16 +17,20 @@
     width:500px;
 }
 #ToolBar{
-    float:right;
-    margin:10px;
-    padding: 5px 10px;
-    background: #00f;
-    color: #fff;
-    margin: 10px 10px 10px 10px;
-    width:150px;
-    height:30px;
-    float:right;
-    position:fixed;
+    padding: 0px 10px;
+    background: #FFF;
+    width:450px;
+    min-height:30px;
+    float:left;
+}
+.sortingOption{
+    font-size:2em;
+    text-decoration: underline;
+    color:#005994;
+    margin-right:30px;
+}
+.sortingOption:hover{
+    color:#000;
 }
 #EmptySpaceUnderToolBar{
     width:20px;

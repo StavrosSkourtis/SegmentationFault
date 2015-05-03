@@ -1,5 +1,7 @@
 <?php
-    include_once("utils/Database.php");
+    if(!isset($ajax))
+        $ajax = "";
+    include_once($ajax."utils/Database.php");
 
     /*
         This file contains an abstact class that describes a User

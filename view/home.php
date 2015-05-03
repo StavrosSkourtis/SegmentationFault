@@ -1,23 +1,16 @@
-<?php include_once "model/Question.php"; ?>
+<script type="text/javascript" src="view/javascript/getQuestionListItem.js"></script>
+<script type="text/javascript">
+    
+    sorting = <?php print "'".$args["sorting"]."'"; ?>;
 
-<script>
-    function change_sorting() {
-        window.location="?p=home&ofset=0&sorting="+document.getElementById("ToolBar").value;
-    }
 </script>
-
 <div id="ContentWraper">
-    <select id="ToolBar" onchange="change_sorting()">
-        <option class="ToolBarItem" value="newest" <?php if($_GET["sorting"] == 'newest'){echo("selected");}?>>
-            Newest
-        </option>
-        <option class="ToolBarItem" value="toptoday" <?php if($_GET["sorting"] == 'toptoday'){echo("selected");}?>>
-            Top Today
-        </option>
-        <option class="ToolBarItem" value="alltimetop" <?php if($_GET["sorting"] == 'alltimetop'){echo("selected");}?>>
-            All Time Top
-        </option>
-    </select>
+    <div id="ToolBar">
+        <a class="sortingOption" href="?p=home&sorting=new">Latest</a>
+        <a class="sortingOption" href="?p=home&sorting=top">Top</a>
+        <hr>
+    </div>
+
 
     <div id="DynamicLeftPart">
         <div id="EmptySpaceUnderToolBar">
@@ -33,14 +26,6 @@
 
         </div>
         <br><br>
-
-        <?php
-
-          if($_SESSION["questions_ofset"]!=0){
-            echo '<a class="next_page_link" href="?p=home&ofset='.($_SESSION["questions_ofset"]-$args["questions_per_page"]).'">newer</a>';
-          }
-          if($args["questions"]!==null)echo '<a class="next_page_link" href="?p=home&ofset='.($_SESSION["questions_ofset"]+$args["questions_per_page"]).'">older</a>';
-        ?>
 
     </div>
 

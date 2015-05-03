@@ -4,7 +4,9 @@
         This scripts contains the SimpleUser class
         It defines the basic action of a registered user
     */
-    include_once 'model/User.php';
+    if(!isset($ajax))
+        $ajax = "";
+    include_once $ajax.'model/User.php';
 
     class SimpleUser extends User {
         /*

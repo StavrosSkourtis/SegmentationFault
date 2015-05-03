@@ -1,5 +1,7 @@
 <?php
-    include_once 'model/Votable.php';
+    if(!isset($ajax))
+        $ajax = "";
+    include_once $ajax.'model/Votable.php';
     /*
         This class describes an answer
     */

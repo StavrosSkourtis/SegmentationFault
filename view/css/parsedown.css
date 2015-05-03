@@ -8,6 +8,10 @@
     padding: 10px;
 }
 
+.markdown code{
+    background-color:#f3f3f3;
+    padding: 2px;
+}
 .markdown h1{
 	font-size: 1.5em;
 	font-weight: normal;

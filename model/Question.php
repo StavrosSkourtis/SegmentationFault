@@ -4,12 +4,15 @@
 
         note static methods are located at the bottom
     */
-    include_once("utils/Database.php");
-    include_once("model/SimpleUser.php");
-    include_once("model/Votable.php");
-    include_once("model/SimpleUser.php");
-    include_once("model/Answer.php");
-    include_once("model/Comment.php");
+    if(!isset($ajax))
+        $ajax = "";
+
+    include_once($ajax."utils/Database.php");
+    include_once($ajax."model/SimpleUser.php");
+    include_once($ajax."model/Votable.php");
+    include_once($ajax."model/SimpleUser.php");
+    include_once($ajax."model/Answer.php");
+    include_once($ajax."model/Comment.php");
 
     class Question implements Votable{
         /*
@@ -76,7 +79,6 @@
             */
             $query = new DatabaseQuery("select * from question where qid=?" ,$dbConnection);
             $query->addParameter('i',$id);
-
             /*
                 execute the query
             */
@@ -118,14 +120,15 @@
             $this->comments = Comment::getComments($id,'Q');
             
 
+
             /*
                 Get the tags
-
             */
-            $tagQuery = new DatabaseQuery("select tag_string ".
-                                          "from tag ".
-                                          "inner join questiontags on tag.tag_id=questiontags.tag ".
-                                          "where questiontags.qustion=?"
+            
+            $tagQuery = new DatabaseQuery("select tag_string 
+                                           from tag 
+                                           inner join questiontags on tag.tag_id=questiontags.tag 
+                                           where questiontags.question=? "
                                           ,$dbConnection);
             $tagQuery->addParameter('i',$id);
 
@@ -134,11 +137,12 @@
             while($tagRow = $tagSet->next() ){
                 $this->tags[count($this->tags)] = $tagRow['tag_string'];
             }
-
+            
 
 
             $votesQuery = new DatabaseQuery("select sum(vote) as score from questionscore where qid=?",$dbConnection);
             $votesQuery->addParameter('i',$id);
+
 
             $votesSet = $votesQuery->execute();
             $votesRow = $votesSet->next();
@@ -259,79 +263,63 @@
             Static methods
         */
         public static function getQuestions($offset,$count,$sorting){
-          $con = new DatabaseConnection();
+            $con = new DatabaseConnection();
 
-          if($sorting=="newest"){
-            $questionsQuery = new DatabaseQuery(
-              "select question.html as data,question.qid as id,question.title as title,question.post_date as date,user.username as username,user.uid as userid
-               from question,user where user.uid=question.user order by date DESC limit ".$count." OFFSET ".$offset
-            , $con);
-          }
-          if($sorting=="toptoday"){
-            $questionsQuery = new DatabaseQuery(
-              "select question.html as data,question.qid as id,question.title as title,question.post_date as date,user.username as username,user.uid as userid
-               from question,user where user.uid=question.user and question.post_date=now() order by date DESC limit ".$count." OFFSET ".$offset
-            , $con);
-          }
-          if($sorting=="alltimetop"){
-            $questionsQuery = new DatabaseQuery(
-            "select question.html as data,sum(questionscore.vote) as votes,question.qid as id,question.title as title,question.post_date as date,user.username as username,user.uid as userid
-            from question,user,questionscore where user.uid=question.user and questionscore.qid=question.qid order by votes DESC limit ".$count." OFFSET ".$offset
-            , $con);
-          }
 
-          $result = $questionsQuery->execute();
-          while($questionRow = $result->next()){
-            $question=new Question;
-            $question->setTitle($questionRow["title"]);
-            $question->setDatePosted($questionRow["date"]);
-            $question->setHtml($questionRow["data"]);
+            if($sorting == 'top' ){
+                /*
+                    Create a query that returns the ids of all the questions defined by $offset and $count
+                    the questions are ordered by the number of votes they have
+                */
+                $query = new DatabaseQuery('select question.qid , sum(questionscore.vote) as votes from question 
+                                            inner join questionscore on question.qid=questionscore.qid 
+                                            order by votes desc limit ?, ?' , $con);
 
-            $tagsQuery = new DatabaseQuery(
-              "select tag.tag_id as id,tag.tag_string as name
-               from tag,questiontags
-               where questiontags.question=? and
-               questiontags.tag=tag.tag_id"
-            , $con);
+            }else{
 
-            $user=new SimpleUser;
-            $user->setUsername($questionRow["username"]);
-            $user->setUserid($questionRow["userid"]);
-            $question->setUser($user);
+                /*
+                    Create a query that returns the ids of all the questions defined by $offset and $count
+                    the questions are ordered by their insert date
+                */
+                $query = new DatabaseQuery('select qid from question order by qid desc limit ?, ?' , $con);
 
-            $tagsQuery->getQuery()->bind_param("i" ,$questionRow["id"]);
-            $tags = $tagsQuery->execute();
-
-            unset($tagsData);
-            while($tagRow=$tags->next()){
-              $tagsData[$tagRow["id"]]=$tagRow["name"];
-            }
-            if(isset($tagsData)){
-              $question->setTags($tagsData);
             }
 
             /*
-              the following can be used as a query above instead of a new query just for the votes,the problem is that every question needs atleast
-              1 vote(can be 0)
-
-              select sum(questionscore.vote) as votes,question.qid as id,question.title as title,question.post_date as date,user.name as username,user.uid as userid
-              from question,user,questionscore where user.uid=question.user and questionscore.qid=question.qid
+                And the parameters to the query
             */
+            $query->addParameter('ii',$offset , $count);
 
-            $votesQuery = new DatabaseQuery(
-              "select sum(questionscore.vote) as v from questionscore where
-              questionscore.qid=".$questionRow["id"]
-            , $con);
-            $rsVotes = $votesQuery->execute();
-            $vote=$rsVotes->next();
-            if(!isset($vote))$question->setVotes(0);
-            else $question->setVotes($vote["v"]);
-            $questions[$questionRow["id"]]=$question;
-          }
-          if(isset($questions)){
+            /*
+                Execute the query
+            */
+            $set = $query->execute();
+            
+
+            /*
+                array of Question objects
+            */
+            $questions = array();
+
+            while( $row = $set->next()){
+                /*
+                    create the question
+                */
+                $question = new Question();
+                $question->create($row['qid']);
+
+                /*
+                    add the question to the array
+                */
+                $questions[ count($questions) ] = $question;
+            }
+
+            $con->close();
+
+            /*
+                return the array
+            */
             return $questions;
-          }
-
         }
 
         /*
