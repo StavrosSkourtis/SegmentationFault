@@ -11,13 +11,60 @@
         /*
             User information
         */
-        public $id;
-        public $name;
-        public $surname;
-        public $email;
-        public $username;
-        public $joinDate;
+        protected $id;
+        protected $name;
+        protected $surname;
+        protected $email;
+        protected $username;
+        protected $joinDate;
+        protected $reputation;
 
+        public function getId(){
+            return $this->id;
+        }
+
+        public function setId($id){
+            $this->id = $id;
+        }
+
+        public function getName(){
+            return $this->name;
+        }
+
+        public function setName($name){
+            $this->name = $name;
+        }
+
+        public function getSurname(){
+            return $this->surname;
+        }
+
+        public function setSurname($surname){
+            $this->surname = $surname;
+        }
+
+        public function getEmail(){
+            return $this->email;
+        }
+
+        public function setEmail($email){
+            $this->email = $email;
+        }
+
+        public function getJoinDate(){
+            return $this->joinDate;          
+        }
+        public function setJoinDate($joinDate){
+            $this->joinDate = $joinDate;
+        }
+
+        public function getReputation(){
+            return $this->reputation;
+        }
+
+        public function setReputation($reputation){
+            $this->reputation = $reputation;
+        }
         /*
             Creates a user based on the id
         */
@@ -33,13 +80,75 @@
                 return false;
 
             $row = $set->next();
-
+            $this->id = $id;
             $this->name = $row["name"];
             $this->surname = $row["surname"];
             $this->email = $row["email"];
             $this->joinDate = $row["join_date"];
             $this->username = $row["username"];
 
+            /*
+                Get reputation from questions
+            */
+            $questionRepQuery = new DatabaseQuery('SELECT COALESCE(sum(questionscore.vote),0) as reputation from user
+                                                   inner join question on user.uid=question.user
+                                                   inner join questionscore on question.qid=questionscore.qid
+                                                   where user.uid=?'
+                                            ,$dbConnection);
+            $questionRepQuery->addParameter('i' , $this->id);
+
+            $repSet = $questionRepQuery->execute();
+            $repRow = $repSet->next();
+
+            $this->reputation = $repRow['reputation'];
+
+            /*
+                Get reputation from answers
+            */
+            $answerRepQuery = new DatabaseQuery("SELECT COALESCE(sum(answerscore.vote),0)  as reputation from user
+                                                   inner join answer on user.uid=answer.user
+                                                   inner join answerscore on answerscore.aid=answer.aid
+                                                   where user.uid=?"
+                                            ,$dbConnection);
+            $answerRepQuery->addParameter('i' , $this->id);
+
+            $repSet = $answerRepQuery->execute();
+            $repRow = $repSet->next();
+
+            $this->reputation += $repRow['reputation'];
+
+            /*
+                Get reputation from question comments
+            */  
+            $commentQRepQuery = new DatabaseQuery('SELECT COALESCE(sum(qcommentscore.vote),0)  as reputation from user
+                                                   inner join questioncomment on user.uid=questioncomment.user
+                                                   inner join qcommentscore on qcommentscore.cid=questioncomment.cid
+                                                   where user.uid=?'
+                                            ,$dbConnection);
+            $commentQRepQuery->addParameter('i' , $this->id);
+
+            $repSet = $commentQRepQuery->execute();
+            $repRow = $repSet->next();
+
+            $this->reputation += $repRow['reputation'];
+
+            /*
+                Get reputation from answer comments
+            */  
+            $commentARepQuery = new DatabaseQuery('SELECT COALESCE(sum(acommentscore.vote),0)  as reputation from user
+                                                   inner join answercomment on user.uid=answercomment.user
+                                                   inner join acommentscore on acommentscore.cid=answercomment.cid
+                                                   where user.uid=?',
+                                                   $dbConnection);
+
+            $commentARepQuery->addParameter('i' , $this->id);
+
+            $repSet = $commentARepQuery->execute();
+            $repRow = $repSet->next();
+
+            $this->reputation += $repRow['reputation'];
+
+            
             $dbConnection->close();
             return true;
         }
@@ -72,26 +181,32 @@
         public function signUp($username,$password,$email){
             $con = new DatabaseConnection();
 
-
             /*check if a user with the given username already exists*/
             $query = new DatabaseQuery("select uid from user where username=?" , $con);
             $query->addParameter('s',$username);
+
             $set = $query->execute();
             if($set->getRowCount() > 0){
                 /*if a username is taken ,return false*/
                 return FALSE;
             }
 
+
             /*create the sql query and add the parameters,id must be auto-increment*/
             $query = new DatabaseQuery("insert into user(username,password,email,join_date,type,user_icon) values(?,?,?,now(),?,?)" , $con);
+            
+
+            $hashed_password = password_hash($password , PASSWORD_DEFAULT);
+            $user_type = User::getUserType('User');
 
             $query->addParameter("sssis",
                 $username,
-                password_hash($password,PASSWORD_DEFAULT),
+                $hashed_password,
                 $email,
-                User::getUserType('User'),
-                $icon="null"
+                $user_type,
+                "null"
             );
+           
 
 
             $query->executeUpdate();
@@ -145,7 +260,7 @@
         public static function getUserType($user_type_string){
             $con = new DatabaseConnection();
 
-            $cmd = new DatabaseQuery("select type_id from UserType where type_name=?" , $con);
+            $cmd = new DatabaseQuery("select type_id from usertype where type_name=?" , $con);
             $cmd->addParameter('s',$user_type_string);
             $set = $cmd->execute();
             $row = $set->next();
@@ -160,4 +275,8 @@
         public function setUserid($id){
             $this->id=$id;
         }
+
+
+
+
     }

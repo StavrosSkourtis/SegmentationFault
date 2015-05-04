@@ -95,7 +95,7 @@
             /*
                 get the answers and the comments
             */
-            $this->comments = Comment::getComments($id,'A');
+            $this->comments = Comment::getComments($id,'A', $this);
             
             $votesQuery = new DatabaseQuery("select sum(vote) as score from answerscore where aid=?",$dbConnection);
             $votesQuery->addParameter('i',$id);
@@ -191,7 +191,7 @@
         /*
             Returns an Array of answers that belong to that question
         */
-        public static function getAnswers($question_id){
+        public static function getAnswers($question_id , $question){
             $dbConnection = new DatabaseConnection();
 
             $query = new DatabaseQuery( "select aid from answer where question=?", $dbConnection);
@@ -203,7 +203,7 @@
             while( $row = $set->next()){
                 $answer = new Answer();
                 $answer->create($row['aid']);
-
+                $answer->setQuestion($question);
                 $answers[count($answers)] = $answer;
             }
 

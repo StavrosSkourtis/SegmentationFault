@@ -1,0 +1,31 @@
+#ContentWraper{
+	width:800px;
+	padding: 20px;
+	margin:10px auto;
+	background-color: #FFF;
+	border-radius: 10px;
+}
+
+.title{
+	font-weight: normal;
+}
+
+.subtitle{
+	font-weight: normal;
+}
+.label{
+	display: inline;
+	margin-right: 30px;
+}
+.PostContainer{
+	min-height: 100px;
+}
+.PostContainer a{
+	color:#0073BC;
+	text-decoration: none;
+	font-size:1.2em;
+	margin:10px;
+}
+.PostContainer a:hover{
+	color:#000;
+}

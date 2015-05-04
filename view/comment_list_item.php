@@ -32,7 +32,7 @@
             <?php  print $question->getVotes();?>
         </div>
         <div class="username_and_date">
-            <p class="question_item_sub_label">by <a href="?p=user&id=<?php  print $question->getUser()->getId();?>"><?php  print $question->getUser()->getUserName();?></a> <?php  print $question->getDatePosted();?></p>
+            <p class="question_item_sub_label">by <a href=""><?php  print $question->getUser()->getUserName();?></a> <?php  print $question->getDatePosted();?></p>
         </div>
     </div>
 </div>

@@ -10,29 +10,17 @@
 
     <div class="question_title_div">
         <a class="question_item_title" href="?p=question&id=<?php print $question->getId(); ?>" target="_blank">
-            <?php print $question->getTitle(); ?>
+            <?php print $answer->getTitle(); ?>
         </a>
     </div>
 
-
-    <div class="question_tags" >
-        <?php
-            $tags =  $question->getTags();
-            /* TODO
-            foreach ($tags as $tag){
-                print '<div class="q_item_tag"><a >'+$tag+'</div>';
-            }
-            */
-        ?>
-
-    </div>
     <br>
     <div class="q_label_div">
         <div class="question_score">
             <?php  print $question->getVotes();?>
         </div>
         <div class="username_and_date">
-            <p class="question_item_sub_label">by <a href="?p=user&id=<?php  print $question->getUser()->getId();?>"><?php  print $question->getUser()->getUserName();?></a> <?php  print $question->getDatePosted();?></p>
+            <p class="question_item_sub_label">by <a href=""><?php  print $question->getUser()->getUserName();?></a> <?php  print $question->getDatePosted();?></p>
         </div>
     </div>
 </div>

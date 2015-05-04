@@ -23,10 +23,15 @@
     float:right;
     height:50px;
 }
-#HeaderRight p{
+.user_link{
     display: inline-block;
-    margin-right: 20px;
+    margin:17px 20px 0px 0px;
     font-style: italic;
+    color:#cecece;
+    text-decoration: none;
+}
+.user_link:hover{
+    color:#FFF;
 }
 
 #HeaderLeft h1{
@@ -67,10 +72,10 @@
     text-align:center;
 }
 .sign_inup:hover{
-    background-color: #000 ;
+    color: #FFF ;
 }
 .sign_out:hover{
-    background-color: #000 ;
+    color: #FFF ;
 }
 .titleBracket{
     color:#416cb4;

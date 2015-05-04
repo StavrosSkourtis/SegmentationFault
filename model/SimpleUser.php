@@ -64,6 +64,29 @@
             if(!$this->checkIfLoggedIn())
                 return;
 
+            /*
+                Create database connection
+            */
+
+
+            /*
+                Create query
+            */
+
+
+            /*
+                Set the parameters from the question object
+            */
+
+            /*
+                exucute the query
+            */
+
+
+            /*
+                close the database connection
+            */
+
         }
 
 
@@ -172,5 +195,148 @@
                 return false;
         }
 
+
+        /*
+            Returns an array of Question objects that were posted by this user
+        */
+        public function getQuestions(){
+            /*
+                Create the connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+                Create the query that gets the id of the questions            
+            */
+            $query = new DatabaseQuery( 'select qid from question where user=?', $dbConnection);
+
+            /*
+                Set the parameter and execute
+            */
+            $query->addParameter('i',$this->id);
+            $set = $query->execute();
+
+            /*
+                init the array
+            */
+            $questions = array();
+
+            /*
+                Loop throught the results , create the questions and add it to the array
+            */
+            while($row = $set->next()){
+                $question = new Question();
+                $question->create($row['qid']);
+
+                $questions[count($questions)] = $question;
+            }
+
+            $dbConnection->close();
+
+            /*
+                return the array
+            */
+            return $questions;
+        }
+
+        /*
+            Returns an array of Comment objects that were posted by this user
+        */
+        public function getComments(){
+            /*
+                Create the connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+                Create the query
+                add the parameter and execute it
+            */
+            $qCommentQuery = new DatabaseQuery( 'select cid from questioncomment where user=?' ,$dbConnection);
+            $qCommentQuery->addParameter('i' , $this->id);
+            $qCommentSet = $qCommentQuery->execute();
+
+            /*
+                the array that will hold the cooments
+            */
+            $comments = array();
+
+            /*
+                Loop through the result set , create the comment and add it to the array
+            */
+            while($qRow = $qCommentSet->next()){
+                $comment = new Comment();
+                $comment->create($qRow['cid'] , 'Q');
+
+                $comments[ count($comments) ] = $comment;
+            }
+
+
+            /*
+                Create the query that will get the id of the comments to answers
+                add the parameter and execute it 
+            */
+            $aCommentQuery = new DatabaseQuery('select cid from answercomment where user=?' , $dbConnection );
+            $aCommentQuery->addParameter('i' , $this->id);
+            $aCommentSet = $aCommentQuery->execute();
+
+            /*
+                loop through the result set , create the comment and add it to the array
+            */
+            while ( $aRow = $aCommentSet->next()){
+                $comment = new Comment();
+                $comment->create($qRow['cid'] , 'A');
+
+                $comments[ count($comments) ] = $comment;
+            }
+
+            $dbConnection->close();
+
+
+            /*
+                return the array
+            */
+            return $comments;
+        }
+
+        /*
+            returns an array of Answer objects that were posted by this user
+        */
+        public function getAnswers(){
+            /*
+                Create the database Connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+                Create the query
+                add the parameter and execute it
+            */
+            $query = new DatabaseQuery('select aid from answer where user=?' , $dbConnection);
+            $query->addParameter('i' , $this->id);
+            $set = $query->execute();
+
+            /*
+                create the array that will hold the answers
+            */
+
+            $answers = array();
+
+            /*
+                loop through the result set , create the answers and add them to the array
+            */
+            while($row = $set->next()){
+                $answer = new Answer();
+                $answer->create($row['aid']);
+
+                $answers[ count($answers) ] = $answer; 
+            }
+
+            $dbConnection->close();
+
+            /*
+                return the array
+            */
+            return $answers;
+        }
     }
-?>

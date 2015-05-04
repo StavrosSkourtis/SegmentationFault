@@ -18,7 +18,8 @@
         'postquestion' => 'PostQuestionController'  ,
         'home'         => 'HomePageController'      ,
         'signout'      => 'SignoutController'       ,
-        'question'     => 'ViewQuestionController'
+        'question'     => 'ViewQuestionController'  ,
+        'user'         => 'ViewUserProfileController'
     );
 
     

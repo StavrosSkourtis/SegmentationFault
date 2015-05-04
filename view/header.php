@@ -17,7 +17,7 @@
           </div>
         <?php else: ?>
           <div id="HeaderRight">
-              <p>Logged in as <?php print $_SESSION["username"]; ?></p>
+              <a class="user_link" href="?p=user&id=<?php print $_SESSION["uid"]; ?>" >Logged in as <?php print $_SESSION["username"]; ?></a>
               <a class="sign_out" href="?p=signout" >Sign out</a>
           </div>
         <?php endif; ?>

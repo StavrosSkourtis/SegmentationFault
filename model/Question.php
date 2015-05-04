@@ -116,8 +116,8 @@
             /*
                 get the answers and the comments
             */
-            $this->answers = Answer::getAnswers($id);
-            $this->comments = Comment::getComments($id,'Q');
+            $this->answers = Answer::getAnswers($id,$this);
+            $this->comments = Comment::getComments($id,'Q',$this);
             
 
 
@@ -145,9 +145,16 @@
 
 
             $votesSet = $votesQuery->execute();
-            $votesRow = $votesSet->next();
-            $this->votes = $votesRow['score'];
 
+            if($votesSet->getRowCount() == 0)
+                $this->votes = 0;
+            else{                
+                $votesRow = $votesSet->next();
+                if(is_null($votesRow['score']) )
+                    $this->votes = 0;
+                else
+                    $this->votes = $votesRow['score'];
+            }
 
             $dbConnection->close();
             /*

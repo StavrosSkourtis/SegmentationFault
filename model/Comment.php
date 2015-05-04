@@ -186,7 +186,7 @@
             @param target_type the type of the target , 'Q' means question , 'A' means answer
 
         */
-        public static function getComments($target_id , $target_type ){
+        public static function getComments($target_id , $target_type ,$target){
             /*  
                 Create the connection
             */
@@ -207,6 +207,7 @@
             while($row = $set->next()){
                 $comment = new Comment();
                 $comment->create($row['cid'] , $target_type);
+                $comment->setTarget($target);
 
                 $comments[count($comments)] = $comment;
             }
