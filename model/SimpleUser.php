@@ -385,6 +385,54 @@
             return $comments;
         }
 
+        public function hasVoted($pid , $type){
+            /*
+                Create the connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+                Create the query
+            */
+            if($type == 'Q' ){
+                $query = new DatabaseQuery('select vote from questionscore where qid=?,uid=?' ,$dbConnection);
+            }else if($type == 'A'){
+                $query = new DatabaseQuery('select vote from answerscore where aid=?,uid=?' ,$dbConnection);
+            }else if($type == 'AC'){
+                $query = new DatabaseQuery('select vote from acommentscore where cid=?,uid=?' ,$dbConnection);
+            }else if($type == 'QC'){
+                $query = new DatabaseQuery('select vote from qcommentscore where cid=?,uid=?' ,$dbConnection);
+            }
+
+            /*
+                add the parameter and execute
+            */
+            $query->addParameter('ii',$pid,$this->id);
+            $set = $query->execute();
+
+            /*
+                If number of rows equals zero then return false
+            */
+            if($set->getRowCount() ==0)
+                return false;
+
+            /*
+                Get first row
+            */  
+            $row = $set->next();
+
+            /*
+                If vote equals 0 then return false
+            */
+            if($row['vote'] == '0')
+                return false;
+
+            /*
+                Any other case the user has voted , so return true
+            */
+            return true;
+        }
+
         /*
             returns an array of Answer objects that were posted by this user
         */
