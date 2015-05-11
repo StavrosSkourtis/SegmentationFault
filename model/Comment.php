@@ -127,9 +127,114 @@
 
         /*
             Inserts a vote to the database
+
+            First check if exists a record on acommentscore or qcommentscore table depending on the $this->type
+            with $uid and $this->id
+
+            if true
+            alter that row and set vote to $vote
+
+            if false
+            insert a rown with $uid , $this->id and $vote
         */
         public function vote($uid, $vote){
+/*
+                Create database connection
+            */
+				$dbConnection = new DatabaseConnection();
 
+				
+			if($this->getType() == 'Q') {
+				/*
+                Create query
+				*/
+				$dbQuery = new DatabaseQuery('select count(*) from qcommentscore where cid=?' , $dbConnection);
+			}
+			else if($this->getType() == 'A') {
+				/*
+                Create query
+				*/
+				$dbQuery = new DatabaseQuery('select count(*) from acommentscore where cid=?' , $dbConnection);
+			}
+			
+            
+
+            /*
+                Set the parameters
+            */
+           
+			$dbQuery->addParameter('i',$this->getId());
+          
+            /*
+                exucute the query
+            */
+			
+			$qresults = $dbQuery->execute();	
+
+			/*
+				count returned rows
+			*/
+			
+			$count=0;
+			while($qresults->next()) {
+				$count=$count+1;
+				break;
+			}
+			
+			/*
+				if we didnt have any row we can insert a new one
+			*/
+			if($count == 0) {
+				/*
+					Create query
+				*/
+				
+				$dbQuery = new DatabaseQuery('insert into answerscore(aid,uid,vote) values(?,?,?)' , $dbConnection);
+				
+				/*
+					Set the parameters 
+				*/
+				$dbQuery.addParameter('iii',$this->getId(),$uid,$vote);
+				
+			}
+			/*
+				else we must update the table
+			*/
+			else {
+				
+				if($this->getType() == 'Q') {
+					/*
+					Create query
+					*/
+				
+					$dbQuery = new DatabaseQuery('update qcommentscore set vote=vote + ? where cid=?' , $dbConnection);
+				}
+				else if($this->getType() == 'A') {
+					/*
+					Create query
+					*/
+				
+					$dbQuery = new DatabaseQuery('update acommentscore set vote=vote + ? where cid=?' , $dbConnection);
+				}
+				/*
+					Set the parameters
+				*/
+				$dbQuery.addParameter('ii',$vote,$this->getId());
+				
+			}
+			
+			
+			/*
+				exucute the query
+			*/
+				$qresults = $dbQuery->execute();
+				
+			
+            /*
+                close the database connection
+            */
+			
+			$dbConnection->close();
         }
 
 

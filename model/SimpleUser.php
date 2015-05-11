@@ -22,6 +22,10 @@
             $votable->vote( $this->id ,+1);
         }
 
+        public function neutralvote($votable){
+            $votable->vote( $this->id , 0);
+        }
+
         public function downvote($votable){
             $votable->vote( $this->id ,-1);
         }
