@@ -74,15 +74,18 @@
             */
 				$dbQuery = new DatabaseQuery('insert into question (title,html,user,post_date) values(?,?,?,CURDATE())' , $dbConnection);
 			
+            
 
             /*
                 Set the parameters from the question object
             */
-			$title=$question->getTitle();
-			$html=$question->getHtml();
-			$user=$question->getUser();
+			$title =$question->getTitle();
+			$html = $question->getHtml();
+			$user = $question->getUser()->getId();
 			
-			$dbQuery->addParameter('lii',$title,$html,$user);
+           
+			$dbQuery->addParameter('ssi',$title,$html,$user);
+          
             /*
                 exucute the query
             */
@@ -165,7 +168,7 @@
             */
 			
 			$text=$comment->getText();
-			$user=$comment->getUser();
+			$user=$comment->getUser()->getId();
 			/*
 				same method name so no problem if is a question or an answer
 			*/
@@ -345,7 +348,7 @@
             while($qRow = $qCommentSet->next()){
                 $comment = new Comment();
                 $comment->create($qRow['cid'] , 'Q');
-
+                $comment->fetchTarget();
                 $comments[ count($comments) ] = $comment;
             }
 
@@ -363,8 +366,9 @@
             */
             while ( $aRow = $aCommentSet->next()){
                 $comment = new Comment();
-                $comment->create($qRow['cid'] , 'A');
-
+                $comment->create($aRow['cid'] , 'A');
+                $comment->fetchTarget();
+                $comment->getTarget()->fetchQuestion();
                 $comments[ count($comments) ] = $comment;
             }
 
@@ -406,6 +410,7 @@
             while($row = $set->next()){
                 $answer = new Answer();
                 $answer->create($row['aid']);
+                $answer->fetchQuestion();
 
                 $answers[ count($answers) ] = $answer; 
             }

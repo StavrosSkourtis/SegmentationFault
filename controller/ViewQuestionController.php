@@ -63,7 +63,7 @@
 				Post a comment to a question
 			*/
 			if(isset($_POST['question_id']) && isset($_POST['question_comment'])){
-
+				$this->postQuestionComment($_POST['question_id']  , $_POST['question_comment']);
 			}
 
 			/*
@@ -77,7 +77,7 @@
 				Post a comment to an answer
 			*/
 			if(isset($_POST['answer_id']) && isset($_POST['answer_comment'])){
-
+				$this->postAnswerComment($_POST['answer_id']  , $_POST['answer_comment']);
 			}
 
 	
@@ -133,6 +133,35 @@
 				post it
 			*/
 			$user->postAnswer($answer);
+
+			header("Location: ?p=home");
+		}
+
+		private function postAnswerComment($aid , $commentText){
+			$answer = new Answer();
+			$answer->create($aid);
+
+			$this->postComment($answer,'A',$commentText);
+		}
+
+		private function postQuestionComment($qid , $commentText){
+			$question = new Question();
+			$question->create($qid);
+
+			$this->postComment($question, 'Q' ,$commentText);
+		}
+
+		private function postComment($target,$target_type,$commentText){
+			$user = new SimpleUser();
+			$user->create($_SESSION['uid']);
+
+			$comment = new Comment();
+			$comment->setUser($user);
+			$comment->setText($commentText);
+			$comment->setTarget($target);
+			$comment->setType($target_type);
+
+			$user->postComment($comment);
 		}
 
 	}

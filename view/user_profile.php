@@ -47,6 +47,7 @@
 				else{
 					print '<a href="?p=question&id='.$comment->getTarget()->getQuestion()->getId().'" >';
 					print $comment->getTarget()->getQuestion()->getTitle();
+					print $comment->getTarget()->getHtml();
 				}
 				print '</a>';
 				print '<br>';

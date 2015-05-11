@@ -39,7 +39,7 @@
                 */
                 if(isset($_POST["tags"]) && isset($_POST["title"]) && isset($_POST["question"])){
                     $title=htmlspecialchars($_POST["title"]);
-                    $question=($_POST["question"]);
+                    $html=($_POST["question"]);
 
                     $tags=explode("*",$_POST["tags"]);
 
@@ -47,20 +47,32 @@
                         $error_msg = "You need atleast 1 tag";
                     if(strlen($title)<20)
                         $error_msg = "Title should be atleast 20 characters";
-                    if(strlen($question)<50)
+                    if(strlen($html)<50)
                         $error_msg = "Your question needs to be atleast 50 characters";
 
                     if(isset($error_msg))
                         $args["error_msg"] = $error_msg;
                     else{
                         $args = null;
-                        $question=new Question;
-                        $question->setTags($tags);
-                        $question->setHtml($question);
 
-                        $user=new SimpleUser;
-                        $user->setUserid($_SESSION["uid"]);
+
+                        $question=new Question();
+                        $question->setTitle($title);
+                        $question->setTags($tags);
+                        $question->setHtml($html);
+
+
+                        $user=new SimpleUser();
+                        
+                        $user->create($_SESSION['uid']);
+                        
+                        $question->setUser($user);
+                        
+                        
+                        
                         $user->postQuestion($question);
+                        
+                        header("Location: ?p=home");
                     }
                 }
 

@@ -55,7 +55,7 @@
 		
 		<hr>
 		<div id="QuestionText" class="markdown">
-			<?php print $args['question']->getHtml(); ?>
+			<?php print $args['question']->getHtmlParsed(); ?>
 		</div>
 
 		<hr>
@@ -103,8 +103,7 @@
 				/*
 					Loop throught the questions answers and show them
 				*/
-				for ($i=0; $i < count( $args['question']->getAnswers()) ; $i++) { 
-					$answer = $args['question']->getAnswers()[$i];
+				foreach ($args['question']->getAnswers()  as $answer ) {
 					include 'view/answer.php';
 				}
 				

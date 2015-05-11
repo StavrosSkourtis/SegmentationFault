@@ -43,7 +43,6 @@
         */
         private $type;
 
-
         /*
             Creates a comment
 
@@ -64,9 +63,11 @@
             /*
                 Create the query
             */
-            if($target_type == 'Q'){
+            if($type == 'Q'){
+
                 $query = new DatabaseQuery("select * from questioncomment where cid=?" , $dbConnection);
-            }else if($target_type == 'A'){
+            }else if($type == 'A'){
+  
                 $query = new DatabaseQuery("select * from answercomment where cid=?" , $dbConnection);
             }
 
@@ -81,18 +82,23 @@
             $this->text = $row['text'];
             $this->editDate = $row['edit_date'];
 
-            if($target_type == 'Q')
+
+            if($type == 'Q'){
                 $this->target = $row['question'];
-            else if($target_type == 'A')
+            }
+            else if($type == 'A'){
                 $this->target = $row['answer'];
+            }
             
+          
+
             $user = new SimpleUser();
             $user->create($row["user"]);
             $this->user = $user;
 
-            if($target_type == 'Q'){
+            if($type == 'Q'){
                 $votesQuery = new DatabaseQuery("select sum(vote) as votes from qcommentscore where cid=?" , $dbConnection);
-            }else if($target_type == 'A'){
+            }else if($type == 'A'){
                 $votesQuery = new DatabaseQuery("select sum(vote) as votes from acommentscore where cid=?" , $dbConnection);
             }
             $votesQuery->addParameter('i',$id);
@@ -107,6 +113,17 @@
             $dbConnection->close();
         }
 
+        public function fetchTarget(){
+            if($this->type == 'Q'){
+                $qid = $this->target;
+                $this->target = new Question();
+                $this->target->create($qid);
+            }else{
+                $aid = $this->target;
+                $this->target = new Answer();
+                $this->target->create($aid);
+            }
+        }
 
         /*
             Inserts a vote to the database

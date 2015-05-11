@@ -83,6 +83,7 @@
             $this->html = $row["html"];
             $this->date = $row["post_date"];
             $this->editDate = $row["edit_date"];
+            $this->question = $row["question"];
 
             /*
                 Get the user
@@ -111,6 +112,13 @@
             */
             return true;
         
+        }
+
+        public function fetchQuestion(){
+            $qid = $this->question;
+
+            $this->question = new Question();
+            $this->question->create($qid);
         }
 
 
@@ -193,17 +201,17 @@
         */
         public static function getAnswers($question_id , $question){
             $dbConnection = new DatabaseConnection();
-
             $query = new DatabaseQuery( "select aid from answer where question=?", $dbConnection);
             $query->addParameter('i' , $question_id);
-            $set = $query->execute();
 
+            $set = $query->execute();
             $answers = array();
 
             while( $row = $set->next()){
                 $answer = new Answer();
                 $answer->create($row['aid']);
                 $answer->setQuestion($question);
+
                 $answers[count($answers)] = $answer;
             }
 
@@ -211,4 +219,5 @@
 
             return $answers;
         }
+
     }
