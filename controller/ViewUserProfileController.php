@@ -1,4 +1,4 @@
-<?
+<?php
 	include_once 'utils/Controller.php';
 	include_once 'model/SimpleUser.php';
 	include_once 'model/Question.php';

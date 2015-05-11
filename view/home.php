@@ -39,16 +39,11 @@
 
         <h2>Top 10 Tags</h2>
         <div class="tag_div">
-            <p href="" class="tag">Java</p> 
-            <p href="" class="tag">C++</p>
-            <p href="" class="tag">Android</p>
-            <p href="" class="tag">C#</p>
-            <p href="" class="tag">Java</p>
-            <p href="" class="tag">C++</p>
-            <p href="" class="tag">Android</p>
-            <p href="" class="tag">C#</p>
-            <p href="" class="tag">C#</p>
-            <p href="" class="tag">C#</p>
+            <?php
+                foreach ($args['tags'] as $tag) {
+                    print '<p href="" class="tag">'.$tag.'</p>';
+                }
+            ?>
             <div style="clear: both"></div>
         </div>
 
