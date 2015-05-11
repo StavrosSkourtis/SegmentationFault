@@ -138,7 +138,8 @@
             insert a rown with $uid , $this->id and $vote
         */
         public function vote($uid, $vote){
-/*
+            
+            /*
                 Create database connection
             */
 				$dbConnection = new DatabaseConnection();
@@ -157,7 +158,7 @@
 				$dbQuery = new DatabaseQuery('select cid from acommentscore where cid=?' , $dbConnection);
 			}
 			
-            
+           
 
             /*
                 Set the parameters
@@ -195,7 +196,7 @@
 					$dbQuery = new DatabaseQuery('insert into qcommentscore(cid,uid,vote) values(?,?,?)' , $dbConnection);
 				
 				}
-				else if($this->getType() == 'Q') {
+				else if($this->getType() == 'A') {
 					/*
 					type answer
 					*/

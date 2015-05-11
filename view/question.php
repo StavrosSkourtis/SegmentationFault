@@ -17,9 +17,19 @@
 		<div id="QuestionHeader">
 			<div id="QuestionVote">
 				<div id="QuestionVoteWraper">
-					<img class="voteIcon" src="res/ui/up.png" onclick="vote(this, <?php   print $args['question']->getId() ?>, 'Q')" > 
+					<img class="voteIcon"
+						id="<?php print 'UPQ'.$args['question']->getId(); ?>"
+						<?php 
+							if(isset($args['user']) && $args['user']->hasVoted($args['question']->getId() ,'Q') ==1){
+								print 'src="res/ui/pressed_up.png" ';
+							}else{
+								print 'src="res/ui/up.png" ';
+							}
+						?>
+						 
+						 onclick="vote(this, <?php   print $args['question']->getId() ?>, 'Q')" > 
 
-					<p class="VoteLabel"> 
+					<p class="VoteLabel" id="<?php print 'LBQ'.$args['question']->getId(); ?>"> 
 						<?php 
 							/*
 								Print the number of votes
@@ -29,7 +39,16 @@
 					</p>
 
 
-					<img class="voteIcon" src="res/ui/down.png" onclick="vote(this, <?php   print $args['question']->getId() ?>, 'Q')">  
+					<img class="voteIcon" 
+						id="<?php print 'DNQ'.$args['question']->getId(); ?>"
+						<?php 
+							if(isset($args['user']) && $args['user']->hasVoted($args['question']->getId() ,'Q') ==-1){
+								print 'src="res/ui/pressed_down.png" ';
+							}else{
+								print 'src="res/ui/down.png" ';
+							}
+						?>
+						onclick="vote(this, <?php   print $args['question']->getId() ?>, 'Q')">  
 				</div>
 			</div>
 

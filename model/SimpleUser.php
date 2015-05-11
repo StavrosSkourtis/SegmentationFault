@@ -395,13 +395,13 @@
                 Create the query
             */
             if($type == 'Q' ){
-                $query = new DatabaseQuery('select vote from questionscore where qid=?,uid=?' ,$dbConnection);
+                $query = new DatabaseQuery('select vote from questionscore where qid=? and uid=?' ,$dbConnection);
             }else if($type == 'A'){
-                $query = new DatabaseQuery('select vote from answerscore where aid=?,uid=?' ,$dbConnection);
+                $query = new DatabaseQuery('select vote from answerscore where aid=? and uid=?' ,$dbConnection);
             }else if($type == 'AC'){
-                $query = new DatabaseQuery('select vote from acommentscore where cid=?,uid=?' ,$dbConnection);
+                $query = new DatabaseQuery('select vote from acommentscore where cid=? and uid=?' ,$dbConnection);
             }else if($type == 'QC'){
-                $query = new DatabaseQuery('select vote from qcommentscore where cid=?,uid=?' ,$dbConnection);
+                $query = new DatabaseQuery('select vote from qcommentscore where cid=? and uid=?' ,$dbConnection);
             }
 
             /*
@@ -414,7 +414,7 @@
                 If number of rows equals zero then return false
             */
             if($set->getRowCount() ==0)
-                return false;
+                return 0;
 
             /*
                 Get first row
@@ -425,12 +425,16 @@
                 If vote equals 0 then return false
             */
             if($row['vote'] == '0')
-                return false;
+                return 0;
+            else if($row['vote'] =='1')
+                return 1;
+            else if($row['vote']=='-1')
+                return -1;
 
             /*
                 Any other case the user has voted , so return true
             */
-            return true;
+            return 0;
         }
 
         /*

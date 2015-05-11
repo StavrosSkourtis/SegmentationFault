@@ -1,7 +1,17 @@
 <div class="Answer">
 	<div class="AnswerHeader">
-		<img class="answerVoteIcon" src="res/ui/up.png" onclick="vote(this, <?php   print $answer->getId() ?>, 'A')">
-		<p class="AnswerVoteLabel"> 
+		<img class="answerVoteIcon"
+			id="<?php print 'UPA'.$answer->getId(); ?>"
+			<?php 
+				if( isset($args['user']) && $args['user']->hasVoted($answer->getId() ,'A') ==1){
+					print 'src="res/ui/pressed_up.png" ';
+				}else{
+					print 'src="res/ui/up.png" ';
+				}
+			?>
+		 	onclick="vote(this, <?php   print $answer->getId() ?>, 'A')">
+		<p id="<?php print 'LBA'.$answer->getId(); ?>" class="AnswerVoteLabel"> 
+
 			<?php 
 				/*
 					Print the number of votes
@@ -9,7 +19,16 @@
 				print $answer->getVotes();
 			?>
 		</p>
-		<img class="answerVoteIcon" src="res/ui/down.png" onclick="vote(this, <?php   print $answer->getId() ?>, 'A')">  
+		<img class="answerVoteIcon" 
+			id="<?php print 'DNA'.$answer->getId(); ?>"
+			<?php 
+				if( isset($args['user']) && $args['user']->hasVoted($answer->getId() ,'A') ==-1){
+					print 'src="res/ui/pressed_down.png" ';
+				}else{
+					print 'src="res/ui/down.png" ';
+				}
+			?>
+			onclick="vote(this, <?php   print $answer->getId() ?>, 'A')">  
 		<p class="AnswerTopLabel"> 
 		<?php 
 			/*

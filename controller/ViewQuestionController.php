@@ -82,6 +82,10 @@
                 die();
 			}
 
+			if(isset($_SESSION['uid'])) {
+				$args['user'] = new SimpleUser();
+				$args['user']->create($_SESSION['uid']);
+			}
 
 			/*
 				Show View
