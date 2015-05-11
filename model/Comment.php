@@ -148,13 +148,13 @@
 				/*
                 Create query
 				*/
-				$dbQuery = new DatabaseQuery('select count(*) from qcommentscore where cid=?' , $dbConnection);
+				$dbQuery = new DatabaseQuery('select cid from qcommentscore where cid=?' , $dbConnection);
 			}
 			else if($this->getType() == 'A') {
 				/*
                 Create query
 				*/
-				$dbQuery = new DatabaseQuery('select count(*) from acommentscore where cid=?' , $dbConnection);
+				$dbQuery = new DatabaseQuery('select cid from acommentscore where cid=?' , $dbConnection);
 			}
 			
             
@@ -186,10 +186,22 @@
 			*/
 			if($count == 0) {
 				/*
-					Create query
+					Create insert query question or answer
 				*/
+				if($this->getType() == 'Q') {
+					/*
+					type question
+					*/
+					$dbQuery = new DatabaseQuery('insert into qcommentscore(cid,uid,vote) values(?,?,?)' , $dbConnection);
 				
-				$dbQuery = new DatabaseQuery('insert into answerscore(aid,uid,vote) values(?,?,?)' , $dbConnection);
+				}
+				else if($this->getType() == 'Q') {
+					/*
+					type answer
+					*/
+					$dbQuery = new DatabaseQuery('insert into acommentscore(cid,uid,vote) values(?,?,?)' , $dbConnection);
+
+				}
 				
 				/*
 					Set the parameters 
@@ -204,14 +216,14 @@
 				
 				if($this->getType() == 'Q') {
 					/*
-					Create query
+					type question
 					*/
 				
 					$dbQuery = new DatabaseQuery('update qcommentscore set vote=vote + ? where cid=?' , $dbConnection);
 				}
 				else if($this->getType() == 'A') {
 					/*
-					Create query
+					type answer
 					*/
 				
 					$dbQuery = new DatabaseQuery('update acommentscore set vote=vote + ? where cid=?' , $dbConnection);
