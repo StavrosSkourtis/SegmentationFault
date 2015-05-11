@@ -226,7 +226,7 @@
 				/*
 					Set the parameters
 				*/
-				$dbQuery.addParameter('iii',$this->getId(),$uid,$vote);
+				$dbQuery->addParameter('iii',$this->getId(),$uid,$vote);
 				
 			}
 			/*
@@ -237,12 +237,12 @@
 					Create query
 				*/
 				
-				$dbQuery = new DatabaseQuery('update questionscore set vote = vote + ? where qid=?' , $dbConnection);
+				$dbQuery = new DatabaseQuery('update questionscore set vote =? where qid=?' , $dbConnection);
 				
 				/*
 					Set the parameters
 				*/
-				$dbQuery.addParameter('ii',$vote,$this->getId());
+				$dbQuery->addParameter('ii',$vote,$this->getId());
 				
 			}
 			

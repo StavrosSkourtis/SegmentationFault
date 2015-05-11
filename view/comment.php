@@ -2,8 +2,8 @@
 	
 	<div class="CommentVoteWraper">
 		<div class="QuestionIconWraper">
-				<img class="commentVoteIcon" src="res/ui/up.png">
-				<img class="commentVoteIcon" src="res/ui/down.png">  
+				<img class="commentVoteIcon" src="res/ui/up.png" onclick="vote(this, <?php   print $comment->getId() ?>, <?php print '\''.$comment->getType().'C\'';  ?>)">
+				<img class="commentVoteIcon" src="res/ui/down.png" onclick="vote(this, <?php   print $comment->getId() ?>, <?php print '\''.$comment->getType().'C\'';  ?>)">  
 		</div>
 		<p class="CommentVotes"> <?php  print $comment->getVotes(); ?>  </p>
 	</div>

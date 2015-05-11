@@ -98,7 +98,7 @@
             */
             $this->comments = Comment::getComments($id,'A', $this);
             
-            $votesQuery = new DatabaseQuery("select sum(vote) as score from answerscore where aid=?",$dbConnection);
+            $votesQuery = new DatabaseQuery("select COALESCE(sum(vote),0) as score from answerscore where aid=?",$dbConnection);
             $votesQuery->addParameter('i',$id);
 
             $votesSet = $votesQuery->execute();
@@ -183,7 +183,7 @@
 				/*
 					Set the parameters 
 				*/
-				$dbQuery.addParameter('iii',$this->getId(),$uid,$vote);
+				$dbQuery->addParameter('iii',$this->getId(),$uid,$vote);
 				
 			}
 			/*
@@ -194,12 +194,12 @@
 					Create query
 				*/
 				
-				$dbQuery = new DatabaseQuery('update answerscore set vote=vote + ? where aid=?' , $dbConnection);
+				$dbQuery = new DatabaseQuery('update answerscore set vote=? where aid=?' , $dbConnection);
 				
 				/*
 					Set the parameters
 				*/
-				$dbQuery.addParameter('ii',$vote,$this->getId());
+				$dbQuery->addParameter('ii',$vote,$this->getId());
 				
 			}
 			

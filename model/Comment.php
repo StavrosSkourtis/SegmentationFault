@@ -97,9 +97,9 @@
             $this->user = $user;
 
             if($type == 'Q'){
-                $votesQuery = new DatabaseQuery("select sum(vote) as votes from qcommentscore where cid=?" , $dbConnection);
+                $votesQuery = new DatabaseQuery("select COALESCE(sum(vote),0) as votes from qcommentscore where cid=?" , $dbConnection);
             }else if($type == 'A'){
-                $votesQuery = new DatabaseQuery("select sum(vote) as votes from acommentscore where cid=?" , $dbConnection);
+                $votesQuery = new DatabaseQuery("select COALESCE(sum(vote),0) as votes from acommentscore where cid=?" , $dbConnection);
             }
             $votesQuery->addParameter('i',$id);
             $set2 = $votesQuery->execute();
@@ -206,7 +206,7 @@
 				/*
 					Set the parameters 
 				*/
-				$dbQuery.addParameter('iii',$this->getId(),$uid,$vote);
+				$dbQuery->addParameter('iii',$this->getId(),$uid,$vote);
 				
 			}
 			/*
@@ -219,19 +219,19 @@
 					type question
 					*/
 				
-					$dbQuery = new DatabaseQuery('update qcommentscore set vote=vote + ? where cid=?' , $dbConnection);
+					$dbQuery = new DatabaseQuery('update qcommentscore set vote=? where cid=?' , $dbConnection);
 				}
 				else if($this->getType() == 'A') {
 					/*
 					type answer
 					*/
 				
-					$dbQuery = new DatabaseQuery('update acommentscore set vote=vote + ? where cid=?' , $dbConnection);
+					$dbQuery = new DatabaseQuery('update acommentscore set vote=? where cid=?' , $dbConnection);
 				}
 				/*
 					Set the parameters
 				*/
-				$dbQuery.addParameter('ii',$vote,$this->getId());
+				$dbQuery->addParameter('ii',$vote,$this->getId());
 				
 			}
 			

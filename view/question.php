@@ -1,4 +1,5 @@
 <script type="text/javascript" src="view/javascript/answerPostPreview.js"></script>
+<script type="text/javascript" src="view/javascript/voting.js"></script>
 <div id="ContentWraper">
 
 	<div id="Question">
@@ -16,7 +17,7 @@
 		<div id="QuestionHeader">
 			<div id="QuestionVote">
 				<div id="QuestionVoteWraper">
-					<img class="voteIcon" src="res/ui/up.png">
+					<img class="voteIcon" src="res/ui/up.png" onclick="vote(this, <?php   print $args['question']->getId() ?>, 'Q')" > 
 
 					<p class="VoteLabel"> 
 						<?php 
@@ -28,7 +29,7 @@
 					</p>
 
 
-					<img class="voteIcon" src="res/ui/down.png">  
+					<img class="voteIcon" src="res/ui/down.png" onclick="vote(this, <?php   print $args['question']->getId() ?>, 'Q')">  
 				</div>
 			</div>
 

@@ -1,6 +1,6 @@
 <div class="Answer">
 	<div class="AnswerHeader">
-		<img class="answerVoteIcon" src="res/ui/up.png">
+		<img class="answerVoteIcon" src="res/ui/up.png" onclick="vote(this, <?php   print $answer->getId() ?>, 'A')">
 		<p class="AnswerVoteLabel"> 
 			<?php 
 				/*
@@ -9,7 +9,7 @@
 				print $answer->getVotes();
 			?>
 		</p>
-		<img class="answerVoteIcon" src="res/ui/down.png">  
+		<img class="answerVoteIcon" src="res/ui/down.png" onclick="vote(this, <?php   print $answer->getId() ?>, 'A')">  
 		<p class="AnswerTopLabel"> 
 		<?php 
 			/*
