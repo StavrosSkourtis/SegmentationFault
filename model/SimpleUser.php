@@ -62,31 +62,37 @@
         */
         public function postQuestion($question){
             if(!$this->checkIfLoggedIn())
-                return;
-
+                return;			
+	
+			
             /*
                 Create database connection
             */
-
+				$dbConnection = new DatabaseConnection();
 
             /*
                 Create query
             */
-
+				$dbQuery = new DatabaseQuery('insert into question (title,html,user,post_date) values(?,?,?,CURDATE())' , $dbConnection);
+			
 
             /*
                 Set the parameters from the question object
             */
-
+			$title=$question->getTitle();
+			$html=$question->getHtml();
+			$user=$question->getUser();
+			
+			$dbQuery->addParameter('lii',$title,$html,$user);
             /*
                 exucute the query
             */
-
+			$qresults = $dbQuery->execute();	
 
             /*
                 close the database connection
             */
-
+			$dbConnection->close();
         }
 
 
@@ -136,7 +142,10 @@
              
 			 $qresults = $dbQuery->execute();			
 			
-
+			/*
+                close the database connection
+            */
+			$dbConnection->close();
         }
 
         /*
