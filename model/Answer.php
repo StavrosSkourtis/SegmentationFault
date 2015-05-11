@@ -144,7 +144,7 @@
             /*
                 Create query
             */
-				$dbQuery = new DatabaseQuery('select count(*) from answerscore where aid=?' , $dbConnection);
+				$dbQuery = new DatabaseQuery('select aid from answerscore where aid=?' , $dbConnection);
 			
             
 
