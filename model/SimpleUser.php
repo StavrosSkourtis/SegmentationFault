@@ -108,6 +108,22 @@
         public function postAnswer($answer){
             if(!$this->checkIfLoggedIn())
                 return;
+			
+			 
+			 $dbConnection = new DatabaseConnection();
+
+             $dbQuery = new DatabaseQuery('insert into answer(html,user,question,post_date) values(?,?,?,CURDATE())' , $dbConnection);
+			
+			$html=$answer->getHtml();
+			$user=$answer->getUser();
+			$question=$answer->getQuestion();
+			
+			
+             $dbQuery->addParameter('lii',$html,$user,$question);
+             
+			 $qresults = $dbQuery->execute();			
+			
+			
 
         }
 
