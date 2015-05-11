@@ -167,9 +167,18 @@
 
         /*
             Inserts a vote to the database
+
+            First check if exists a record on questionscore table
+            with $uid and $this->id
+
+            if true
+            alter that row and set vote to $vote
+
+            if false
+            insert a rown with $uid , $this->id and $vote
         */
         public function vote($uid, $vote){
-
+            
         }
 
         /*
