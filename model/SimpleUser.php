@@ -62,8 +62,7 @@
         */
         public function postQuestion($question){
             if(!$this->checkIfLoggedIn())
-                return;			
-	
+                return;		
 			
             /*
                 Create database connection
@@ -155,6 +154,49 @@
         public function postComment($comment){
             if(!$this->checkIfLoggedIn())
                 return;
+			
+			
+            /*
+                Create database connection
+            */
+				$dbConnection = new DatabaseConnection();
+
+            /*
+                Create query
+            */
+			
+			$text=$comment->getText();
+			$user=$comment->getUser();
+			/*
+				same method name so no problem if is a question or an answer
+			*/
+			$id=$comment->getTarget()->getId();
+			
+			
+			if($comment->getType() == 'Q') {			
+				$dbQuery = new DatabaseQuery('insert into questioncomment (text,user,post_date,question) values(?,?,CURDATE(),?)' , $dbConnection);
+			}
+			else if ($comment->getType() == 'A') {				
+				$dbQuery = new DatabaseQuery('insert into answercomment (text,user,post_date,answer) values(?,?,CURDATE(),?)' , $dbConnection);
+			}
+			
+			
+			/*
+				Set the parameters from the question object
+			*/
+			$dbQuery->addParameter('sii',$text,$user,$id);
+			
+			/*
+                exucute the query
+            */
+			$qresults = $dbQuery->execute();	
+
+            /*
+                close the database connection
+            */
+			$dbConnection->close();
+			
+			
         }
 
 
