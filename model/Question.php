@@ -187,7 +187,7 @@
             /*
                 Create query
             */
-				$dbQuery = new DatabaseQuery('select count(*) from questionscore where qid=?' , $dbConnection);
+				$dbQuery = new DatabaseQuery('select qid from questionscore where qid=?' , $dbConnection);
 			
             
 
