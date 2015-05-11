@@ -105,6 +105,11 @@
 
             Για οδηγίες σχετικά με την βαση δεδομένων στην php πάνε εδώ testbed/database_test.php
         */
+		
+		/*
+			Creates an answer on a given question
+            @param the answer
+		*/
         public function postAnswer($answer){
             if(!$this->checkIfLoggedIn())
                 return;
@@ -112,17 +117,24 @@
 			 
 			 $dbConnection = new DatabaseConnection();
 
+			 /*
+                Create the query
+            */
              $dbQuery = new DatabaseQuery('insert into answer(html,user,question,post_date) values(?,?,?,CURDATE())' , $dbConnection);
 			
+			/*
+				query parameters
+			*/
 			$html=$answer->getHtml();
 			$user=$answer->getUser();
 			$question=$answer->getQuestion();
 			
-			
+			/*
+				add the parameter and execute it
+			*/
              $dbQuery->addParameter('lii',$html,$user,$question);
              
 			 $qresults = $dbQuery->execute();			
-			
 			
 
         }
