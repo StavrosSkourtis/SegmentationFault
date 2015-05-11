@@ -62,31 +62,36 @@
         */
         public function postQuestion($question){
             if(!$this->checkIfLoggedIn())
-                return;
-
+                return;		
+			
             /*
                 Create database connection
             */
-
+				$dbConnection = new DatabaseConnection();
 
             /*
                 Create query
             */
-
+				$dbQuery = new DatabaseQuery('insert into question (title,html,user,post_date) values(?,?,?,CURDATE())' , $dbConnection);
+			
 
             /*
                 Set the parameters from the question object
             */
-
+			$title=$question->getTitle();
+			$html=$question->getHtml();
+			$user=$question->getUser();
+			
+			$dbQuery->addParameter('lii',$title,$html,$user);
             /*
                 exucute the query
             */
-
+			$qresults = $dbQuery->execute();	
 
             /*
                 close the database connection
             */
-
+			$dbConnection->close();
         }
 
 
@@ -105,6 +110,11 @@
 
             Για οδηγίες σχετικά με την βαση δεδομένων στην php πάνε εδώ testbed/database_test.php
         */
+		
+		/*
+			Creates an answer on a given question
+            @param the answer
+		*/
         public function postAnswer($answer){
             if(!$this->checkIfLoggedIn())
                 return;
@@ -113,19 +123,27 @@
 			$dbConnection = new DatabaseConnection();
 
             $dbQuery = new DatabaseQuery('insert into answer(html,user,question,post_date) values(?,?,?,CURDATE())' , $dbConnection);
-			
+
+	
+			/*
+				query parameters
+			*/
 			$html=$answer->getHtml();
 			$user=$answer->getUser()->getId();
 			$question=$answer->getQuestion()->getId();
 			
+
             print $html;
 			
             $dbQuery->addParameter('sii',$html,$user,$question);
+
              
 			$qresults = $dbQuery->execute();			
 			
-			
-
+			/*
+                close the database connection
+            */
+			$dbConnection->close();
         }
 
         /*
@@ -135,6 +153,49 @@
         public function postComment($comment){
             if(!$this->checkIfLoggedIn())
                 return;
+			
+			
+            /*
+                Create database connection
+            */
+				$dbConnection = new DatabaseConnection();
+
+            /*
+                Create query
+            */
+			
+			$text=$comment->getText();
+			$user=$comment->getUser();
+			/*
+				same method name so no problem if is a question or an answer
+			*/
+			$id=$comment->getTarget()->getId();
+			
+			
+			if($comment->getType() == 'Q') {			
+				$dbQuery = new DatabaseQuery('insert into questioncomment (text,user,post_date,question) values(?,?,CURDATE(),?)' , $dbConnection);
+			}
+			else if ($comment->getType() == 'A') {				
+				$dbQuery = new DatabaseQuery('insert into answercomment (text,user,post_date,answer) values(?,?,CURDATE(),?)' , $dbConnection);
+			}
+			
+			
+			/*
+				Set the parameters from the question object
+			*/
+			$dbQuery->addParameter('sii',$text,$user,$id);
+			
+			/*
+                exucute the query
+            */
+			$qresults = $dbQuery->execute();	
+
+            /*
+                close the database connection
+            */
+			$dbConnection->close();
+			
+			
         }
 
 
