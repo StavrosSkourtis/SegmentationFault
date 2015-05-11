@@ -169,7 +169,85 @@
             Inserts a vote to the database
         */
         public function vote($uid, $vote){
+			/*
+                Create database connection
+            */
+				$dbConnection = new DatabaseConnection();
 
+            /*
+                Create query
+            */
+				$dbQuery = new DatabaseQuery('select count(*) from questionscore where qid=?' , $dbConnection);
+			
+            
+
+            /*
+                Set the parameters 
+            */
+           
+			$dbQuery->addParameter('i',$this->getId());
+          
+            /*
+                exucute the query
+            */
+			
+			$qresults = $dbQuery->execute();	
+
+			/*
+				count returned rows
+			*/
+			
+			$count=0;
+			while($qresults->next()) {
+				$count=$count+1;
+				break;
+			}
+			
+			/*
+				if we didnt have any row we can insert a new one
+			*/
+			if($count == 0) {
+				/*
+					Create query
+				*/
+				
+				$dbQuery = new DatabaseQuery('insert into questionscore(qid,uid,vote) values(?,?,?)' , $dbConnection);
+				
+				/*
+					Set the parameters
+				*/
+				$dbQuery.addParameter('iii',$this->getId(),$uid,$vote);
+				
+			}
+			/*
+				else we must update the table
+			*/
+			else {
+				/*
+					Create query
+				*/
+				
+				$dbQuery = new DatabaseQuery('update questionscore set vote = vote + ? where qid=?' , $dbConnection);
+				
+				/*
+					Set the parameters
+				*/
+				$dbQuery.addParameter('ii',$vote,$this->getId());
+				
+			}
+			
+			
+			/*
+				exucute the query
+			*/
+				$qresults = $dbQuery->execute();
+				
+			
+            /*
+                close the database connection
+            */
+			
+			$dbConnection->close();
         }
 
         /*
