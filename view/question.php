@@ -114,7 +114,7 @@
 
 	<div id="AnswerForm">
 
-		<form>
+		<form method="post">
 			<input type="hidden" name="question_id" value="<?php print $args['question']->getId(); ?>" >
 			<h1>Enter an answer</h1> 
 			<textarea id="postAnswerTextarea" name="postedAnswer"></textarea> 

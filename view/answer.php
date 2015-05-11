@@ -23,7 +23,8 @@
 	</div>
 	<hr>
 	<div class="AnswerText markdown">
-		<?php print $answer->getText(); ?>
+		<?php print $answer->getHtml(); ?>
+		
 	</div>
 
 	<hr>

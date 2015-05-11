@@ -8,7 +8,7 @@
 
     class Answer{
         /*
-            The text of the answer
+            The html of the answer
         */
         private $html;
         /*
@@ -125,8 +125,8 @@
         /*
             Getters and Setters
         */
-        public function getText(){
-            return $this->text;
+        public function getHtml(){
+            return $this->html;
         }
 
         public function getUser(){
@@ -156,8 +156,8 @@
         public function setId($id){
             $this->id = $id;
         }
-        public function setText($text){
-            $this->text = $text;
+        public function setHtml($html){
+            $this->html = $html;
         }
 
         public function setUser($user){

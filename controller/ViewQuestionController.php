@@ -69,8 +69,8 @@
 			/*
 				Post an answer to a question
 			*/
-			if(isset($_POST['question_id']) && isset($_POST['postedAnswer'])){
-
+			if(isset($_POST['question_id']) && isset($_POST['postedAnswer']) ){
+				$this->postAnswer($_POST['question_id']  , $_POST['postedAnswer']);
 			}
 
 			/*
@@ -85,6 +85,54 @@
 				Show View
 			*/
 			$this->showView($args);
+		}
+
+
+		/*
+			Posts an answer
+		*/
+		private function postAnswer($qid , $answerText){
+			/*
+				If not logged in return
+			*/
+			if(  !isset($_SESSION["uid"] ) )
+				return 'You must login to post';
+
+			/*
+				Get question
+			*/
+			$question = new Question();
+			$question->create($qid);
+
+			/*
+				Check if the question exists
+			*/
+			if($question == false)
+				return 'Questions doesnt exist';
+
+			/*
+				Create the user
+			*/
+			$user = new SimpleUser();
+			$user->create($_SESSION['uid']);
+
+			/*
+				Create the answer
+			*/
+			$answer = new Answer();
+
+			/*
+				set the data
+			*/
+			$answer->setHtml($answerText);
+			$answer->setQuestion($question);
+			$answer->setUser($user);
+
+
+			/*
+				post it
+			*/
+			$user->postAnswer($answer);
 		}
 
 	}

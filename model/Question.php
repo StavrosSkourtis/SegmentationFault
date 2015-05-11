@@ -329,9 +329,47 @@
             return $questions;
         }
 
-        /*
-        the following need to be implemented
-        */
+        
+
+        public static function getQuestionsLike($matchString){
+            /*
+                Create connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+                Create the query
+            */
+            $query = new DatabaseQuery( 'select qid from question where title like ?',$dbConnection);
+
+            /*
+                Add the parameter 
+            */
+            $query->addParameter('s','%' . $matchString.'%');
+
+
+            /*
+                Execute the query
+            */
+            $set = $query->execute();
+
+            $questions = array();
+            while($row = $set->next()){
+                 /*
+                    create the question
+                */
+                $question = new Question();
+                $question->create($row['qid']);
+
+                /*
+                    add the question to the array
+                */
+                $questions[ count($questions) ] = $question;
+            }
+
+
+            return $questions;
+        }
 
 
     }

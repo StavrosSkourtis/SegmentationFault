@@ -110,18 +110,19 @@
                 return;
 			
 			 
-			 $dbConnection = new DatabaseConnection();
+			$dbConnection = new DatabaseConnection();
 
-             $dbQuery = new DatabaseQuery('insert into answer(html,user,question,post_date) values(?,?,?,CURDATE())' , $dbConnection);
+            $dbQuery = new DatabaseQuery('insert into answer(html,user,question,post_date) values(?,?,?,CURDATE())' , $dbConnection);
 			
 			$html=$answer->getHtml();
-			$user=$answer->getUser();
-			$question=$answer->getQuestion();
+			$user=$answer->getUser()->getId();
+			$question=$answer->getQuestion()->getId();
 			
+            print $html;
 			
-             $dbQuery->addParameter('lii',$html,$user,$question);
+            $dbQuery->addParameter('sii',$html,$user,$question);
              
-			 $qresults = $dbQuery->execute();			
+			$qresults = $dbQuery->execute();			
 			
 			
 
