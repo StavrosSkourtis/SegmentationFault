@@ -28,6 +28,29 @@
 		}
 
 		public function handle(){
+			
+			/*
+				Post a comment to a question
+			*/
+			if(isset($_POST['question_id']) && isset($_POST['question_comment'])){
+				$this->postQuestionComment($_POST['question_id']  , $_POST['question_comment']);
+			}
+
+			/*
+				Post an answer to a question
+			*/
+			if(isset($_POST['question_id']) && isset($_POST['postedAnswer']) ){
+				$this->postAnswer($_POST['question_id']  , $_POST['postedAnswer']);
+			}
+
+			/*
+				Post a comment to an answer
+			*/
+			if(isset($_POST['answer_id']) && isset($_POST['answer_comment'])){
+				$this->postAnswerComment($_POST['answer_id']  , $_POST['answer_comment']);
+			}
+
+			
 			/*
 				if the id is set
 			*/
@@ -59,28 +82,7 @@
                 die();
 			}
 
-			/*
-				Post a comment to a question
-			*/
-			if(isset($_POST['question_id']) && isset($_POST['question_comment'])){
-				$this->postQuestionComment($_POST['question_id']  , $_POST['question_comment']);
-			}
 
-			/*
-				Post an answer to a question
-			*/
-			if(isset($_POST['question_id']) && isset($_POST['postedAnswer']) ){
-				$this->postAnswer($_POST['question_id']  , $_POST['postedAnswer']);
-			}
-
-			/*
-				Post a comment to an answer
-			*/
-			if(isset($_POST['answer_id']) && isset($_POST['answer_comment'])){
-				$this->postAnswerComment($_POST['answer_id']  , $_POST['answer_comment']);
-			}
-
-	
 			/*
 				Show View
 			*/
