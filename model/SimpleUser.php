@@ -287,7 +287,6 @@
 			$question=$answer->getQuestion()->getId();
 			
 
-            print $html;
 			
             $dbQuery->addParameter('sii',$html,$user,$question);
 

@@ -42,7 +42,7 @@
 	</div>
 	<hr>
 	<div class="AnswerText markdown">
-		<?php print $answer->getHtml(); ?>
+		<?php print $answer->getHtmlParsed(); ?>
 		
 	</div>
 

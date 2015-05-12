@@ -115,7 +115,6 @@
 			*/
 			if($question == false)
 				return 'Questions doesnt exist';
-
 			/*
 				Create the user
 			*/
@@ -139,8 +138,6 @@
 				post it
 			*/
 			$user->postAnswer($answer);
-
-			header("Location: ?p=home");
 		}
 
 		private function postAnswerComment($aid , $commentText){

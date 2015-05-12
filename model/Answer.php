@@ -230,7 +230,19 @@
             $this->votes = $votesRow['score'];
         }
 
+        public function getHtmlParsed(){
+            /*
+                create parsedown object
+            */
+            $parsedown = new Parsedown();
 
+            /*
+                parse the text given and return the output
+                we use setsetMarkupEscaped(true) to protect
+                against xss.
+            */
+            return $parsedown->setMarkupEscaped(true)->text($this->html);
+        }
         /*
             Getters and Setters
         */
