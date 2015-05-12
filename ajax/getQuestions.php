@@ -37,7 +37,7 @@
 
 		$questions = Question::getQuestionsLike($_POST['question_search_text']);
 
-
+		
 		foreach ($questions as $question) {
 			
 			/*
@@ -45,6 +45,6 @@
 				
 			*/
 			include '../view/question_list_item.php';
-
+			
 		}
 	}

@@ -18,11 +18,10 @@
     <div class="question_tags" >
         <?php
             $tags =  $question->getTags();
-            /* TODO
-            foreach ($tags as $tag){
-                print '<div class="q_item_tag"><a >'+$tag+'</div>';
-            }
-            */
+            
+            foreach ($tags as $tag) {
+                print '<div class="q_item_tag" ><a>'.$tag.'</a></div>';
+            }  
         ?>
 
     </div>

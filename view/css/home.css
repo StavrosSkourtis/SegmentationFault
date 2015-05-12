@@ -98,6 +98,7 @@
     border-radius:5px;
     float:left;
     color:#FFF;
+    cursor: pointer;
 }
 .tag:hover{
     background-color:rgba(15, 159, 255, 0.77);

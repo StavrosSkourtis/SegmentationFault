@@ -1,6 +1,7 @@
 var offset = 10;
 var count = 10;
 var sorting;
+var viewQuestions = true;
 $(document).ready(function (){
 
 	(function($) {
@@ -23,9 +24,26 @@ $(document).ready(function (){
 		sendRequest();
 	}
 
+	$("#search_box").keyup(function (){
+		
+
+		postData = {
+			"question_search_text" : $("#search_box").val()
+		};
+
+	    $.ajax({url: 'ajax/getQuestions.php'  ,type: "POST",data: postData, success: function(result){
+	        $("#Questions").html(result);
+
+	        viewQuestions = false;
+	    }});
+	});
+
 });
 
 function sendRequest(){
+	if(!viewQuestions)
+		return;
+	
 	postData = {
 		"offset" : offset ,
 		"count" : count ,
@@ -38,3 +56,4 @@ function sendRequest(){
     }});
 
 }
+

@@ -28,17 +28,21 @@
     color:black;
 }
 .q_item_tag{
-    margin:2px;
-    float:left;
-    color:#000;
-    font-size:0.8em;
+    margin: 0px 2px 2px 2px;
+    float: left;
+    color: #000;
+    font-size: 0.8em;
+    background-color: #0099ff;
+    padding: 3px 8px;
+    border-radius: 6px;
 }
 .q_item_tag a{
     text-decoration:none;
-    color:black;
+    color: white;
+    cursor: pointer;
 }
-.q_item_tag a:hover{
-    color:#1193ff;
+.q_item_tag:hover{
+    background-color:rgba(15, 159, 255, 0.77);
 }
 .q_label_div{
     width:100%;

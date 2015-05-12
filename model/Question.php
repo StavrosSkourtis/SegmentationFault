@@ -136,7 +136,9 @@
             $tagSet = $tagQuery->execute();
 
             while($tagRow = $tagSet->next() ){
+
                 $this->tags[count($this->tags)] = $tagRow['tag_string'];
+
             }
             
 
@@ -331,7 +333,6 @@
             return $upvotes-$downvotes;
         }
         public function getTags(){
-        //  return array("java","c++");
             return $this->tags;
         }
         public function setHtml($html){
