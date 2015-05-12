@@ -740,13 +740,15 @@
 			
             
 			/*
-				Get the id from comment object 
+				Get the id,text from comment object 
 				And then set the parameters
 				
 			*/
+			
+			$text=$comment->getText();
 			$comment_id=$comment->getId();
 			
-			$query->addParameter('i',$comment_id);
+			$query->addParameter('si',$text,$comment_id);
 
             /*
                 execute the query
