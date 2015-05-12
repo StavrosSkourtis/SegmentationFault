@@ -623,6 +623,43 @@
         public function editQuestion($question){
             if(!$this->checkIfLoggedIn())
                 return;
+			
+			/*
+                Create the database connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+			
+			/*
+			Set up the query
+			*/
+			 $query = new DatabaseQuery("update question set title=? , html=? , edit_date=CURDATE() where qid=?" ,$dbConnection);
+
+			/*
+				Get the parameters from question object 
+				And then set them
+				
+			*/
+			
+			$title=$question->getTitle();
+			$html=$question->getHtml();
+			$question_id=$question->getId();
+			
+			$query->addParameter('sli',$title,$html,$question_id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+			
+			
+			
+			
+			/*
+                close the database connection
+            */
+			$dbConnection->close();
+			
         }
 
         /*
