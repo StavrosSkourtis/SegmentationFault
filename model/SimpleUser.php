@@ -363,10 +363,59 @@
             if(!$this->checkIfLoggedIn())
                 return;
 			
+			/*
+                Create the database connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+				First of all we must delete question score rate
+                Set up the query
+            */
+			
+            $query = new DatabaseQuery("Delete from questionscore where qid=?" ,$dbConnection);
+            
+			/*
+				Get the id from question object 
+				And then set the parameters
+				
+			*/
+			$question_id=$question->getId();
+			
+			$query->addParameter('i',$question_id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute(); 
 
 
-           
+            /*
+				Now we must delete question tags
+				Not the tag name but e.g question id=213 have tag_id=50
+				The connection of them
+                Set up the query
+            */
+			
+            $query = new DatabaseQuery("Delete from questiontags where question=?" ,$dbConnection);
+            
+			/*
+				Use again the same question id
+				And then set the parameter
+				
+			*/
+			
+			$query->addParameter('i',$question_id);
 
+            /*
+                execute the query
+            */
+            $set  = $query->execute(); 
+
+			/*
+                close the database connection
+            */
+			$dbConnection->close();
             
         }
 
@@ -384,7 +433,7 @@
             $dbConnection = new DatabaseConnection();
 
             /*
-				First of all we must delete answer scores rate
+				First of all we must delete answer score rate
                 Set up the query
             */
 			
