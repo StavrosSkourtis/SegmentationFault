@@ -362,6 +362,12 @@
         public function deleteQuestion($question){
             if(!$this->checkIfLoggedIn())
                 return;
+			
+
+
+           
+
+            
         }
 
         /*
@@ -378,6 +384,117 @@
         public function deleteComment($comment){
             if(!$this->checkIfLoggedIn())
                 return;
+			
+			/*
+                Create the database connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+				First of all delete the scores from each answer comment
+                Set up the query
+            */
+			
+            $query = new DatabaseQuery("Delete from acommentscore where cid=?" ,$dbConnection);
+            
+			/*
+				Get the id from comment object 
+				And then set the parameters
+				
+			*/
+			$comment_id=$comment->getId();
+			
+			$query->addParameter('i',$comment_id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+			
+			
+			/*
+				Then delete the scores from each question comment
+                Set up the query
+            */
+			
+            $query = new DatabaseQuery("Delete from qcommentscore where cid=?" ,$dbConnection);
+            
+			/* 
+				And then set the same parameters
+				
+			*/
+			
+			$query->addParameter('i',$comment_id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+			
+			
+			/*
+				Then delete the questioncomment or answer comment
+				But first we must check the comment type
+			*/
+			
+			if($comment->getType() == 'Q') {
+				/*
+				
+                Set up the delete questioncomment query
+				*/
+			
+				$query = new DatabaseQuery("Delete from questioncomment where cid=?" ,$dbConnection);
+				
+				/* 
+					First of all we must get the question id using 
+					getTarget() object which is question or answer object type
+					Now is question cause of Type = Q
+					And then set the  parameters
+					
+				*/
+				$question_id=$comment->getTarget()->getId();
+				
+				$query->addParameter('i',$question_id);
+
+				/*
+					execute the query
+				*/
+				$set  = $query->execute();  
+			}
+			/*
+				 else delete the anwsercomment 
+			*/
+			else if($comment->getType() == 'A') {
+				/*
+				
+                Set up the delete anwsercomment query
+				*/
+			
+				$query = new DatabaseQuery("Delete from answercomment where cid=?" ,$dbConnection);
+				
+				/* 
+					First of all we must get the answer id using 
+					getTarget() object which is question or answer object type
+					Now is answer cause of Type = A
+					And then set the  parameters
+					
+				*/
+				$answer_id=$comment->getTarget()->getId();
+				
+				$query->addParameter('i',$answer_id);
+
+				/*
+					execute the query
+				*/
+				$set  = $query->execute();  
+			}
+			
+			
+			
+			 /*
+                close the database connection
+            */
+			$dbConnection->close();
         }
 
 
