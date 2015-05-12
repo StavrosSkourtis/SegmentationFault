@@ -376,6 +376,59 @@
         public function deleteAnswer($answer){
             if(!$this->checkIfLoggedIn())
                 return;
+			
+			
+			/*
+                Create the database connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+				First of all we must delete answer scores rate
+                Set up the query
+            */
+			
+            $query = new DatabaseQuery("Delete from answerscore where aid=?" ,$dbConnection);
+            
+			/*
+				Get the id from answer object 
+				And then set the parameters
+				
+			*/
+			$answer_id=$answer->getId();
+			
+			$query->addParameter('i',$answer_id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+			
+			
+			/*
+				Now we can delete the answer
+                Set up the query
+            */
+			
+            $query = new DatabaseQuery("Delete from answer where aid=?" ,$dbConnection);
+            
+			/*
+				Use again the same answer id
+				And then set the parameter
+			*/
+			
+			$query->addParameter('i',$answer_id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+			
+			
+			/*
+                close the database connection
+            */
+			$dbConnection->close();
         }
 
         /*
@@ -491,7 +544,7 @@
 			
 			
 			
-			 /*
+			/*
                 close the database connection
             */
 			$dbConnection->close();
