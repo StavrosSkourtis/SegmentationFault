@@ -30,15 +30,18 @@ function vote(node , id , type){
 
     $.ajax({url: 'ajax/vote.php'  ,type: "POST",data: postData, success: function(result){
        
+		/*
+			Check if the result is numeric
+ 		*/
+        if( !isNaN(result)){
         	/*
-				Script executed successfuly
-        	*/
-        	if(vote ==1 ){
-        		node.src = 'res/ui/pressed_up.png';
-        	}else if(vote ==-1){
-        		node.src = 'res/ui/pressed_down.png';
-        	}else {
-
+			Script executed successfuly
+	       	*/
+	       	if(vote ==1 ){
+	       		node.src = 'res/ui/pressed_up.png';
+	       	}else if(vote ==-1){
+	       		node.src = 'res/ui/pressed_down.png';
+	       	}else {
         		if(icon == 'pressed_up.png')
         			node.src = 'res/ui/up.png';
         		else
@@ -50,11 +53,9 @@ function vote(node , id , type){
         	}else if( node.id==("DN"+type+id) ){
         		document.getElementById("UP"+type+id).src='res/ui/up.png';
         	}
-
-
         	label = document.getElementById("LB"+type+id);
         	label.innerHTML = result;
-        
+       	}
     }});
 
 }

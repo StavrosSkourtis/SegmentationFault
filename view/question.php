@@ -1,9 +1,7 @@
 <script type="text/javascript" src="view/javascript/answerPostPreview.js"></script>
 <script type="text/javascript" src="view/javascript/voting.js"></script>
 <div id="ContentWraper">
-
 	<div id="Question">
-		
 		<div id="QuestionTitleWraper">
 				<h1 id="QuestionTitle"> 
 					<?php 
