@@ -613,6 +613,42 @@
             if(!$this->checkIfLoggedIn())
                 return;
 			
+			
+			/*
+                Create the database connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+			
+			/*
+			Set up the query
+			*/
+			 $query = new DatabaseQuery("update answer set html=? , edit_date=CURDATE() where aid=?" ,$dbConnection);
+
+			/*
+				Get the parameters from answer object 
+				And then set them
+				
+			*/
+			
+			$html=$answer->getHtml();
+			$answer_id=$answer->getId();
+			
+			$query->addParameter('li',$html,$answer_id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+			
+			
+			
+			
+			/*
+                close the database connection
+            */
+			$dbConnection->close();
+			
         }
 
         /*
