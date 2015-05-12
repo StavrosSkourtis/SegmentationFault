@@ -612,6 +612,7 @@
         public function editAnswer($answer){
             if(!$this->checkIfLoggedIn())
                 return;
+			
         }
 
         /*
@@ -632,6 +633,62 @@
         public function editComment($comment){
             if(!$this->checkIfLoggedIn())
                 return;
+			
+			/*
+                Create the database connection
+            */
+            $dbConnection = new DatabaseConnection();
+
+            /*
+				First of all we must test comment type
+                if comment type Question then
+            */
+			
+			
+			if($comment -> getType() == 'Q') {
+				/*
+				Set up the query
+				*/
+				 $query = new DatabaseQuery("update questioncomment set text=? , edit_date=CURDATE() where cid=?" ,$dbConnection);
+            
+				
+			}
+			/*
+				else if comment type Answer
+			*/
+			else if($comment -> getType() == 'A') {
+				/*
+				Set up the query
+				*/
+				 $query = new DatabaseQuery("update answercomment set text=? , edit_date=CURDATE() where cid=?" ,$dbConnection);
+            
+				
+			}
+			
+            
+			/*
+				Get the id from comment object 
+				And then set the parameters
+				
+			*/
+			$comment_id=$comment->getId();
+			
+			$query->addParameter('i',$comment_id);
+
+            /*
+                execute the query
+            */
+            $set  = $query->execute();  
+			
+			
+			
+			
+			/*
+                close the database connection
+            */
+			$dbConnection->close();
+			
+			
         }
 
 
