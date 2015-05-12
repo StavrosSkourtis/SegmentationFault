@@ -1,5 +1,5 @@
 var offset = 10;
-var count = 10;
+var count = 5;
 var sorting;
 var viewQuestions = true;
 $(document).ready(function (){
@@ -10,19 +10,14 @@ $(document).ready(function (){
 	    }
 	})(jQuery);
 
-	$(document).scroll(function(){
-		var percentage = (100*$(document).scrollTop() ) / $(document).height();
 
-		if( percentage > 30){
 
-			sendRequest();
+	$(window).scroll(function(){
+	    if ($(window).scrollTop() == $(document).height()-$(window).height()){
+	        sendRequest();
+	    }
+	});
 
-		}
-	})
-
-	for (var i = 0; i < 5; i++) {
-		sendRequest();
-	}
 
 	$("#search_box").keyup(function (){
 		
@@ -49,7 +44,7 @@ function sendRequest(){
 		"count" : count ,
 		"sorting" : sorting
 	};
-
+	
     $.ajax({url: 'ajax/getQuestions.php'  ,type: "POST",data: postData, success: function(result){
         $("#Questions").append(result);
         offset+= count;

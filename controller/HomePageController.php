@@ -54,9 +54,9 @@
             /*
                 Create the query
             */
-            $query = new DatabaseQuery('select tag.tag_string, COALESCE(count(questiontags.tag),0) as c from tag
-                                        inner join questiontags on questiontags.tag=tag.tag_id
-                                        order by c desc limit 10' ,$dbConnection);
+            $query = new DatabaseQuery('select tag.tag_string,count(questiontags.tag) as c from tag
+inner join questiontags on questiontags.tag=tag.tag_id
+group by tag_string order by c desc limit 10' ,$dbConnection);
 
             $set = $query->execute();
 

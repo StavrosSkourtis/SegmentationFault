@@ -401,9 +401,12 @@
                     Create a query that returns the ids of all the questions defined by $offset and $count
                     the questions are ordered by the number of votes they have
                 */
-                $query = new DatabaseQuery('select question.qid , sum(questionscore.vote) as votes from question 
-                                            inner join questionscore on question.qid=questionscore.qid 
-                                            order by votes desc limit ?, ?' , $con);
+                $query = new DatabaseQuery('select question.qid , sum(COALESCE(questionscore.vote,0)) as votes 
+                                            from question 
+                                            inner join questionscore 
+                                            on question.qid=questionscore.qid
+                                            group by qid
+                                            order by votes  desc limit ?, ?' , $con);
 
             }else{
 

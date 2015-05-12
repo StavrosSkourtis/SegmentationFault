@@ -15,8 +15,9 @@
 		/*
 			get the array of questions
 		*/
-		$questions = Question::getQuestions($_POST['offset'] , $_POST['count'] ,$_POST['sorting']);
 
+		$questions = Question::getQuestions($_POST['offset'] , $_POST['count'] ,$_POST['sorting']);
+		
 		/*
 			loop thought the questions
 		*/

@@ -134,10 +134,10 @@
 				/*
 					Get question id
 				*/
-				$row = $set->next();
+				$row = $qresults->next();
 				
 				$question_id=$row['qid'];
-
+                print $question_id;
 				/*
 					Now we must take the tag id
 					Default set to empty string
@@ -146,7 +146,7 @@
 				/*
 					Search if tag exist
 				*/
-				for($i=0;$i<$tags_lengthk;$i++) {
+				for($i=0;$i<$tags_length;$i++) {
 					/*
 						Create the query to search for id
 					*/
@@ -176,7 +176,7 @@
 						if tag does not exist
 						We must insert it in database
 					*/
-					if($tag_id == "") {
+					if($qresults->getRowCount()==0) {
 						/*
 							Create the query to insert the new tag
 						*/
