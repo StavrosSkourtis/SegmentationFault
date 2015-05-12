@@ -250,6 +250,23 @@
 			$dbConnection->close();
         }
 
+        public function refreshVotes(){
+            $dbConnection = new DatabaseConnection();
+            if($this->type == 'Q'){
+                $votesQuery = new DatabaseQuery("select COALESCE(sum(vote),0) as votes from qcommentscore where cid=?" , $dbConnection);
+            }else if($this->type == 'A'){
+                $votesQuery = new DatabaseQuery("select COALESCE(sum(vote),0) as votes from acommentscore where cid=?" , $dbConnection);
+            }
+            $votesQuery->addParameter('i',$this->id);
+            $set2 = $votesQuery->execute();
+
+            $votesRow = $set2->next();
+
+            $votes = $votesRow['votes'];
+
+            $this->votes = $votes;   
+        }
+
 
         /*
             Getter and Setter methods

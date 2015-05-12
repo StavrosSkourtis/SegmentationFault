@@ -74,6 +74,7 @@
 			exit with code 1
 			means all is ok
 		*/
-		print  'All is ok';
+		$target->refreshVotes();
+		print  $target->getVotes();
 	}else
 		print 'Data is not set';

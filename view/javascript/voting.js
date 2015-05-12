@@ -53,7 +53,7 @@ function vote(node , id , type){
 
 
         	label = document.getElementById("LB"+type+id);
-        	label.innerHTML = parseInt(label.innerHTML)+voteChange;
+        	label.innerHTML = result;
         
     }});
 

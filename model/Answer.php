@@ -215,7 +215,19 @@
             */
 			
 			$dbConnection->close();
+        }
 
+        /*
+            Refreshes the votes
+        */
+        public function refreshVotes(){
+            $dbConnection = new DatabaseConnection();
+            $votesQuery = new DatabaseQuery("select COALESCE(sum(vote),0) as score from answerscore where aid=?",$dbConnection);
+            $votesQuery->addParameter('i',$this->id);
+
+            $votesSet = $votesQuery->execute();
+            $votesRow = $votesSet->next();
+            $this->votes = $votesRow['score'];
         }
 
 

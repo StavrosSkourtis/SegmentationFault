@@ -258,7 +258,25 @@
             */
 			
 			$dbConnection->close();
+        }
 
+        public function refreshVotes(){
+            $dbConnection = new DatabaseConnection();
+            $votesQuery = new DatabaseQuery("select sum(vote) as score from questionscore where qid=?",$dbConnection);
+            $votesQuery->addParameter('i',$this->id);
+
+
+            $votesSet = $votesQuery->execute();
+
+            if($votesSet->getRowCount() == 0)
+                $this->votes = 0;
+            else{                
+                $votesRow = $votesSet->next();
+                if(is_null($votesRow['score']) )
+                    $this->votes = 0;
+                else
+                    $this->votes = $votesRow['score'];
+            }
         }
 
         /*
