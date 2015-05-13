@@ -1,3 +1,3 @@
-# value-added-services-project
-A small university project
+# Segmentation Fault
 
+This is a Q&A web service very inspired from stack-overflow. 
