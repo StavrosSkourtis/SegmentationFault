@@ -17,13 +17,13 @@
 		}	
 
 		public function handle(){
-			if(!isset($_SESSION['uid'])){
-				header("Location: ?p=home");
-                die();
-			}else if(isset($_GET['aid']) ){
+			if(isset($_SESSION['uid']) && isset($_GET['aid']) && SimpleUser::ownsAnswer($_SESSION['uid'],$_GET['aid'])  ){
 				$answer = new Answer();
 
 				$answer->create($_GET['aid']);
+			}else{
+				header("Location: ?p=home");
+                die();
 			}
 
 			if( isset($_POST['postedAnswer']) ){

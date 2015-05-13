@@ -467,6 +467,7 @@
             */
             $set  = $query->execute();  
 			
+            
             foreach ($answer->getComments() as $comment) {
                 $this->deleteComment($comment);
             }
@@ -771,6 +772,8 @@
                 return false;
         }
 
+        
+
 
         /*
             Returns an array of Question objects that were posted by this user
@@ -968,5 +971,66 @@
                 return the array
             */
             return $answers;
+        }
+
+
+        /*
+            Checks if this user owns this questions
+        */
+        public static function ownsQuestion($user_id , $question_id){
+            $dbConnection = new DatabaseConnection();
+
+            $dbQuery = new DatabaseQuery('select * from question where qid=? and user=?' , $dbConnection);
+
+            $dbQuery->addParameter('ii',$question_id,$user_id);
+
+            $set = $dbQuery->execute();
+
+            $dbConnection->close();
+            if($set->getRowCount() > 0)
+                return true;
+            else
+                return false;            
+        }
+
+        /*
+            Checks if this user owns this answer
+        */
+        public static function ownsAnswer($user_id , $answer_id){
+            $dbConnection = new DatabaseConnection();
+
+            $dbQuery = new DatabaseQuery('select * from answer where aid=? and user=?' , $dbConnection);
+
+            $dbQuery->addParameter('ii',$answer_id,$user_id);
+
+            $set = $dbQuery->execute();
+
+            $dbConnection->close();
+            if($set->getRowCount() > 0)
+                return true;
+            else
+                return false; 
+        }
+
+        /*
+            Checks if this user owns this comment
+        */
+        public static function ownsComment($user_id , $comment_id , $comment_type){
+            $dbConnection = new DatabaseConnection();
+
+            if($comment_type=='Q')
+                $dbQuery = new DatabaseQuery('select * from questioncomment where cid=? and user=?' , $dbConnection);
+            else
+                $dbQuery = new DatabaseQuery('select * from answercomment where cid=? and user=?' , $dbConnection);
+
+            $dbQuery->addParameter('ii',$comment_id,$user_id);
+
+            $set = $dbQuery->execute();
+
+            $dbConnection->close();
+            if($set->getRowCount() > 0)
+                return true;
+            else
+                return false; 
         }
     }

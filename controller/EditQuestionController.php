@@ -17,7 +17,10 @@
 		}	
 
 		public function handle(){
-			if(!isset($_SESSION['uid']) ){
+			if(isset($_SESSION['uid']) && isset($_GET['qid']) && SimpleUser::ownsQuestion($_SESSION['uid'],$_GET['qid'])){
+				$question = new Question();
+				$question->create($_GET['qid']);
+			}else{
 				header("Location: ?p=home");
                 die();
 			}
@@ -65,15 +68,11 @@
 	        }
 
 
-			if(isset($_GET['qid'])){
-				$question = new Question();
-				$question->create($_GET['qid']);
+			
+				
 
-				$args["question"] = $question;
-			}else{
-				header("Location: ?p=home");
-                die();
-			}
+			$args["question"] = $question;
+			
 
 
 			$this->showView($args);

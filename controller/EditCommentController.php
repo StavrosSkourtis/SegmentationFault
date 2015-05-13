@@ -15,13 +15,13 @@
 		}	
 
 		public function handle(){
-			if(!isset($_SESSION['uid'])){
-				header("Location: ?p=home");
-                die();
-			}else if(isset($_GET['cid']) && isset($_GET['type']) ){
+			if(isset($_SESSION['uid']) && isset($_GET['cid']) && isset($_GET['type']) && SimpleUser::ownsComment($_SESSION['uid'] , $_GET['cid'] ,$_GET['type']) ){
 				$comment = new Comment();
 
 				$comment->create($_GET['cid'] , $_GET['type']);
+			}else{
+				header("Location: ?p=home");
+                die();
 			}
 
 			if( isset($_POST['commentText']) ){

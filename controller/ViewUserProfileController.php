@@ -21,23 +21,23 @@
 				$user = new SimpleUser();
 				$user->create($_SESSION['uid']);
 
-				if($_GET['action'] == 'delete'){
-					if($_GET['type'] =='Q'){
+				if($_GET['action'] == 'delete' ){
+					if($_GET['type'] =='Q' && SimpleUser::ownsQuestion($_SESSION['uid'],$_GET['pid'])){
 						$question = new Question();
 						$question->create($_GET['pid']);
 
 						$user->deleteQuestion($question);
-					}else if($_GET['type'] == 'A'){
+					}else if($_GET['type'] == 'A' && SimpleUser::ownsAnswer($_SESSION['uid'],$_GET['pid']) ){
 						$answer = new Answer();
 						$answer->create($_GET['pid']);
 
 						$user->deleteAnswer($answer);
-					}else if($_GET['type'] == 'AC'){
+					}else if($_GET['type'] == 'AC' && SimpleUser::ownsComment($_SESSION['uid'] , $_GET['pid'] ,'A')){
 						$comment = new Comment();
 						$comment->create($_GET['pid'],'A');
 
 						$user->deleteComment($comment);
-					}else if($_GET['type'] == 'QC'){
+					}else if($_GET['type'] == 'QC' && SimpleUser::ownsComment($_SESSION['uid'] , $_GET['pid'] ,'Q') ){
 						$comment = new Comment();
 						$comment->create($_GET['pid'],'Q');
 
