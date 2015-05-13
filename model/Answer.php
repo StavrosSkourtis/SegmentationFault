@@ -265,6 +265,9 @@
         public function getDate(){
             return $this->date;
         }
+        public function getEditDate(){
+            return $this->editDate;
+        }
 
         public function getVotes(){
             return $this->votes;

@@ -49,11 +49,13 @@
     class DatabaseQuery{
         // holds the prepared query
         private $query;
+        private $connection;
 
         // constructor
         public function __construct($query,$connection){
             // create the prepared query
             $this->query = $connection->getConnection()->prepare($query);
+            $this->connection = $connection;
         }
 
         /*
@@ -90,7 +92,7 @@
             returns a ResultSet object
         */
         public function execute(){
-            $this->query->execute();
+            $this->query->execute() or die(mysqli_error($this->connection->getConnection()));
             $result = $this->query->get_result();
             $resultSet = new ResultSet($result);
             return $resultSet;

@@ -12,6 +12,8 @@
 
 		<?php
 			foreach ($args['questions'] as $question ) {
+				print '<a href="?p=user&id='.$args['user']->getId().'&pid='.$question->getId().'&type=Q&action=delete" >Delete </a>';
+				print '<a href="?p=user&id='.$args['user']->getId().'&pid='.$question->getId().'&type=Q&action=edit" >Edit </a>';
 				print '<a href="?p=question&id='.$question->getId().'" >';
 				print $question->getTitle();
 				print '</a>';
@@ -26,6 +28,8 @@
 		<hr>
 		<?php
 			foreach ($args['answers'] as $answer ) {
+				print '<a href="?p=user&id='.$args['user']->getId().'&pid='.$answer->getId().'&type=A&action=delete" >Delete </a>';
+				print '<a href="?p=user&id='.$args['user']->getId().'&pid='.$answer->getId().'&type=A&action=edit" >Edit </a>';
 				print '<a href="?p=question&id='.$answer->getQuestion()->getId().'" >';
 				print $answer->getQuestion()->getTitle();
 				print '</a>';
@@ -39,15 +43,19 @@
 		<hr>
 		<?php
 			foreach ($args['comments'] as $comment ) {
-
+				
 				if($comment->getType() == 'Q'){
+					print '<a href="?p=user&id='.$args['user']->getId().'&pid='.$comment->getId().'&type=QC&action=delete" >Delete </a>';
+					print '<a href="?p=user&id='.$args['user']->getId().'&pid='.$comment->getId().'&type=QC&action=edit" >Edit </a>';
 					print '<a href="?p=question&id='.$comment->getTarget()->getId().'" >';
 					print $comment->getTarget()->getTitle();	
 				}
 				else{
+					print '<a href="?p=user&id='.$args['user']->getId().'&pid='.$comment->getId().'&type=AC&action=delete" >Delete </a>';
+					print '<a href="?p=user&id='.$args['user']->getId().'&pid='.$comment->getId().'&type=AC&action=edit" >Edit </a>';
 					print '<a href="?p=question&id='.$comment->getTarget()->getQuestion()->getId().'" >';
 					print $comment->getTarget()->getQuestion()->getTitle();
-					print $comment->getTarget()->getHtml();
+					
 				}
 				print '</a>';
 				print '<br>';

@@ -1,0 +1,17 @@
+#postCommentForm{
+	width:800px;
+	margin:20px auto;
+}
+#QuestionCommentTextField{
+	width:94%;
+	height:60px;
+	margin: 20px 3% 5px 3%;
+}
+#QuestionCommentSubmit{
+	float:right;
+	height:50px;
+	margin-right:3%;
+	font-size:1.1em;
+	background-color: #0099ff;
+	border-width:1px;
+}

@@ -73,6 +73,7 @@
                         $user->postQuestion($question);
                         
                         header("Location: ?p=home");
+                        die();
                     }
                 }
 

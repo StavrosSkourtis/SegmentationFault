@@ -279,6 +279,10 @@
             return $this->date;
         }
 
+        public function getEditDate(){
+            return $this->editDate;
+        }
+
         public function getText(){
             return $this->text;
         }

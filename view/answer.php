@@ -37,7 +37,15 @@
 				print 'Posted on '.$answer->getDate().' by '.$answer->getUser()->getUsername();
 			?>
 		</p>	
-
+		<p class="AnswerTopLabel">
+			<?php 
+				/*
+					Print the edit date
+				*/
+				if(!is_null($answer->getEditDate()))
+				print 'Last edit on '.$answer->getEditDate();
+			?>
+		</p>
 
 	</div>
 	<hr>

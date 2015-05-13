@@ -13,13 +13,16 @@
         Define pages that exist on this web sercive
     */
     $pages = array(
-        'signin'       => 'SignInController'        ,
-        'signup'       => 'SignUpController'        ,
-        'postquestion' => 'PostQuestionController'  ,
-        'home'         => 'HomePageController'      ,
-        'signout'      => 'SignoutController'       ,
-        'question'     => 'ViewQuestionController'  ,
-        'user'         => 'ViewUserProfileController'
+        'signin'       => 'SignInController'         ,
+        'signup'       => 'SignUpController'         ,
+        'postquestion' => 'PostQuestionController'   ,
+        'home'         => 'HomePageController'       ,
+        'signout'      => 'SignoutController'        ,
+        'question'     => 'ViewQuestionController'   ,
+        'user'         => 'ViewUserProfileController',
+        'editcomment'  => 'EditCommentController'    ,
+        'editanswer'   => 'EditAnswerController'      ,
+        'editquestion' => 'EditQuestionController'
     );
 
     

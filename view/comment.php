@@ -36,6 +36,13 @@
 		<div class="CommentInfo">
 			<p class="CommentUsernameField"> <?php print 'By '.$comment->getUser()->getUsername(); ?></p>
 			<p class="CommentDateField"> <?php print 'Posted on '.$comment->getDate(); ?></p>
+			<p><?php 
+				/*
+					Print the edit date
+				*/
+				if(!is_null($comment->getEditDate()))
+				print 'Last Edit on '.$comment->getEditDate();
+			?></p>
 		</div>
 
 	</div>

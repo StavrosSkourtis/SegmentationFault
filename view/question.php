@@ -64,7 +64,9 @@
 							/*
 								Print the date
 							*/
-							print 'on '.$args['question']->getDatePosted();
+							if(!is_null($args['question']->getLastEdited()))
+								print 'Last Edit on '.$args['question']->getLastEdited();
+							print '&nbsp&nbsp&nbsp&nbsp&nbspPosted on '.$args['question']->getDatePosted();
 						?>
 				</p>
 			</div>

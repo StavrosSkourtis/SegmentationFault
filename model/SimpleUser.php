@@ -373,7 +373,7 @@
                 Set up the query
             */
 			
-            $query = new DatabaseQuery("Delete from questionscore where qid=?" ,$dbConnection);
+            $query = new DatabaseQuery("delete from questionscore where qid=?" ,$dbConnection);
             
 			/*
 				Get the id from question object 
@@ -397,7 +397,7 @@
                 Set up the query
             */
 			
-            $query = new DatabaseQuery("Delete from questiontags where question=?" ,$dbConnection);
+            $query = new DatabaseQuery("delete from questiontags where question=?" ,$dbConnection);
             
 			/*
 				Use again the same question id
@@ -412,6 +412,20 @@
             */
             $set  = $query->execute(); 
 
+
+            foreach ($question->getAnswers() as $answer) {
+                $this->deleteAnswer($answer);
+            }
+
+            foreach ($question->getComments() as $comment) {
+                $this->deleteComment($comment);
+            }
+             
+            $query = new DatabaseQuery("delete from question where qid=?",$dbConnection);
+
+            $query->addParameter('i',$question->getId());
+
+            $query->execute();
 			/*
                 close the database connection
             */
@@ -437,7 +451,7 @@
                 Set up the query
             */
 			
-            $query = new DatabaseQuery("Delete from answerscore where aid=?" ,$dbConnection);
+            $query = new DatabaseQuery("delete from answerscore where aid=?" ,$dbConnection);
             
 			/*
 				Get the id from answer object 
@@ -453,6 +467,9 @@
             */
             $set  = $query->execute();  
 			
+            foreach ($answer->getComments() as $comment) {
+                $this->deleteComment($comment);
+            }
 			
 			/*
 				Now we can delete the answer
@@ -496,37 +513,18 @@
 				First of all delete the scores from each answer comment
                 Set up the query
             */
-			
-            $query = new DatabaseQuery("Delete from acommentscore where cid=?" ,$dbConnection);
-            
-			/*
-				Get the id from comment object 
-				And then set the parameters
-				
-			*/
-			$comment_id=$comment->getId();
-			
-			$query->addParameter('i',$comment_id);
-
-            /*
-                execute the query
-            */
-            $set  = $query->execute();  
-			
-			
-			/*
-				Then delete the scores from each question comment
-                Set up the query
-            */
-			
-            $query = new DatabaseQuery("Delete from qcommentscore where cid=?" ,$dbConnection);
+			if($comment->getType() == 'A'){
+                $query = new DatabaseQuery("delete from acommentscore where cid=?" ,$dbConnection);
+            }else if($comment->getType() == 'Q'){
+                $query = new DatabaseQuery("delete from qcommentscore where cid=?" ,$dbConnection);
+            }
             
 			/* 
 				And then set the same parameters
 				
 			*/
 			
-			$query->addParameter('i',$comment_id);
+			$query->addParameter('i',$comment->getId());
 
             /*
                 execute the query
@@ -545,7 +543,7 @@
                 Set up the delete questioncomment query
 				*/
 			
-				$query = new DatabaseQuery("Delete from questioncomment where cid=?" ,$dbConnection);
+				$query = new DatabaseQuery("delete from questioncomment where cid=?" ,$dbConnection);
 				
 				/* 
 					First of all we must get the question id using 
@@ -554,9 +552,8 @@
 					And then set the  parameters
 					
 				*/
-				$question_id=$comment->getTarget()->getId();
 				
-				$query->addParameter('i',$question_id);
+				$query->addParameter('i',$comment->getId());
 
 				/*
 					execute the query
@@ -572,7 +569,7 @@
                 Set up the delete anwsercomment query
 				*/
 			
-				$query = new DatabaseQuery("Delete from answercomment where cid=?" ,$dbConnection);
+				$query = new DatabaseQuery("delete from answercomment where cid=?" ,$dbConnection);
 				
 				/* 
 					First of all we must get the answer id using 
@@ -581,9 +578,8 @@
 					And then set the  parameters
 					
 				*/
-				$answer_id=$comment->getTarget()->getId();
 				
-				$query->addParameter('i',$answer_id);
+				$query->addParameter('i',$comment->getId());
 
 				/*
 					execute the query
@@ -634,7 +630,7 @@
 			$html=$answer->getHtml();
 			$answer_id=$answer->getId();
 			
-			$query->addParameter('li',$html,$answer_id);
+			$query->addParameter('si',$html,$answer_id);
 
             /*
                 execute the query
@@ -669,7 +665,7 @@
 			/*
 			Set up the query
 			*/
-			 $query = new DatabaseQuery("update question set title=? , html=? , edit_date=CURDATE() where qid=?" ,$dbConnection);
+			$query = new DatabaseQuery("update question set title=? , html=? , edit_date=CURDATE() where qid=?" ,$dbConnection);
 
 			/*
 				Get the parameters from question object 
@@ -681,15 +677,13 @@
 			$html=$question->getHtml();
 			$question_id=$question->getId();
 			
-			$query->addParameter('sli',$title,$html,$question_id);
+			$query->addParameter('ssi',$title,$html,$question_id);
 
             /*
                 execute the query
             */
             $set  = $query->execute();  
-			
-			
-			
+
 			
 			/*
                 close the database connection
