@@ -1,5 +1,3 @@
-<?php session_start() ?>
-
 <div id="Header">
     <div id="HeaderContent">
         <div id="HeaderLeft">
