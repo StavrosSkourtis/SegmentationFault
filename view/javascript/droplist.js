@@ -45,11 +45,11 @@ function showMatchingTags(){
     /*
         get the user's text
     */
-    text = $("#tagTextfield").val();
+    textField = $("#tagTextfield").val();
     /*
         convert it to post data
     */
-    postData = {"search_text" : text };
+    postData = {"search_text" : textField };
 
     /*
         create a http ruquest to getMatchingTags.php which will return an array of tag names in json format
@@ -70,9 +70,9 @@ function showMatchingTags(){
             Loop through the array and create the appropriate html for the tag
         */
         for ( i = 0 ;  i < tagList.length ; i++) {
-            text += '<p class="listItem" onclick="addTag(\''+tagList[i].tagName+'\')">'+tagList[i].tagName+'</p>';
+            text += '<p class="listItem" onclick="addTag(\''+tagList[i].tagName+'\')">'+tagList[i].tagName+'</p>';;
         }
-
+        text += '<p class="newlistItem" onclick="addTag(\''+textField+'\')">'+textField+'</p>';
         /*
             print the result
         */

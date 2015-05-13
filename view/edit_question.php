@@ -61,7 +61,7 @@
         <p class="label" id="informationMessage"></p>
         <div class="sub_section">
             <p class="label">Add tags</p>
-            <input type="text" class="textfield" id="tagTextfield">
+            <input type="text" class="textfield" id="tagTextfield" autocomplete="off">
             <div id="dropList">
             </div>
         </div>

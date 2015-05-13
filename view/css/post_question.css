@@ -59,6 +59,12 @@
 .listItem{
     margin-left:10px;
     cursor:pointer;
+    text-shadow: 1px 1px 1px rgba(0, 0, 255, 0.28);
+}
+.newlistItem{
+    margin-left:10px;
+    cursor:pointer;
+    text-shadow: 1px 1px 1px rgba(0, 0, 255, 0.28);
 }
 
 .sub_section{
