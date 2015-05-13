@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `questioncomment` (
 CREATE TABLE IF NOT EXISTS `questionscore` (
   `qid` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
-  `vote` varchar(45) NOT NULL,
+  `vote` int(11) NOT NULL,
   PRIMARY KEY (`qid`,`uid`),
   KEY `qscore_user_key_idx` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
 --
 
 INSERT INTO `tag` (`tag_string`) VALUES
-( 'Java'),('c++'),('c'),('Perl'),('Perl'),('Sql'),('Oracle'),('php'),('OpenGL');
+( 'Java'),('c++'),('c'),('Perl'),('Sql'),('Oracle'),('php'),('OpenGL');
 
 -- --------------------------------------------------------
 
