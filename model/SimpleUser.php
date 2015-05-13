@@ -685,6 +685,134 @@
             */
             $set  = $query->execute();  
 
+            /*
+				Delete old unused tags
+            */
+            $oldtagsQuery  = new DatabaseQuery('select tag.tag_string,tag.tag_id from tag
+												 inner join questiontags on questiontags.tag=tag.tag_id
+												 where questiontags.question=?' , $dbConnection);
+
+			$deletetagQuery = new DatabaseQuery('delete from questiontags where question=? and tag=?' , $dbConnection);
+
+			$oldtagsQuery->addParameter('i',$question->getId());
+
+			$set = $oldtagsQuery->execute();
+
+			while($row = $set->next() ){
+				if( !in_array($row["tag_string"] , $question->getTags() ) ){
+					$deletetagQuery->addParameter('ii' , $question->getId() , $row['tag_id']);
+					$deletetagQuery->execute();
+				}
+
+			}
+
+
+            $query = new DatabaseQuery('select * from tag '.
+			         				   'inner join questiontags on questiontags.tag=tag.tag_id '.
+			    					   'where tag.tag_string=? and questiontags.question=? ' , $dbConnection);
+
+            /*
+				Add new tags
+            */
+			foreach ($question->getTags() as $tag) {
+				$query->addParameter('si' , $tag , $question->getId());
+				$set = $query->execute();
+
+				if($set->getRowCount() ==0){
+					/*
+						Create the query to search for id
+					*/
+					$dbQuery = new DatabaseQuery('select tag_id from tag where tag_string=?' , $dbConnection);
+					
+					/*
+					Set the parameters
+					*/
+			   
+					$dbQuery->addParameter('s',$tag);
+			  
+					/*
+						exucute the query
+					*/
+					$qresults = $dbQuery->execute();	
+					
+					/*
+						take tag id if exist
+					*/
+					while($row=$qresults->next()) {
+						/*
+							if not empty we will take and the tag id
+						*/
+						$tag_id=$row['tag_id'];
+					}
+					/*
+						if tag does not exist
+						We must insert it in database
+					*/
+					if($qresults->getRowCount()==0) {
+						/*
+							Create the query to insert the new tag
+						*/
+						$dbQuery = new DatabaseQuery('insert into tag(tag_string) values(?)' , $dbConnection);
+						
+						/*
+						Set the parameters
+						*/
+				   
+						$dbQuery->addParameter('s',$tag);
+				  
+						/*
+							exucute the query
+						*/
+						$qresults = $dbQuery->execute();	
+
+						
+						/*
+							Now we must take the id
+						*/
+						
+						$dbQuery = new DatabaseQuery('select tag_id from tag where tag_string=?' , $dbConnection);
+					
+						/*
+							Set the parameters
+						*/
+				   
+						$dbQuery->addParameter('s',$tag);
+				  
+						/*
+							exucute the query
+						*/
+						$qresults = $dbQuery->execute();	
+						
+						/*
+							Take tag id
+						*/
+						$row=$qresults->next();
+						$tag_id=$row['tag_id'];
+						
+						
+					}
+						
+					/*
+						Now we must insert each tag into the questiontags table
+						Create the query to insert the new question tag with his question
+					*/
+					$dbQuery = new DatabaseQuery('insert into questiontags values(?,?)' , $dbConnection);
+					
+					/*
+					Set the parameters
+					*/
+			   
+					$dbQuery->addParameter('ii',$question->getId(),$tag_id);
+			  
+					/*
+						exucute the query
+					*/
+					$qresults = $dbQuery->execute();	
+						
+				}
+			}
+
+
 			
 			/*
                 close the database connection

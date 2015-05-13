@@ -63,7 +63,7 @@
                     $user->editQuestion($question);
                         
                     header("Location: ?p=question&id=".$question->getId());
-                    die();
+                   	die();
                 }
 	        }
 
