@@ -26,7 +26,7 @@
 
 			if( isset($_POST['commentText']) ){
 				
-				if(strlen($_POST['commentText'])<50){
+				if(strlen($_POST['commentText'])<15){
                     $args["error_msg"] = "Your comment needs to be at least 15 characters";
 				}
                 else{
