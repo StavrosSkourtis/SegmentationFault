@@ -1,6 +1,10 @@
 <script type="text/javascript" src="view/javascript/answerPostPreview.js"></script>
 <script type="text/javascript" src="view/javascript/voting.js"></script>
 <div id="ContentWraper">
+	<p id="error_mesg"><?php 
+		if(isset($args["error_msg"]))
+			print $args["error_msg"];
+	?></p>
 	<div id="Question">
 		<div id="QuestionTitleWraper">
 				<h1 id="QuestionTitle"> 

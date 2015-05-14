@@ -33,21 +33,21 @@
 				Post a comment to a question
 			*/
 			if(isset($_POST['question_id']) && isset($_POST['question_comment'])){
-				$this->postQuestionComment($_POST['question_id']  , $_POST['question_comment']);
+				$args["error_msg"] = $this->postQuestionComment($_POST['question_id']  , $_POST['question_comment']);
 			}
 
 			/*
 				Post an answer to a question
 			*/
 			if(isset($_POST['question_id']) && isset($_POST['postedAnswer']) ){
-				$this->postAnswer($_POST['question_id']  , $_POST['postedAnswer']);
+				$args["error_msg"] = $this->postAnswer($_POST['question_id']  , $_POST['postedAnswer']);
 			}
 
 			/*
 				Post a comment to an answer
 			*/
 			if(isset($_POST['answer_id']) && isset($_POST['answer_comment'])){
-				$this->postAnswerComment($_POST['answer_id']  , $_POST['answer_comment']);
+				$args["error_msg"] = $this->postAnswerComment($_POST['answer_id']  , $_POST['answer_comment']);
 			}
 
 			
@@ -103,6 +103,10 @@
 			*/
 			if(  !isset($_SESSION["uid"] ) )
 				return 'You must login to post';
+			else if( strlen($answerText)<50)
+                return "Your answer needs to be at least 50 characters";
+
+
 
 			/*
 				Get question
@@ -144,17 +148,22 @@
 			$answer = new Answer();
 			$answer->create($aid);
 
-			$this->postComment($answer,'A',$commentText);
+			return $this->postComment($answer,'A',$commentText);
 		}
 
 		private function postQuestionComment($qid , $commentText){
 			$question = new Question();
 			$question->create($qid);
 
-			$this->postComment($question, 'Q' ,$commentText);
+			return $this->postComment($question, 'Q' ,$commentText);
 		}
 
 		private function postComment($target,$target_type,$commentText){
+			if(  !isset($_SESSION["uid"] ) )
+				return 'You must login to post';
+			else if( strlen($commentText)<15)
+                return "Your comment needs to be at least 15 characters";
+
 			$user = new SimpleUser();
 			$user->create($_SESSION['uid']);
 
